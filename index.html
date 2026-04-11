@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Points Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', -apple-system, sans-serif; background: #fff; color: #1a1a2e; line-height: 1.5; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+
+        h1 { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+        .subtitle { color: #6b7280; font-size: 14px; margin-bottom: 32px; }
+        h2 { font-size: 20px; font-weight: 700; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #e5e7eb; }
+        h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+
+        /* ── Points Summary ── */
+        .points-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px; }
+        .points-card {
+            border-radius: 12px;
+            padding: 24px;
+            color: white;
+        }
+        .points-card.chase { background: linear-gradient(135deg, #003087, #0052cc); }
+        .points-card.amex { background: linear-gradient(135deg, #006fcf, #0090ff); }
+        .points-card.bilt { background: linear-gradient(135deg, #1a1a2e, #2d2d44); }
+        .points-card .card-label { font-size: 12px; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; }
+        .points-card .card-name { font-size: 13px; opacity: 0.7; margin-top: 2px; }
+        .points-card .pts { font-size: 36px; font-weight: 800; margin: 8px 0; }
+        .points-card .val { font-size: 13px; opacity: 0.85; }
+
+        .total-bar {
+            background: #f0fdf4;
+            border: 2px solid #bbf7d0;
+            border-radius: 12px;
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 48px;
+        }
+        .total-bar .total-label { font-size: 14px; color: #166534; font-weight: 600; }
+        .total-bar .total-pts { font-size: 14px; color: #6b7280; }
+        .total-bar .total-value { font-size: 28px; font-weight: 800; color: #166534; }
+
+        /* ── Sign Up Section ── */
+        .signup-section { margin-bottom: 48px; }
+        .signup-card {
+            border: 2px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 16px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 20px;
+            align-items: start;
+            transition: border-color 0.2s;
+        }
+        .signup-card:hover { border-color: #a5b4fc; }
+        .signup-card.top-pick { border-color: #f59e0b; background: #fffbeb; }
+        .card-rank {
+            display: inline-block;
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-right: 10px;
+        }
+        .rank-1 { background: #fef3c7; color: #92400e; }
+        .rank-2 { background: #e0e7ff; color: #3730a3; }
+        .rank-3 { background: #f3f4f6; color: #374151; }
+        .signup-card .card-title { font-size: 18px; font-weight: 700; display: inline; }
+        .signup-card .issuer-tag { font-size: 12px; color: #6b7280; margin-left: 8px; }
+        .signup-card .why { font-size: 14px; color: #374151; margin-top: 8px; }
+        .signup-card .why strong { color: #059669; }
+        .signup-card .details { display: flex; gap: 20px; margin-top: 12px; flex-wrap: wrap; }
+        .signup-card .detail-item { font-size: 13px; color: #6b7280; }
+        .signup-card .detail-item span { font-weight: 700; color: #1a1a2e; }
+        .bonus-box {
+            text-align: center;
+            min-width: 140px;
+            padding: 16px;
+            border-radius: 10px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+        .signup-card.top-pick .bonus-box { background: #fef3c7; border-color: #fcd34d; }
+        .bonus-box .bonus-pts { font-size: 28px; font-weight: 800; color: #1a1a2e; }
+        .bonus-box .bonus-label { font-size: 11px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; }
+        .bonus-box .bonus-value { font-size: 14px; font-weight: 700; color: #059669; margin-top: 4px; }
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-right: 6px;
+            margin-top: 8px;
+        }
+        .tag-urgent { background: #fef2f2; color: #dc2626; }
+        .tag-best { background: #fef3c7; color: #92400e; }
+        .tag-hyatt { background: #f0fdf4; color: #166534; }
+        .tag-flights { background: #eff6ff; color: #1d4ed8; }
+        .apply-btn {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 10px 24px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .apply-btn:hover { background: #1d4ed8; }
+        .apply-btn.amex-btn { background: #006fcf; }
+        .apply-btn.amex-btn:hover { background: #0055a4; }
+        .apply-btn.cap1-btn { background: #d32f2f; }
+        .apply-btn.cap1-btn:hover { background: #b71c1c; }
+
+        /* ── Timeline ── */
+        .timeline-section { margin-bottom: 48px; }
+        .tl-item {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 16px;
+            padding: 18px 0;
+            border-bottom: 1px solid #f3f4f6;
+            align-items: start;
+        }
+        .tl-item:last-child { border-bottom: none; }
+        .tl-when { font-size: 13px; font-weight: 700; }
+        .tl-when.urgent { color: #dc2626; }
+        .tl-when.soon { color: #d97706; }
+        .tl-when.watch { color: #6b7280; }
+        .tl-what h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+        .tl-what p { font-size: 13px; color: #6b7280; }
+        .tl-what .tl-action {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .tl-action.act-now { background: #fef2f2; color: #dc2626; }
+        .tl-action.act-soon { background: #fef3c7; color: #92400e; }
+        .tl-action.act-watch { background: #f3f4f6; color: #6b7280; }
+
+        /* ── Current Cards ── */
+        .current-cards { margin-bottom: 48px; }
+        .current-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .current-card {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 16px;
+        }
+        .current-card .cc-name { font-weight: 600; font-size: 14px; }
+        .current-card .cc-details { font-size: 12px; color: #6b7280; margin-top: 4px; }
+
+        /* ── Warning Box ── */
+        .warning-box {
+            background: #fef2f2;
+            border: 2px solid #fecaca;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 24px;
+        }
+        .warning-box h3 { color: #dc2626; font-size: 15px; }
+        .warning-box p { font-size: 14px; color: #7f1d1d; margin-top: 6px; }
+
+        /* ── Info Box ── */
+        .info-box {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 48px;
+        }
+        .info-box h3 { color: #1d4ed8; font-size: 15px; }
+        .info-box p { font-size: 14px; color: #1e3a5f; margin-top: 6px; }
+
+        .footer { font-size: 12px; color: #9ca3af; text-align: center; padding: 24px; border-top: 1px solid #e5e7eb; }
+
+        @media (max-width: 768px) {
+            .points-grid { grid-template-columns: 1fr; }
+            .current-grid { grid-template-columns: 1fr; }
+            .signup-card { grid-template-columns: 1fr; }
+            .total-bar { flex-direction: column; gap: 8px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>My Credit Card Points</h1>
+    <div class="subtitle">Updated April 11, 2026 &mdash; Source: Chase, Amex, and Bilt account pages</div>
+
+    <!-- ═══════════ YOUR POINTS ═══════════ -->
+    <div class="points-grid">
+        <div class="points-card chase">
+            <div class="card-label">Chase Ultimate Rewards</div>
+            <div class="card-name">Freedom Unlimited (...9058)</div>
+            <div class="pts">93,957</div>
+            <div class="val">Worth $1,879 toward Hyatt hotels (2.0&cent; per point)</div>
+        </div>
+        <div class="points-card amex">
+            <div class="card-label">Amex Membership Rewards</div>
+            <div class="card-name">Gold Card (...83000)</div>
+            <div class="pts">203,538</div>
+            <div class="val">Worth $5,088 toward ANA First Class flights (2.5&cent; per point)</div>
+        </div>
+        <div class="points-card bilt">
+            <div class="card-label">Bilt Rewards</div>
+            <div class="card-name">Bilt Mastercard 2.0</div>
+            <div class="pts">38,300</div>
+            <div class="val">Worth $766 toward Hyatt hotels (2.0&cent; per point)</div>
+        </div>
+    </div>
+
+    <div class="total-bar">
+        <div>
+            <div class="total-label">Total Portfolio Value</div>
+            <div class="total-pts">335,795 points across 3 cards</div>
+        </div>
+        <div class="total-value">$7,733</div>
+    </div>
+
+    <!-- ═══════════ WARNING ═══════════ -->
+    <div class="warning-box">
+        <h3>Your 93,957 Chase points are locked right now</h3>
+        <p>
+            The Freedom Unlimited earns Chase UR points, but you <strong>cannot transfer them to Hyatt or any airline</strong> without also having a Chase Sapphire Preferred or Sapphire Reserve. Without one, those points are stuck at 1&cent; each ($939) instead of 2&cent;+ ($1,879). Getting a Sapphire card is your single highest-impact move.
+        </p>
+    </div>
+
+    <!-- ═══════════ CARDS TO SIGN UP FOR ═══════════ -->
+    <div class="signup-section">
+        <h2>Cards You Should Sign Up For</h2>
+        <p style="color: #6b7280; font-size: 14px; margin-top: -12px; margin-bottom: 24px;">
+            Ranked by how much value they add to <em>your specific situation</em>. Bonus values based on The Points Guy April 2026 valuations. Always verify the current offer on the issuer's website before applying.
+        </p>
+
+        <!-- #1 -->
+        <div class="signup-card top-pick">
+            <div>
+                <div>
+                    <span class="card-rank rank-1">1</span>
+                    <div class="card-title">Chase Sapphire Preferred</div>
+                    <span class="issuer-tag">Chase &bull; $95/yr</span>
+                </div>
+                <div class="why">
+                    <strong>Unlocks your existing 93,957 UR for Hyatt transfers</strong> &mdash; plus you earn 75,000 bonus points on top. That gives you 168,957 transferable Chase points worth <strong>$3,379 in Hyatt stays</strong>. Best bang for your buck at only $95/yr.
+                </div>
+                <div class="details">
+                    <div class="detail-item">Spend: <span>$5,000 in 3 months</span></div>
+                    <div class="detail-item">Top earn: <span>5x Chase Travel, 3x dining</span></div>
+                    <div class="detail-item">Perks: <span>$50 hotel credit, DashPass</span></div>
+                </div>
+                <span class="tag tag-best">TOP PICK</span>
+                <span class="tag tag-hyatt">UNLOCKS HYATT</span>
+                <br>
+                <a href="https://creditcards.chase.com/rewards-credit-cards/sapphire/preferred" target="_blank" class="apply-btn">Apply on Chase.com</a>
+            </div>
+            <div class="bonus-box">
+                <div class="bonus-pts">75K</div>
+                <div class="bonus-label">Bonus Points</div>
+                <div class="bonus-value">+ unlocks 94K existing</div>
+            </div>
+        </div>
+
+        <!-- #2 -->
+        <div class="signup-card">
+            <div>
+                <div>
+                    <span class="card-rank rank-2">2</span>
+                    <div class="card-title">Chase Sapphire Reserve</div>
+                    <span class="issuer-tag">Chase &bull; $795/yr</span>
+                </div>
+                <div class="why">
+                    Same Hyatt-unlock benefit as the Preferred but with a <strong>125,000 point bonus</strong> instead of 75K. Combined with your existing 94K, that's 218,957 UR = <strong>$4,379 in Hyatt value</strong>. Higher fee but comes with $300 travel credit, Priority Pass airport lounges, and 3x dining.
+                </div>
+                <div class="details">
+                    <div class="detail-item">Spend: <span>$6,000 in 3 months</span></div>
+                    <div class="detail-item">Top earn: <span>8x Chase Travel, 4x flights/hotels</span></div>
+                    <div class="detail-item">Perks: <span>$300 travel credit, Priority Pass, $300 dining</span></div>
+                </div>
+                <span class="tag tag-hyatt">UNLOCKS HYATT</span>
+                <span class="tag tag-flights">AIRPORT LOUNGES</span>
+                <br>
+                <a href="https://creditcards.chase.com/rewards-credit-cards/sapphire/reserve" target="_blank" class="apply-btn">Apply on Chase.com</a>
+            </div>
+            <div class="bonus-box">
+                <div class="bonus-pts">125K</div>
+                <div class="bonus-label">Bonus Points</div>
+                <div class="bonus-value">+ unlocks 94K existing</div>
+            </div>
+        </div>
+
+        <!-- #3 -->
+        <div class="signup-card">
+            <div>
+                <div>
+                    <span class="card-rank rank-2">3</span>
+                    <div class="card-title">Amex Platinum</div>
+                    <span class="issuer-tag">Amex &bull; $895/yr</span>
+                </div>
+                <div class="why">
+                    You already have the Gold Card, so you're in the right order for Amex's family rules (Gold before Platinum = no pop-up block). The 80K bonus pools with your <strong>203,538 MR</strong> for a total of <strong>283,538 MR</strong>. Best for international premium flights via ANA or Virgin Atlantic. Also gets you Centurion Lounge access.
+                </div>
+                <div class="details">
+                    <div class="detail-item">Spend: <span>$8,000 in 6 months</span></div>
+                    <div class="detail-item">Top earn: <span>5x flights booked direct, 5x prepaid hotels</span></div>
+                    <div class="detail-item">Perks: <span>Centurion Lounges, $200 airline credit, $200 hotel credit</span></div>
+                </div>
+                <span class="tag tag-flights">BEST FOR FLIGHTS</span>
+                <br>
+                <a href="https://www.americanexpress.com/us/credit-cards/card/platinum/" target="_blank" class="apply-btn amex-btn">Apply on Amex.com</a>
+            </div>
+            <div class="bonus-box">
+                <div class="bonus-pts">80K</div>
+                <div class="bonus-label">Bonus Points</div>
+                <div class="bonus-value">$2,000 flight value</div>
+            </div>
+        </div>
+
+        <!-- #4 -->
+        <div class="signup-card">
+            <div>
+                <div>
+                    <span class="card-rank rank-3">4</span>
+                    <div class="card-title">Capital One Venture</div>
+                    <span class="issuer-tag">Capital One &bull; $95/yr</span>
+                </div>
+                <div class="why">
+                    Flat 2x on every purchase catches all the spending your Chase and Amex cards miss. 75K bonus miles transfer to Turkish Airlines (Star Alliance flights) or use as $750 travel credit. Plus $250 travel credit and $120 Global Entry credit. Low fee, simple card.
+                </div>
+                <div class="details">
+                    <div class="detail-item">Spend: <span>$4,000 in 3 months</span></div>
+                    <div class="detail-item">Top earn: <span>2x everything, 5x Capital One Travel</span></div>
+                    <div class="detail-item">Perks: <span>$250 travel credit, Global Entry</span></div>
+                </div>
+                <span class="tag tag-flights">CATCH-ALL CARD</span>
+                <br>
+                <a href="https://www.capitalone.com/credit-cards/venture/" target="_blank" class="apply-btn cap1-btn">Apply on CapitalOne.com</a>
+            </div>
+            <div class="bonus-box">
+                <div class="bonus-pts">75K</div>
+                <div class="bonus-label">Bonus Miles</div>
+                <div class="bonus-value">$750+ travel value</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ INFO BOX ═══════════ -->
+    <div class="info-box">
+        <h3>Which Sapphire should you pick?</h3>
+        <p>
+            <strong>If you want simple &amp; cheap:</strong> Sapphire Preferred ($95/yr). You get 75K bonus, unlock Hyatt transfers, and the fee is minimal.<br>
+            <strong>If you travel a lot:</strong> Sapphire Reserve ($795/yr). The 125K bonus is bigger, you get airport lounges, $300 travel credit, and better earn rates. The effective cost after credits is ~$495/yr.<br>
+            <strong>Either way</strong>, the most important thing is that it unlocks your existing 93,957 Chase UR points for hotel transfers. That's free value you're leaving on the table right now.
+        </p>
+    </div>
+
+    <!-- ═══════════ YOUR CURRENT CARDS ═══════════ -->
+    <div class="current-cards">
+        <h2>Your Current Cards</h2>
+        <div class="current-grid">
+            <div class="current-card">
+                <div class="cc-name">Chase Freedom Unlimited</div>
+                <div class="cc-details">
+                    $0/yr &bull; 93,957 pts<br>
+                    1.5x all purchases, 3x dining, 5x Chase Travel<br>
+                    <em style="color: #dc2626;">Needs Sapphire to transfer points</em>
+                </div>
+            </div>
+            <div class="current-card">
+                <div class="cc-name">Amex Gold Card</div>
+                <div class="cc-details">
+                    $325/yr &bull; 203,538 pts<br>
+                    4x dining, 4x groceries, 3x flights<br>
+                    $100 Resy credit ($50 earned), $120 Uber Cash, $84 Dunkin' credit
+                </div>
+            </div>
+            <div class="current-card">
+                <div class="cc-name">Bilt Mastercard 2.0</div>
+                <div class="cc-details">
+                    $0/yr &bull; 38,300 pts<br>
+                    1x-3x on dining (Rent Day bonus on 1st of month)<br>
+                    Transfers to Hyatt 1:1
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ WHAT YOUR POINTS CAN GET YOU ═══════════ -->
+    <div style="margin-bottom: 48px;">
+        <h2>What Your Points Can Get You Today</h2>
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+            <thead>
+                <tr style="border-bottom: 2px solid #e5e7eb;">
+                    <th style="text-align: left; padding: 12px 0; color: #6b7280; font-size: 12px; text-transform: uppercase;">Redemption</th>
+                    <th style="text-align: left; padding: 12px 0; color: #6b7280; font-size: 12px; text-transform: uppercase;">Points Needed</th>
+                    <th style="text-align: left; padding: 12px 0; color: #6b7280; font-size: 12px; text-transform: uppercase;">You Have</th>
+                    <th style="text-align: left; padding: 12px 0; color: #6b7280; font-size: 12px; text-transform: uppercase;">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid #f3f4f6;">
+                    <td style="padding: 14px 0;"><strong>5 nights at Park Hyatt</strong> (Cat 7)</td>
+                    <td style="padding: 14px 0;">125,000 Hyatt pts</td>
+                    <td style="padding: 14px 0;">132,257 (Chase + Bilt)*</td>
+                    <td style="padding: 14px 0; color: #059669; font-weight: 600;">Ready*</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #f3f4f6;">
+                    <td style="padding: 14px 0;"><strong>8 nights at Hyatt Regency</strong> (Cat 5)</td>
+                    <td style="padding: 14px 0;">120,000 Hyatt pts</td>
+                    <td style="padding: 14px 0;">132,257 (Chase + Bilt)*</td>
+                    <td style="padding: 14px 0; color: #059669; font-weight: 600;">Ready*</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #f3f4f6;">
+                    <td style="padding: 14px 0;"><strong>ANA First Class round-trip to Tokyo</strong></td>
+                    <td style="padding: 14px 0;">~110,000 Amex MR</td>
+                    <td style="padding: 14px 0;">203,538 MR</td>
+                    <td style="padding: 14px 0; color: #059669; font-weight: 600;">Ready</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #f3f4f6;">
+                    <td style="padding: 14px 0;"><strong>ANA Business Class round-trip to Tokyo</strong></td>
+                    <td style="padding: 14px 0;">~85,000 Amex MR</td>
+                    <td style="padding: 14px 0;">203,538 MR</td>
+                    <td style="padding: 14px 0; color: #059669; font-weight: 600;">Ready (x2 trips)</td>
+                </tr>
+                <tr>
+                    <td style="padding: 14px 0;"><strong>Virgin Atlantic to fly Delta One to Europe</strong></td>
+                    <td style="padding: 14px 0;">~50,000 Amex MR</td>
+                    <td style="padding: 14px 0;">203,538 MR</td>
+                    <td style="padding: 14px 0; color: #059669; font-weight: 600;">Ready (x4 trips)</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="font-size: 12px; color: #9ca3af; margin-top: 12px;">
+            * Chase UR requires a Sapphire Preferred or Reserve to transfer to Hyatt. Bilt transfers directly. Without a Sapphire card, only 38,300 Bilt points are Hyatt-transferable today.
+        </p>
+    </div>
+
+    <!-- ═══════════ REFRESH & LAUNCH TIMELINE ═══════════ -->
+    <div class="timeline-section">
+        <h2>Card Refresh &amp; Launch Rumors</h2>
+        <p style="color: #6b7280; font-size: 14px; margin-top: -12px; margin-bottom: 24px;">
+            Credit card issuers typically refresh cards every 2-3 years with new benefits and fee increases. If you sign up <strong>before</strong> a refresh, you get grandfathered into the old fee for your first year while keeping the new benefits. This is the best time to maximize value.
+        </p>
+
+        <div class="info-box" style="margin-bottom: 24px;">
+            <h3>How the Grandfather Strategy Works</h3>
+            <p>
+                When a card raises its annual fee (e.g., CSP from $95 to $150), existing cardholders keep the old fee until their next renewal date. If you apply right <em>before</em> the increase, you lock in the lower fee for a full year while getting all the new perks added in the refresh. That's free upside.
+            </p>
+        </div>
+
+        <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px;">
+            <!-- CSP -->
+            <div class="tl-item">
+                <div class="tl-when urgent">NOW &ndash; Q2 2026</div>
+                <div class="tl-what">
+                    <h4>Chase Sapphire Preferred &mdash; Fee Increase to $150</h4>
+                    <p>
+                        Doctor of Credit reports Chase reps have mentioned a fee increase from $95 to $150. Not yet official, but the CSR already refreshed in 2025 ($550 &rarr; $795) and the Preferred is next. <strong>Applying now at $95 locks you in before the hike and still gets you the 75K bonus.</strong> This is your best grandfather window.
+                    </p>
+                    <span class="tl-action act-now">Apply now to lock $95 fee</span>
+                </div>
+            </div>
+
+            <!-- Amex Green -->
+            <div class="tl-item">
+                <div class="tl-when soon">Q2&ndash;Q3 2026</div>
+                <div class="tl-what">
+                    <h4>Amex Green Card &mdash; Refresh Incoming</h4>
+                    <p>
+                        Amex has stopped accepting new Green Card applications &mdash; a strong signal a refresh is imminent. Rumored new benefits include 4x on gas, 3x on streaming, and a possible fee increase from $150 to $195-$250. The Gold and Platinum both refreshed already; Green is the last in the family. Since you have the Gold, this could be a good MR-stacking companion after the refresh launches with a new SUB.
+                    </p>
+                    <span class="tl-action act-soon">Wait for new SUB, then apply</span>
+                </div>
+            </div>
+
+            <!-- Chase x Hyatt Premium -->
+            <div class="tl-item">
+                <div class="tl-when soon">2026 (TBD)</div>
+                <div class="tl-what">
+                    <h4>Chase x Hyatt Premium Card &mdash; New Card Launch</h4>
+                    <p>
+                        Hyatt confirmed they plan to "expand the card portfolio" with Chase. A premium Hyatt card is widely expected in 2026 but no launch date confirmed. This would be the first dedicated premium hotel card from Chase and could include elite status, free night awards, and high Hyatt earn rates. <strong>Extremely relevant for your Hyatt strategy.</strong> Worth waiting to see the SUB before burning a 5/24 slot.
+                    </p>
+                    <span class="tl-action act-soon">Monitor &mdash; could be your best 5/24 slot</span>
+                </div>
+            </div>
+
+            <!-- Bilt lineup -->
+            <div class="tl-item">
+                <div class="tl-when watch">Launched Feb 2026</div>
+                <div class="tl-what">
+                    <h4>Bilt 2.0 Card Lineup &mdash; Already Refreshed</h4>
+                    <p>
+                        You already have the Bilt 2.0 card. The new lineup includes: <strong>Bilt Blue</strong> ($0/yr), <strong>Bilt Obsidian</strong> ($95/yr), and <strong>Bilt Palladium</strong> ($495/yr). If you're on the free tier, the Obsidian adds 2x on dining and 3x on Rent Day. Palladium adds Priority Pass and higher multipliers. Consider upgrading if your rent spend justifies it.
+                    </p>
+                    <span class="tl-action act-watch">Review Obsidian vs your current tier</span>
+                </div>
+            </div>
+
+            <!-- Amex Platinum recent changes -->
+            <div class="tl-item">
+                <div class="tl-when watch">April 2026</div>
+                <div class="tl-what">
+                    <h4>Amex Platinum &mdash; Benefit Changes</h4>
+                    <p>
+                        Amex just extended Platinum discounts to select economy fares (new) but ended Lufthansa lounge access. The card refreshed in 2025 with the fee increase to $895. No further fee changes expected near-term, so the current 80K bonus is what you'd get. <strong>No grandfather urgency &mdash; apply when ready.</strong>
+                    </p>
+                    <span class="tl-action act-watch">No rush &mdash; stable offer</span>
+                </div>
+            </div>
+
+            <!-- CSR already refreshed -->
+            <div class="tl-item">
+                <div class="tl-when watch">Completed 2025</div>
+                <div class="tl-what">
+                    <h4>Chase Sapphire Reserve &mdash; Already Refreshed</h4>
+                    <p>
+                        Fee went from $550 to $795 in June 2025 with new benefits going live October 2025. Includes 8x Chase Travel, $300 travel credit, $300 dining, Priority Pass, Hyatt Explorist status for top spenders. <strong>No further changes expected.</strong> The current 125K bonus is the post-refresh offer.
+                    </p>
+                    <span class="tl-action act-watch">Current offer is post-refresh</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="footer">
+    Points values based on The Points Guy April 2026 valuations. Bonus offers may vary &mdash; always confirm on issuer website before applying.<br><br>
+    Sources:
+    <a href="https://thepointsguy.com/credit-cards/best-pm/" style="color: #6b7280;">The Points Guy</a> &bull;
+    <a href="https://www.doctorofcredit.com/new-credit-cards-for-2026-launched-announced-rumored/" style="color: #6b7280;">Doctor of Credit &mdash; New Cards 2026</a> &bull;
+    <a href="https://www.doctorofcredit.com/rumor-chase-to-increase-chase-sapphire-preferred-annual-fee-to-150/" style="color: #6b7280;">DoC &mdash; CSP Fee Rumor</a> &bull;
+    <a href="https://www.doctorofcredit.com/american-express-green-card-no-longer-accepting-new-applications-refresh-incoming/" style="color: #6b7280;">DoC &mdash; Amex Green Refresh</a> &bull;
+    <a href="https://www.doctorofcredit.com/chase-hyatt-to-launch-more-credit-cards-explorist-status-for-top-spenders/" style="color: #6b7280;">DoC &mdash; Chase Hyatt Expansion</a> &bull;
+    <a href="https://thepointsguy.com/credit-cards/tpg-predicts-2026-trends/" style="color: #6b7280;">TPG 2026 Predictions</a> &bull;
+    <a href="https://viewfromthewing.com/after-9-years-chase-sapphire-reserve-just-blew-up-its-model-why-the-new-795-cards-benefits-radically-outweigh-the-cost/" style="color: #6b7280;">View from the Wing &mdash; CSR Refresh</a>
+</div>
+
+</body>
+</html>
