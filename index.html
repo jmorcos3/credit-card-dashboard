@@ -78,6 +78,20 @@
         .apply-btn.cap1-btn { background: #d32f2f; }
         .apply-btn.cap1-btn:hover { background: #b71c1c; }
 
+        .value-analysis {
+            margin-top: 14px; padding: 14px 16px; background: #f0fdf4; border: 1px solid #bbf7d0;
+            border-radius: 10px; font-size: 13px;
+        }
+        .value-analysis .va-title { font-weight: 700; color: #166534; margin-bottom: 8px; font-size: 13px; }
+        .value-analysis table { width: 100%; font-size: 13px; }
+        .value-analysis td { padding: 3px 0; }
+        .value-analysis td:first-child { color: #6b7280; }
+        .value-analysis td:last-child { text-align: right; font-weight: 600; }
+        .value-analysis .va-total { border-top: 1px solid #bbf7d0; padding-top: 6px; margin-top: 4px; }
+        .value-analysis .va-total td { font-weight: 700; color: #166534; font-size: 14px; }
+        .value-analysis .va-negative { color: #059669; }
+        .value-analysis .va-positive { color: #dc2626; }
+
         .warning-box {
             background: #fef2f2; border: 2px solid #fecaca; border-radius: 12px; padding: 20px 24px; margin-bottom: 24px;
         }
@@ -115,6 +129,30 @@
         .tl-action.act-soon { background: #fef3c7; color: #92400e; }
         .tl-action.act-watch { background: #f3f4f6; color: #6b7280; }
 
+        .strategy-box {
+            background: #faf5ff; border: 2px solid #e9d5ff; border-radius: 14px;
+            padding: 24px; margin-bottom: 48px;
+        }
+        .strategy-box h2 { border-bottom-color: #e9d5ff; }
+        .strategy-rules { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
+        .strategy-rule {
+            background: white; border: 1px solid #e9d5ff; border-radius: 10px; padding: 18px;
+        }
+        .strategy-rule .rule-num {
+            display: inline-block; width: 24px; height: 24px; border-radius: 50%;
+            background: #9333ea; color: white; text-align: center; line-height: 24px;
+            font-size: 12px; font-weight: 700; margin-bottom: 8px;
+        }
+        .strategy-rule h4 { font-size: 14px; margin-bottom: 6px; }
+        .strategy-rule p { font-size: 13px; color: #6b7280; }
+        .strategy-rule .rule-do { color: #059669; font-weight: 600; font-size: 12px; margin-top: 8px; }
+        .strategy-rule .rule-dont { color: #dc2626; font-weight: 600; font-size: 12px; margin-top: 4px; }
+        .val-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 16px; }
+        .val-table th { text-align: left; padding: 8px 12px; background: #f3e8ff; color: #6b21a8; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .val-table td { padding: 10px 12px; border-bottom: 1px solid #f3f4f6; }
+        .val-table .best-use { font-weight: 600; color: #059669; }
+        .val-table .waste { font-weight: 600; color: #dc2626; }
+
         .footer { font-size: 12px; color: #9ca3af; text-align: center; padding: 24px; border-top: 1px solid #e5e7eb; }
 
         @media (max-width: 768px) {
@@ -122,6 +160,7 @@
             .current-grid { grid-template-columns: 1fr; }
             .signup-card { grid-template-columns: 1fr; }
             .total-bar { flex-direction: column; gap: 8px; text-align: center; }
+            .strategy-rules { grid-template-columns: 1fr; }
             .tl-item { grid-template-columns: 1fr; }
         }
     </style>
@@ -138,28 +177,100 @@
             <div class="card-label">Chase Ultimate Rewards</div>
             <div class="card-name">Freedom Unlimited (...9058)</div>
             <div class="pts">93,957</div>
-            <div class="val">Transfers 1:1 to United MileagePlus &amp; Marriott Bonvoy*</div>
+            <div class="val">~2.0&cent;/pt &bull; Worth <strong>$1,879</strong> via United</div>
+            <div class="val" style="margin-top: 4px; font-size: 11px;">Use for: United flights only &bull; LOCKED (need Sapphire card)</div>
         </div>
         <div class="points-card amex">
             <div class="card-label">Amex Membership Rewards</div>
             <div class="card-name">Gold Card (...83000)</div>
             <div class="pts">203,538</div>
-            <div class="val">Best for premium flights to Europe (ANA, Virgin Atlantic)</div>
+            <div class="val">~2.0&cent;/pt &bull; Worth <strong>$4,071</strong> via airlines</div>
+            <div class="val" style="margin-top: 4px; font-size: 11px;">Use for: ANA First Class, Delta One via Virgin Atlantic</div>
         </div>
         <div class="points-card bilt">
             <div class="card-label">Bilt Rewards</div>
             <div class="card-name">Bilt Mastercard 2.0</div>
             <div class="pts">38,300</div>
-            <div class="val">Transfers to United 1:1 and Marriott 1:1</div>
+            <div class="val">~1.8&cent;/pt &bull; Worth <strong>$689</strong></div>
+            <div class="val" style="margin-top: 4px; font-size: 11px;">Use for: United flights OR Marriott top-offs (1:1 both)</div>
         </div>
     </div>
 
     <div class="total-bar">
         <div>
-            <div class="total-label">Total Portfolio Value</div>
-            <div class="total-pts">335,795 points across 3 cards</div>
+            <div class="total-label">Total Portfolio Value (at best redemption rates)</div>
+            <div class="total-pts">335,795 points across 3 currencies &bull; Amex MR $4,071 + Chase UR $1,879 + Bilt $689</div>
         </div>
-        <div class="total-value">$7,733</div>
+        <div class="total-value">$6,639</div>
+    </div>
+
+    <!-- ═══════════ YOUR STRATEGY ═══════════ -->
+    <div class="strategy-box">
+        <h2>Your Points Strategy</h2>
+        <p style="color: #6b7280; font-size: 14px; margin-top: -12px; margin-bottom: 4px;">
+            Not all points are created equal. The key is using each currency where it's worth the most.
+        </p>
+
+        <table class="val-table">
+            <thead>
+                <tr>
+                    <th>Currency</th>
+                    <th>Value/Point</th>
+                    <th>Best Use</th>
+                    <th>Worst Use</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Amex MR</strong> (203,538 pts)</td>
+                    <td><strong>~2.0&cent;</strong></td>
+                    <td class="best-use">ANA First Class, Delta One via Virgin Atlantic</td>
+                    <td class="waste">Transferring to Marriott (drops to 0.7&cent;)</td>
+                </tr>
+                <tr>
+                    <td><strong>Chase UR</strong> (93,957 pts)</td>
+                    <td><strong>~2.0&cent;</strong></td>
+                    <td class="best-use">United MileagePlus 1:1 (no fuel surcharges)</td>
+                    <td class="waste">Transferring to Marriott (drops to 0.7&cent;)</td>
+                </tr>
+                <tr>
+                    <td><strong>Bilt</strong> (38,300 pts)</td>
+                    <td><strong>~1.8&cent;</strong></td>
+                    <td class="best-use">United 1:1 or Marriott 1:1 (both are good)</td>
+                    <td class="waste">Cash back (drops to 0.5&cent;)</td>
+                </tr>
+                <tr>
+                    <td><strong>Marriott Bonvoy</strong> (earn from card bonuses)</td>
+                    <td><strong>~0.7&cent;</strong></td>
+                    <td class="best-use">Free hotel nights (Cat 5-7 are the sweet spot)</td>
+                    <td class="waste">Converting to airline miles (poor ratio)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="strategy-rules">
+            <div class="strategy-rule">
+                <div class="rule-num">1</div>
+                <h4>Flights = Amex MR + Chase UR</h4>
+                <p>Use your premium currencies (2&cent;/pt) for flights. Amex MR &rarr; ANA or Virgin Atlantic for Europe. Chase UR &rarr; United for domestic &amp; transatlantic.</p>
+                <div class="rule-do">&check; Transfer MR/UR to airlines</div>
+                <div class="rule-dont">&times; Never transfer MR/UR to Marriott</div>
+            </div>
+            <div class="strategy-rule">
+                <div class="rule-num">2</div>
+                <h4>Hotels = Marriott Cards Only</h4>
+                <p>Get Marriott points from sign-up bonuses on Marriott co-branded cards (Brilliant/Bevy). Use Bilt to top off Marriott when needed.</p>
+                <div class="rule-do">&check; Sign up for Marriott card bonuses</div>
+                <div class="rule-dont">&times; Don't waste 2&cent; points on 0.7&cent; hotels</div>
+            </div>
+            <div class="strategy-rule">
+                <div class="rule-num">3</div>
+                <h4>Everyday = Amex Gold</h4>
+                <p>4x dining + 4x groceries builds your most versatile currency (MR). Keep the Gold as your primary card for all daily spending.</p>
+                <div class="rule-do">&check; Amex Gold for dining, groceries, flights</div>
+                <div class="rule-dont">&times; Don't split spend across too many cards</div>
+            </div>
+        </div>
     </div>
 
     <!-- ═══════════ WARNINGS ═══════════ -->
@@ -219,7 +330,23 @@
                 <span class="tag tag-best">TOP PICK</span>
                 <span class="tag tag-marriott">MARRIOTT 200K ALL-TIME HIGH</span>
                 <span class="tag tag-urgent">EXPIRES MAY 13</span>
-                <br>
+
+                <div class="value-analysis">
+                    <div class="va-title">Year 1 Value Breakdown</div>
+                    <table>
+                        <tr><td>Annual fee</td><td>-$650</td></tr>
+                        <tr><td>200K Marriott pts (@ 0.8&cent;/pt)</td><td class="va-negative">+$1,600</td></tr>
+                        <tr><td>Free night cert (up to 85K = Cat 7)</td><td class="va-negative">+$400</td></tr>
+                        <tr><td>$25/mo dining credit ($300/yr)</td><td class="va-negative">+$300</td></tr>
+                        <tr><td>Platinum Elite (upgrades, lounge)</td><td class="va-negative">+$200</td></tr>
+                        <tr><td>Priority Pass lounge access</td><td class="va-negative">+$100</td></tr>
+                    </table>
+                    <table class="va-total">
+                        <tr><td>Net Year 1 value</td><td class="va-negative">+$1,950</td></tr>
+                        <tr><td>Effective cost per point</td><td class="va-negative">FREE (perks cover the fee)</td></tr>
+                    </table>
+                </div>
+
                 <a href="https://www.americanexpress.com/us/credit-cards/card/marriott-bonvoy-brilliant/" target="_blank" class="apply-btn amex-btn">Apply on Amex.com</a>
             </div>
             <div class="bonus-box">
@@ -247,7 +374,21 @@
                 </div>
                 <span class="tag tag-marriott">MARRIOTT 175K ALL-TIME HIGH</span>
                 <span class="tag tag-urgent">EXPIRES MAY 13</span>
-                <br>
+
+                <div class="value-analysis">
+                    <div class="va-title">Year 1 Value Breakdown</div>
+                    <table>
+                        <tr><td>Annual fee</td><td>-$250</td></tr>
+                        <tr><td>175K Marriott pts (@ 0.8&cent;/pt)</td><td class="va-negative">+$1,400</td></tr>
+                        <tr><td>Free night cert (up to 50K = Cat 5)</td><td class="va-negative">+$250</td></tr>
+                        <tr><td>Gold Elite (late checkout, pts bonus)</td><td class="va-negative">+$50</td></tr>
+                    </table>
+                    <table class="va-total">
+                        <tr><td>Net Year 1 value</td><td class="va-negative">+$1,450</td></tr>
+                        <tr><td>Effective cost per point</td><td class="va-negative">FREE (perks cover the fee)</td></tr>
+                    </table>
+                </div>
+
                 <a href="https://www.americanexpress.com/us/credit-cards/card/marriott-bonvoy-bevy/" target="_blank" class="apply-btn amex-btn">Apply on Amex.com</a>
             </div>
             <div class="bonus-box">
@@ -275,7 +416,22 @@
                 </div>
                 <span class="tag tag-united">UNLOCKS UNITED TRANSFERS</span>
                 <span class="tag tag-flights">AIRPORT LOUNGES</span>
-                <br>
+
+                <div class="value-analysis">
+                    <div class="va-title">Year 1 Value Breakdown</div>
+                    <table>
+                        <tr><td>Annual fee</td><td>-$795</td></tr>
+                        <tr><td>125K Chase UR (@ 2.0&cent;/pt via United)</td><td class="va-negative">+$2,500</td></tr>
+                        <tr><td>Unlocks 93,957 existing UR (@ 2.0&cent;)</td><td class="va-negative">+$1,879</td></tr>
+                        <tr><td>$300 annual travel credit</td><td class="va-negative">+$300</td></tr>
+                        <tr><td>Priority Pass lounge access</td><td class="va-negative">+$100</td></tr>
+                    </table>
+                    <table class="va-total">
+                        <tr><td>Net Year 1 value</td><td class="va-negative">+$3,984</td></tr>
+                        <tr><td>Effective cost per point (bonus only)</td><td class="va-negative">FREE (perks cover the fee)</td></tr>
+                    </table>
+                </div>
+
                 <a href="https://creditcards.chase.com/rewards-credit-cards/sapphire/reserve" target="_blank" class="apply-btn">Apply on Chase.com</a>
                 <span style="font-size: 12px; color: #dc2626; margin-left: 12px; font-weight: 600;">Check eligibility &mdash; CSP bonus was already claimed</span>
             </div>
@@ -303,7 +459,24 @@
                     <div class="detail-item">Perks: <span>Centurion Lounges, $200 airline credit, $200 hotel credit</span></div>
                 </div>
                 <span class="tag tag-flights">BEST FOR EUROPE FLIGHTS</span>
-                <br>
+
+                <div class="value-analysis">
+                    <div class="va-title">Year 1 Value Breakdown</div>
+                    <table>
+                        <tr><td>Annual fee</td><td>-$895</td></tr>
+                        <tr><td>80K Amex MR (@ 2.0&cent;/pt via ANA/Virgin)</td><td class="va-negative">+$1,600</td></tr>
+                        <tr><td>$200 airline fee credit</td><td class="va-negative">+$200</td></tr>
+                        <tr><td>$200 hotel credit (FHR/THC)</td><td class="va-negative">+$200</td></tr>
+                        <tr><td>Centurion Lounge access</td><td class="va-negative">+$150</td></tr>
+                        <tr><td>$155 Walmart+ credit</td><td class="va-negative">+$155</td></tr>
+                        <tr><td>$200 Uber Cash</td><td class="va-negative">+$200</td></tr>
+                    </table>
+                    <table class="va-total">
+                        <tr><td>Net Year 1 value</td><td class="va-negative">+$1,610</td></tr>
+                        <tr><td>Effective cost per point</td><td class="va-negative">FREE (credits cover the fee)</td></tr>
+                    </table>
+                </div>
+
                 <a href="https://www.americanexpress.com/us/credit-cards/card/platinum/" target="_blank" class="apply-btn amex-btn">Apply on Amex.com</a>
             </div>
             <div class="bonus-box">
@@ -316,18 +489,23 @@
 
     <!-- ═══════════ INFO BOXES ═══════════ -->
     <div class="info-box">
-        <h3>Which Marriott card: Brilliant vs Bevy?</h3>
+        <h3>Which Marriott card: Brilliant vs Bevy? (The Math)</h3>
         <p>
-            <strong>Brilliant ($650/yr):</strong> 200K bonus, Platinum Elite (upgrades + lounge access at Marriott), Priority Pass, $300/yr dining credit, free night cert up to 85K value.<br>
-            <strong>Bevy ($250/yr):</strong> 175K bonus, Gold Elite (late checkout + points bonus), free night cert up to 50K value.<br><br>
-            <strong>If you stay at Marriott 10+ nights/year:</strong> Brilliant. The Platinum Elite status alone is worth hundreds in upgrades. <strong>If you stay less:</strong> Bevy gives you 87% of the points at 38% of the fee.
+            <strong>Points-only comparison:</strong><br>
+            &bull; Brilliant: $650 fee &divide; 200,000 pts = <strong>0.33&cent; per point</strong><br>
+            &bull; Bevy: $250 fee &divide; 175,000 pts = <strong>0.14&cent; per point</strong><br><br>
+            <strong>On pure cost-per-point, the Bevy wins</strong> &mdash; you pay 57% less per point. You get 87% of the bonus for 38% of the fee.<br><br>
+            <strong>But factor in perks (Year 1):</strong><br>
+            &bull; Brilliant: $650 fee - $300 dining credit - ~$400 free night cert - Platinum Elite = <strong>net cost ~$0</strong> for 200K pts<br>
+            &bull; Bevy: $250 fee - ~$250 free night cert = <strong>net cost ~$0</strong> for 175K pts<br><br>
+            <strong>Bottom line:</strong> Both cards effectively pay for themselves in Year 1. The Brilliant is worth it <strong>only if you'll actually use</strong> the $300 dining credit and value Platinum Elite (10+ Marriott nights/year = room upgrades, lounge, late checkout). If you just want the bonus points and won't use those perks, <strong>the Bevy is the smarter play</strong> &mdash; same net cost, almost the same points, and $400 less risk if you cancel after Year 1.
         </p>
     </div>
 
     <div class="info-box">
-        <h3>Your Chase UR &rarr; United strategy</h3>
+        <h3>Why never transfer Amex MR or Chase UR to Marriott?</h3>
         <p>
-            Chase UR transfers to United MileagePlus at <strong>1:1, instantly</strong>. United is the best Chase transfer partner for Europe because they don't charge fuel surcharges on award flights. A round-trip economy saver to Europe is ~60K United miles. Polaris business class is ~120-160K round-trip. Your 93,957 UR + a CSR bonus of 125K = <strong>218,957 miles = business class round-trip to Europe with miles to spare.</strong> But you need a Sapphire card to unlock transfers.
+            Your Amex MR and Chase UR are worth <strong>~2.0&cent; each</strong> when transferred to airlines. If you transfer them to Marriott instead, they drop to <strong>~0.7&cent; each</strong> &mdash; you'd lose 65% of their value. Example: 100K MR = a <strong>$2,000 Delta One flight</strong> to Europe via Virgin Atlantic, OR just <strong>$700 in Marriott hotel nights</strong>. Always earn Marriott points from Marriott card bonuses and Bilt, and save your premium currencies for flights.
         </p>
     </div>
 
