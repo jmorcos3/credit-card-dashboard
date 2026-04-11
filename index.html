@@ -951,7 +951,7 @@ function createReport() {
 
     html2pdf().set({
         margin: [0.4, 0.5, 0.4, 0.5],
-        filename: 'credit-card-points-report.pdf',
+        filename: 'JM Credit Card Points ' + new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }).replace(/\//g, '-') + '.pdf',
         html2canvas: { scale: 2, useCORS: true },
         jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
         pagebreak: { mode: ['css'] }
