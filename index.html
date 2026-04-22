@@ -164,6 +164,46 @@
         .report-btn:disabled { background: #9ca3af; cursor: wait; }
         .report-btn svg { width: 16px; height: 16px; fill: currentColor; }
 
+        .tracker-box {
+            background: #fdf4ff; border: 2px solid #e9d5ff; border-radius: 14px;
+            padding: 24px; margin-bottom: 24px;
+        }
+        .tracker-box h3 { font-size: 16px; margin-bottom: 4px; }
+        .tracker-box .tracker-sub { font-size: 13px; color: #6b7280; margin-bottom: 16px; }
+        .tracker-progress-bar {
+            background: #f3e8ff; border-radius: 8px; height: 14px; overflow: hidden; margin-bottom: 8px;
+        }
+        .tracker-progress-fill {
+            background: linear-gradient(90deg, #9333ea, #7c3aed); height: 100%; border-radius: 8px;
+            transition: width 0.5s ease;
+        }
+        .tracker-stats { display: flex; justify-content: space-between; font-size: 13px; color: #6b7280; margin-bottom: 16px; }
+        .tracker-stats strong { color: #1a1a2e; }
+        .tracker-input-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+        .tracker-input {
+            padding: 8px 14px; border: 2px solid #e9d5ff; border-radius: 8px; font-size: 14px;
+            width: 160px; outline: none; font-family: inherit;
+        }
+        .tracker-input:focus { border-color: #9333ea; }
+        .tracker-btn {
+            padding: 8px 18px; background: #9333ea; color: white; border: none; border-radius: 8px;
+            font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.2s;
+        }
+        .tracker-btn:hover { background: #7c3aed; }
+        .tracker-btn-reset {
+            padding: 8px 14px; background: #f3f4f6; color: #6b7280; border: none; border-radius: 8px;
+            font-size: 13px; cursor: pointer;
+        }
+        .tracker-btn-reset:hover { background: #e5e7eb; }
+        .tracker-milestone {
+            margin-top: 14px; padding: 12px 16px; background: white; border: 1px solid #e9d5ff;
+            border-radius: 10px; font-size: 13px; color: #6b7280;
+        }
+        .tracker-milestone strong { color: #9333ea; }
+        .tracker-complete {
+            background: #f0fdf4; border-color: #bbf7d0; color: #166534;
+        }
+
         .footer { font-size: 12px; color: #9ca3af; text-align: center; padding: 24px; border-top: 1px solid #e5e7eb; }
 
         @media (max-width: 768px) {
@@ -186,7 +226,7 @@
             Create Report
         </button>
     </div>
-    <div class="subtitle">Updated April 11, 2026 &mdash; Goal: Marriott Bonvoy hotels + United flights to Europe &mdash; Chase Private Client</div>
+    <div class="subtitle">Updated April 12, 2026 &mdash; Goal: Marriott Bonvoy hotels + United flights to Europe &mdash; Chase Private Client</div>
 
     <!-- ═══════════ YOUR POINTS ═══════════ -->
     <div class="points-grid">
@@ -314,11 +354,30 @@
         </p>
     </div>
 
-    <div class="warning-box" style="background: #fef3c7; border-color: #fcd34d;">
-        <h3 style="color: #92400e;">Marriott Bonvoy Brilliant 200K bonus expires May 13, 2026</h3>
-        <p style="color: #78350f;">
-            This is an <strong>all-time high</strong> Marriott bonus. 200,000 Bonvoy points = 6-8 free nights at most Marriott/Westin/Sheraton properties. You have ~30 days before this offer disappears.
-        </p>
+    <!-- ═══════════ BEVY SPEND TRACKER ═══════════ -->
+    <div class="tracker-box" id="bevyTracker">
+        <h3>Marriott Bonvoy Bevy — Bonus Spend Tracker</h3>
+        <div class="tracker-sub">Spend <strong>$5,000 in 6 months</strong> (by Oct 12, 2026) to earn <strong>175,000 Marriott Bonvoy points</strong></div>
+
+        <div class="tracker-progress-bar">
+            <div class="tracker-progress-fill" id="bevyProgressBar" style="width: 0%;"></div>
+        </div>
+        <div class="tracker-stats">
+            <span><strong id="bevySpent">$0</strong> of $5,000 spent</span>
+            <span><strong id="bevyPct">0%</strong></span>
+            <span><strong id="bevyRemaining">$5,000</strong> remaining</span>
+        </div>
+
+        <div class="tracker-input-row">
+            <span style="font-size: 13px; font-weight: 600;">Update spending:</span>
+            <input type="text" class="tracker-input" id="bevyInput" placeholder="e.g. 250 or total 1500">
+            <button class="tracker-btn" onclick="updateBevySpend()">Add</button>
+            <button class="tracker-btn-reset" onclick="resetBevySpend()">Reset</button>
+        </div>
+
+        <div class="tracker-milestone" id="bevyMilestone">
+            <strong>Tip:</strong> At your current monthly spend (~$2,192), put everything on the Bevy and you'll hit $5,000 in <strong>~2.5 months</strong>. Then switch back to Amex Gold for 4x dining/groceries.
+        </div>
     </div>
 
     <!-- ═══════════ CARDS TO SIGN UP FOR ═══════════ -->
@@ -328,109 +387,23 @@
             Ranked for <em>your</em> goals: Marriott hotels + United/Europe flights. Always verify the current offer on the issuer's website before applying.
         </p>
 
-        <!-- #1 Marriott Brilliant -->
+        <!-- #1 CSR (now top pick since Bevy is done) -->
         <div class="signup-card top-pick">
             <div>
                 <div>
                     <span class="card-rank rank-1">1</span>
-                    <div class="card-title">Marriott Bonvoy Brilliant</div>
-                    <span class="issuer-tag">Amex &bull; $650/yr</span>
-                </div>
-                <div class="why">
-                    <strong>All-time high 200,000 Marriott Bonvoy points.</strong> That's 6-8 free nights at Category 5-6 properties (Westin, W Hotels, Sheraton). Pools with your Amex MR ecosystem. Comes with Platinum Elite status (room upgrades, lounge access, late checkout), a free night certificate annually, and $25/month dining credit. <strong>Offer expires May 13.</strong>
-                </div>
-                <div class="details">
-                    <div class="detail-item">Spend: <span>$6,000 in 6 months</span></div>
-                    <div class="detail-item">Top earn: <span>6x at Marriott, 3x flights/dining</span></div>
-                    <div class="detail-item">Perks: <span>Platinum Elite, free night cert, Priority Pass</span></div>
-                </div>
-                <span class="tag tag-best">TOP PICK</span>
-                <span class="tag tag-marriott">MARRIOTT 200K ALL-TIME HIGH</span>
-                <span class="tag tag-urgent">EXPIRES MAY 13</span>
-
-                <div class="value-analysis">
-                    <div class="va-title">Year 1 Value Breakdown</div>
-                    <table>
-                        <tr><td>Annual fee</td><td>-$650</td></tr>
-                        <tr><td>200K Marriott pts (@ 0.8&cent;/pt)</td><td class="va-negative">+$1,600</td></tr>
-                        <tr><td>Free night cert (up to 85K = Cat 7)</td><td class="va-negative">+$400</td></tr>
-                        <tr><td>$25/mo dining credit ($300/yr)</td><td class="va-negative">+$300</td></tr>
-                        <tr><td>Platinum Elite (upgrades, lounge)</td><td class="va-negative">+$200</td></tr>
-                        <tr><td>Priority Pass lounge access</td><td class="va-negative">+$100</td></tr>
-                    </table>
-                    <table class="va-total">
-                        <tr><td>Net Year 1 value</td><td class="va-negative">+$1,950</td></tr>
-                        <tr><td>Value metric (net value &divide; fee)</td><td class="va-negative">3.0x return on $650 fee</td></tr>
-                    </table>
-                </div>
-
-                <a href="https://www.americanexpress.com/us/credit-cards/card/marriott-bonvoy-brilliant/" target="_blank" class="apply-btn amex-btn">Apply on Amex.com</a>
-            </div>
-            <div class="bonus-box">
-                <div class="bonus-pts">200K</div>
-                <div class="bonus-label">Marriott Points</div>
-                <div class="bonus-value">6-8 free hotel nights</div>
-            </div>
-        </div>
-
-        <!-- #2 Marriott Bevy -->
-        <div class="signup-card">
-            <div>
-                <div>
-                    <span class="card-rank rank-2">2</span>
-                    <div class="card-title">Marriott Bonvoy Bevy</div>
-                    <span class="issuer-tag">Amex &bull; $250/yr</span>
-                </div>
-                <div class="why">
-                    If the Brilliant's $650 fee is too steep, the Bevy offers <strong>175,000 Marriott points</strong> at a lower fee. Still an all-time high offer. You get Gold Elite status, a free night cert (up to 50K value), and solid 6x earn at Marriott. <strong>Same May 13 deadline.</strong>
-                </div>
-                <div class="details">
-                    <div class="detail-item">Spend: <span>$5,000 in 6 months</span></div>
-                    <div class="detail-item">Top earn: <span>6x at Marriott, 2x everything else</span></div>
-                    <div class="detail-item">Perks: <span>Gold Elite, free night cert annually</span></div>
-                </div>
-                <span class="tag tag-marriott">MARRIOTT 175K ALL-TIME HIGH</span>
-                <span class="tag tag-urgent">EXPIRES MAY 13</span>
-
-                <div class="value-analysis">
-                    <div class="va-title">Year 1 Value Breakdown</div>
-                    <table>
-                        <tr><td>Annual fee</td><td>-$250</td></tr>
-                        <tr><td>175K Marriott pts (@ 0.8&cent;/pt)</td><td class="va-negative">+$1,400</td></tr>
-                        <tr><td>Free night cert (up to 50K = Cat 5)</td><td class="va-negative">+$250</td></tr>
-                        <tr><td>Gold Elite (late checkout, pts bonus)</td><td class="va-negative">+$50</td></tr>
-                    </table>
-                    <table class="va-total">
-                        <tr><td>Net Year 1 value</td><td class="va-negative">+$1,450</td></tr>
-                        <tr><td>Value metric (net value &divide; fee)</td><td class="va-negative">5.8x return on $250 fee</td></tr>
-                    </table>
-                </div>
-
-                <a href="https://www.americanexpress.com/us/credit-cards/card/marriott-bonvoy-bevy/" target="_blank" class="apply-btn amex-btn">Apply on Amex.com</a>
-            </div>
-            <div class="bonus-box">
-                <div class="bonus-pts">175K</div>
-                <div class="bonus-label">Marriott Points</div>
-                <div class="bonus-value">5-7 free hotel nights</div>
-            </div>
-        </div>
-
-        <!-- #3 CSR -->
-        <div class="signup-card">
-            <div>
-                <div>
-                    <span class="card-rank rank-2">3</span>
                     <div class="card-title">Chase Sapphire Reserve</div>
                     <span class="issuer-tag">Chase &bull; $795/yr</span>
                 </div>
                 <div class="why">
-                    You're blocked from the CSP bonus, but the <strong>Reserve is a different product</strong> and may still give you the 125K bonus. This unlocks your existing 93,957 Chase UR for transfer to <strong>United MileagePlus</strong> (1:1) for Europe flights. Combined: 218,957 UR = enough for a round-trip United Polaris business class to Europe. Also earns 8x on Chase Travel, 4x on direct flights/hotels. Check if you're eligible before applying.
+                    Your top remaining move. The <strong>Reserve is a different product than the CSP</strong> and may still give you the 125K bonus. This unlocks your existing 93,957 Chase UR for transfer to <strong>United MileagePlus</strong> (1:1) for Europe flights. Combined: 218,957 UR = round-trip United Polaris business class to Europe. Also earns 8x on Chase Travel, 4x on direct flights/hotels. Check eligibility before applying.
                 </div>
                 <div class="details">
                     <div class="detail-item">Spend: <span>$6,000 in 3 months</span></div>
                     <div class="detail-item">Top earn: <span>8x Chase Travel, 4x flights/hotels, 3x dining</span></div>
                     <div class="detail-item">Perks: <span>$300 travel credit, Priority Pass, Hyatt Explorist</span></div>
                 </div>
+                <span class="tag tag-best">TOP PICK</span>
                 <span class="tag tag-united">UNLOCKS UNITED TRANSFERS</span>
                 <span class="tag tag-flights">AIRPORT LOUNGES</span>
 
@@ -459,11 +432,37 @@
             </div>
         </div>
 
-        <!-- #4 Amex Platinum -->
+        <!-- #2 Marriott Bevy — SIGNED UP -->
+        <div class="signup-card" style="border-color: #bbf7d0; background: #f0fdf4;">
+            <div>
+                <div>
+                    <span class="card-rank" style="background: #dcfce7; color: #166534;">&#10003;</span>
+                    <div class="card-title">Marriott Bonvoy Bevy</div>
+                    <span class="issuer-tag">Amex &bull; $250/yr &bull; <strong style="color: #059669;">SIGNED UP Apr 12, 2026</strong></span>
+                </div>
+                <div class="why">
+                    <strong style="color: #059669;">You opened this card!</strong> Now spend <strong>$5,000 in 6 months</strong> (by Oct 12) to earn 175,000 Marriott Bonvoy points. Put all everyday spending on this card until you hit the target, then switch back to Amex Gold.
+                </div>
+                <div class="details">
+                    <div class="detail-item">Target: <span>$5,000 by Oct 12, 2026</span></div>
+                    <div class="detail-item">Bonus: <span>175,000 Marriott Bonvoy points</span></div>
+                    <div class="detail-item">Then: <span>Switch back to Amex Gold for 4x dining/groceries</span></div>
+                </div>
+                <span class="tag" style="background: #dcfce7; color: #166534;">SIGNED UP</span>
+                <span class="tag tag-marriott">175K MARRIOTT PENDING</span>
+            </div>
+            <div class="bonus-box" style="background: #dcfce7; border-color: #bbf7d0;">
+                <div class="bonus-pts">175K</div>
+                <div class="bonus-label">Marriott Points</div>
+                <div class="bonus-value" style="color: #166534;">Pending — hit $5K spend</div>
+            </div>
+        </div>
+
+        <!-- #3 Amex Platinum -->
         <div class="signup-card">
             <div>
                 <div>
-                    <span class="card-rank rank-3">4</span>
+                    <span class="card-rank rank-3">3</span>
                     <div class="card-title">Amex Platinum</div>
                     <span class="issuer-tag">Amex &bull; $895/yr</span>
                 </div>
@@ -505,17 +504,13 @@
     </div>
 
     <!-- ═══════════ INFO BOXES ═══════════ -->
-    <div class="info-box">
-        <h3>Which Marriott card: Brilliant vs Bevy? (The Math)</h3>
+    <div class="info-box" style="background: #f0fdf4; border-color: #bbf7d0;">
+        <h3 style="color: #166534;">Your Bevy Game Plan</h3>
         <p>
-            <strong>Points-only comparison:</strong><br>
-            &bull; Brilliant: $650 fee &divide; 200,000 pts = <strong>0.33&cent; per point</strong><br>
-            &bull; Bevy: $250 fee &divide; 175,000 pts = <strong>0.14&cent; per point</strong><br><br>
-            <strong>On pure cost-per-point, the Bevy wins</strong> &mdash; you pay 57% less per point. You get 87% of the bonus for 38% of the fee.<br><br>
-            <strong>But factor in perks (Year 1):</strong><br>
-            &bull; Brilliant: $650 fee - $300 dining credit - ~$400 free night cert - Platinum Elite = <strong>net cost ~$0</strong> for 200K pts<br>
-            &bull; Bevy: $250 fee - ~$250 free night cert = <strong>net cost ~$0</strong> for 175K pts<br><br>
-            <strong>Bottom line:</strong> Both cards effectively pay for themselves in Year 1. The Brilliant is worth it <strong>only if you'll actually use</strong> the $300 dining credit and value Platinum Elite (10+ Marriott nights/year = room upgrades, lounge, late checkout). If you just want the bonus points and won't use those perks, <strong>the Bevy is the smarter play</strong> &mdash; same net cost, almost the same points, and $400 less risk if you cancel after Year 1.
+            <strong>Now &rarr; Oct 2026:</strong> Put ALL everyday spending on the Bevy to hit $5,000. At your pace (~$2,192/mo), that's ~2.5 months.<br><br>
+            <strong>After you hit $5,000:</strong> Switch back to <strong>Amex Gold</strong> for 4x dining ($12.9K/yr) and 4x groceries ($4.5K/yr). The Gold earns 4x MR on your biggest categories vs. the Bevy's 2x Marriott on non-Marriott spend.<br><br>
+            <strong>After Year 1:</strong> Evaluate whether to keep the Bevy ($250/yr). The free night cert (up to 50K pts = ~$250-350 value) roughly covers the fee. If you stay at Marriott 2+ nights/yr, it pays for itself and keeps your Bonvoy points from expiring. If not, cancel &mdash; but use or transfer your Marriott points within 24 months.<br><br>
+            <strong>Referral bonus:</strong> Your Bevy already has a referral link worth <strong>20,000 Marriott pts per referral</strong> (up to 5x/year = 100K bonus pts). If anyone you know wants a Marriott card, share your link.
         </p>
     </div>
 
@@ -585,36 +580,44 @@
     <!-- ═══════════ YOUR CURRENT CARDS ═══════════ -->
     <div class="current-cards">
         <h2>Your Current Cards</h2>
-        <div class="current-grid" style="grid-template-columns: repeat(2, 1fr);">
-            <div class="current-card" style="border-left: 3px solid #dc2626;">
-                <div class="cc-name">Chase Sapphire Preferred (...0043) <span style="color: #dc2626; font-size: 12px;">CLOSED</span></div>
+        <div class="current-grid" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="current-card" style="border-left: 3px solid #9333ea;">
+                <div class="cc-name">Marriott Bonvoy Bevy (...41008) <span style="color: #059669; font-size: 12px;">NEW</span></div>
                 <div class="cc-details">
-                    Opened Jul 2025 &bull; Closed ~Oct 2025 &bull; Fee refunded<br>
-                    <em style="color: #dc2626;">Next bonus eligible: July 2029 (48-month rule)</em>
-                </div>
-            </div>
-            <div class="current-card" style="border-left: 3px solid #003087;">
-                <div class="cc-name">Chase Freedom Unlimited (...9058)</div>
-                <div class="cc-details">
-                    $0/yr &bull; 93,957 pts &bull; $33.3K limit<br>
-                    1.5x all purchases, 3x dining, 5x Chase Travel<br>
-                    <em style="color: #dc2626;">Transfers locked &mdash; need new Sapphire card</em>
+                    $250/yr &bull; $25K limit &bull; Opened Apr 2026<br>
+                    6x Marriott, 2x everything else &bull; Gold Elite<br>
+                    <em style="color: #9333ea;">175K bonus: spend $5K in 6 months</em>
                 </div>
             </div>
             <div class="current-card" style="border-left: 3px solid #006fcf;">
                 <div class="cc-name">Amex Gold Card (...83000)</div>
                 <div class="cc-details">
-                    $325/yr &bull; 203,538 pts<br>
+                    $325/yr &bull; 203,538 MR pts<br>
                     4x dining, 4x groceries, 3x flights<br>
-                    $100 Resy credit ($50 earned), $120 Uber Cash, $84 Dunkin'
+                    <em style="color: #006fcf;">Primary everyday card after Bevy bonus</em>
+                </div>
+            </div>
+            <div class="current-card" style="border-left: 3px solid #003087;">
+                <div class="cc-name">Chase Freedom Unlimited (...9058)</div>
+                <div class="cc-details">
+                    $0/yr &bull; 93,957 UR pts &bull; $33.3K limit<br>
+                    1.5x all purchases, 3x dining<br>
+                    <em style="color: #dc2626;">Transfers locked &mdash; need Sapphire card</em>
                 </div>
             </div>
             <div class="current-card" style="border-left: 3px solid #1a1a2e;">
                 <div class="cc-name">Bilt Mastercard 2.0</div>
                 <div class="cc-details">
-                    $0/yr &bull; 38,300 pts<br>
-                    1x-3x on dining (Rent Day bonus on 1st of month)<br>
-                    Transfers to United &amp; Marriott directly
+                    $0/yr &bull; 38,300 Bilt pts<br>
+                    1x-3x on dining (Rent Day bonus)<br>
+                    Transfers to United &amp; Marriott 1:1
+                </div>
+            </div>
+            <div class="current-card" style="border-left: 3px solid #dc2626;">
+                <div class="cc-name">Chase Sapphire Preferred (...0043) <span style="color: #dc2626; font-size: 12px;">CLOSED</span></div>
+                <div class="cc-details">
+                    Opened Jul 2025 &bull; Closed ~Oct 2025<br>
+                    <em style="color: #dc2626;">Next bonus eligible: July 2029</em>
                 </div>
             </div>
         </div>
@@ -693,6 +696,72 @@
 </div>
 
 <script>
+// ═══════════ BEVY SPEND TRACKER ═══════════
+function loadBevySpend() {
+    var spent = parseFloat(localStorage.getItem('bevySpent') || '0');
+    updateBevyUI(spent);
+}
+
+function updateBevySpend() {
+    var input = document.getElementById('bevyInput').value.trim();
+    var current = parseFloat(localStorage.getItem('bevySpent') || '0');
+    var newAmount;
+
+    if (input.toLowerCase().startsWith('total')) {
+        newAmount = parseFloat(input.replace(/[^0-9.]/g, ''));
+    } else {
+        newAmount = current + parseFloat(input.replace(/[^0-9.]/g, ''));
+    }
+
+    if (isNaN(newAmount) || newAmount < 0) return;
+    localStorage.setItem('bevySpent', newAmount.toString());
+    document.getElementById('bevyInput').value = '';
+    updateBevyUI(newAmount);
+}
+
+function resetBevySpend() {
+    if (confirm('Reset spend tracker to $0?')) {
+        localStorage.setItem('bevySpent', '0');
+        updateBevyUI(0);
+    }
+}
+
+function updateBevyUI(spent) {
+    var target = 5000;
+    var pct = Math.min(100, (spent / target) * 100);
+    var remaining = Math.max(0, target - spent);
+
+    document.getElementById('bevySpent').textContent = '$' + spent.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+    document.getElementById('bevyPct').textContent = Math.round(pct) + '%';
+    document.getElementById('bevyRemaining').textContent = '$' + remaining.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+    document.getElementById('bevyProgressBar').style.width = pct + '%';
+
+    var milestone = document.getElementById('bevyMilestone');
+    if (spent >= target) {
+        milestone.className = 'tracker-milestone tracker-complete';
+        milestone.innerHTML = '<strong>&#10003; Bonus target reached!</strong> Your 175,000 Marriott Bonvoy points should post within 1-2 billing cycles. You can now switch everyday spending back to your Amex Gold for 4x dining/groceries.';
+        document.getElementById('bevyProgressBar').style.background = 'linear-gradient(90deg, #059669, #10b981)';
+    } else if (spent > 0) {
+        var monthlyRate = 2192;
+        var monthsLeft = remaining / monthlyRate;
+        milestone.className = 'tracker-milestone';
+        milestone.innerHTML = '<strong>On track:</strong> At ~$2,192/mo spend, you\'ll hit $5,000 in <strong>~' + monthsLeft.toFixed(1) + ' months</strong>. Keep all non-rent spending on the Bevy until you reach the target.';
+    }
+}
+
+// Load tracker on page load
+document.addEventListener('DOMContentLoaded', loadBevySpend);
+
+// Allow Enter key on input
+document.addEventListener('DOMContentLoaded', function() {
+    var input = document.getElementById('bevyInput');
+    if (input) {
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') updateBevySpend();
+        });
+    }
+});
+
 function createReport() {
     var btn = document.querySelector('.report-btn');
     btn.disabled = true;
