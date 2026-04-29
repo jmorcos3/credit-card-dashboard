@@ -669,7 +669,7 @@
     <div class="live-offers">
         <h2>Live Offers Watch</h2>
         <p style="color: #6b7280; font-size: 14px; margin-top: -12px; margin-bottom: 8px;">
-            Auto-refreshed weekly from TPG, Doctor of Credit, Frequent Miler, View from the Wing, One Mile at a Time. Filtered for cards/programs you care about (Marriott, United, Amex personal, Chase Sapphire, Bilt). Score 0-10 = relevance.
+            Auto-refreshed weekly from TPG, Doctor of Credit, Frequent Miler, View from the Wing, One Mile at a Time, r/churning. Tiered: <strong>YOUR CARDS</strong> (Marriott, United, AA, Amex Gold/Plat/Bevy, Sapphire, Bilt) prioritized; other issuers only if extremely compelling (score ≥ 7). All business cards excluded. Top 10 get Claude one-line TL;DRs.
         </p>
         <div class="lo-meta" id="loMeta">Loading...</div>
         <div class="lo-grid" id="loGrid">
@@ -768,11 +768,15 @@ function loadLiveOffers() {
             grid.innerHTML = data.items.map(function(i) {
                 var cls = i.score >= 7 ? 's-high' : (i.score >= 4 ? 's-mid' : 's-low');
                 var pubDate = i.published ? new Date(i.published).toLocaleDateString('en-US', {month:'short',day:'numeric'}) : '';
+                var newBadge = i.is_new ? '<span style="background:#dcfce7;color:#166534;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:700;margin-left:6px;">NEW</span>' : '';
+                var tierBadge = i.tier === 'tier1' ? '<span style="background:#fef3c7;color:#92400e;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:700;margin-left:6px;">YOUR CARDS</span>' : '';
+                var tldr = i.tldr ? '<div style="font-size:13px;color:#1a1a2e;font-weight:500;margin:6px 0;padding:6px 10px;background:#faf5ff;border-left:3px solid #9333ea;border-radius:4px;">' + i.tldr + '</div>' : '';
                 return '<div class="lo-item">' +
                     '<div class="lo-score ' + cls + '">' + i.score + '</div>' +
                     '<div class="lo-content">' +
-                        '<div class="lo-source">' + i.source + (pubDate ? ' • ' + pubDate : '') + '</div>' +
+                        '<div class="lo-source">' + i.source + (pubDate ? ' • ' + pubDate : '') + newBadge + tierBadge + '</div>' +
                         '<div class="lo-title"><a href="' + i.link + '" target="_blank" rel="noopener">' + i.title + '</a></div>' +
+                        tldr +
                         '<div class="lo-summary">' + (i.summary || '').slice(0, 200) + (i.summary && i.summary.length > 200 ? '…' : '') + '</div>' +
                     '</div>' +
                 '</div>';
