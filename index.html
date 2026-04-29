@@ -204,6 +204,30 @@
             background: #f0fdf4; border-color: #bbf7d0; color: #166534;
         }
 
+        .live-offers { margin-bottom: 48px; }
+        .live-offers .lo-meta { font-size: 12px; color: #9ca3af; margin-bottom: 16px; }
+        .lo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .lo-item {
+            border: 1px solid #e5e7eb; border-radius: 10px; padding: 16px;
+            background: white; display: flex; gap: 12px; transition: border-color 0.2s;
+        }
+        .lo-item:hover { border-color: #9333ea; }
+        .lo-score {
+            min-width: 36px; height: 36px; border-radius: 50%;
+            background: #9333ea; color: white; font-weight: 800; font-size: 14px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .lo-score.s-high { background: #059669; }
+        .lo-score.s-mid { background: #9333ea; }
+        .lo-score.s-low { background: #6b7280; }
+        .lo-content { flex: 1; min-width: 0; }
+        .lo-source { font-size: 11px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+        .lo-title { font-size: 14px; font-weight: 600; margin: 4px 0; line-height: 1.3; }
+        .lo-title a { color: #1a1a2e; text-decoration: none; }
+        .lo-title a:hover { color: #9333ea; }
+        .lo-summary { font-size: 12px; color: #6b7280; line-height: 1.4; }
+        .lo-loading { text-align: center; padding: 24px; color: #9ca3af; font-size: 13px; }
+
         .footer { font-size: 12px; color: #9ca3af; text-align: center; padding: 24px; border-top: 1px solid #e5e7eb; }
 
         @media (max-width: 768px) {
@@ -213,6 +237,7 @@
             .total-bar { flex-direction: column; gap: 8px; text-align: center; }
             .strategy-rules { grid-template-columns: 1fr; }
             .tl-item { grid-template-columns: 1fr; }
+            .lo-grid { grid-template-columns: 1fr; }
             #bevyTracker > div[style*="grid-template-columns"] { grid-template-columns: 1fr 1fr !important; }
         }
     </style>
@@ -227,7 +252,7 @@
             Create Report
         </button>
     </div>
-    <div class="subtitle">Updated April 12, 2026 &mdash; Goal: Marriott Bonvoy hotels + United flights to Europe &mdash; Chase Private Client</div>
+    <div class="subtitle">Goal: Marriott Bonvoy hotels + United flights to Europe &mdash; Chase Private Client &mdash; <span id="lastUpdated">Loading…</span></div>
 
     <!-- ═══════════ YOUR POINTS ═══════════ -->
     <div class="points-grid">
@@ -640,6 +665,18 @@
         </div>
     </div>
 
+    <!-- ═══════════ LIVE OFFERS WATCH ═══════════ -->
+    <div class="live-offers">
+        <h2>Live Offers Watch</h2>
+        <p style="color: #6b7280; font-size: 14px; margin-top: -12px; margin-bottom: 8px;">
+            Auto-refreshed weekly from TPG, Doctor of Credit, Frequent Miler, View from the Wing, One Mile at a Time. Filtered for cards/programs you care about (Marriott, United, Amex personal, Chase Sapphire, Bilt). Score 0-10 = relevance.
+        </p>
+        <div class="lo-meta" id="loMeta">Loading...</div>
+        <div class="lo-grid" id="loGrid">
+            <div class="lo-loading">Fetching latest offers…</div>
+        </div>
+    </div>
+
     <!-- ═══════════ REFRESH & LAUNCH TIMELINE ═══════════ -->
     <div style="margin-bottom: 48px;">
         <h2>Card Refresh &amp; Launch Rumors</h2>
@@ -713,6 +750,47 @@
 </div>
 
 <script>
+// ═══════════ LIVE OFFERS LOADER ═══════════
+function loadLiveOffers() {
+    fetch('offers.json?t=' + Date.now())
+        .then(r => r.ok ? r.json() : Promise.reject(r.status))
+        .then(data => {
+            var meta = document.getElementById('loMeta');
+            var grid = document.getElementById('loGrid');
+            var dt = new Date(data.generated_at);
+            meta.textContent = 'Last refresh: ' + dt.toLocaleString('en-US', {dateStyle:'medium',timeStyle:'short'}) + ' • ' + data.item_count + ' relevant items from ' + data.feed_count + ' feeds';
+
+            if (!data.items || data.items.length === 0) {
+                grid.innerHTML = '<div class="lo-loading">No high-signal offers this week.</div>';
+                return;
+            }
+
+            grid.innerHTML = data.items.map(function(i) {
+                var cls = i.score >= 7 ? 's-high' : (i.score >= 4 ? 's-mid' : 's-low');
+                var pubDate = i.published ? new Date(i.published).toLocaleDateString('en-US', {month:'short',day:'numeric'}) : '';
+                return '<div class="lo-item">' +
+                    '<div class="lo-score ' + cls + '">' + i.score + '</div>' +
+                    '<div class="lo-content">' +
+                        '<div class="lo-source">' + i.source + (pubDate ? ' • ' + pubDate : '') + '</div>' +
+                        '<div class="lo-title"><a href="' + i.link + '" target="_blank" rel="noopener">' + i.title + '</a></div>' +
+                        '<div class="lo-summary">' + (i.summary || '').slice(0, 200) + (i.summary && i.summary.length > 200 ? '…' : '') + '</div>' +
+                    '</div>' +
+                '</div>';
+            }).join('');
+        })
+        .catch(err => {
+            document.getElementById('loMeta').textContent = 'Offers feed unavailable (will refresh next Monday).';
+            document.getElementById('loGrid').innerHTML = '';
+        });
+}
+document.addEventListener('DOMContentLoaded', loadLiveOffers);
+
+// Auto-update "last updated" date
+document.addEventListener('DOMContentLoaded', function() {
+    var el = document.getElementById('lastUpdated');
+    if (el) el.textContent = 'Updated ' + new Date().toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
+});
+
 // ═══════════ BEVY SPEND TRACKER ═══════════
 function loadBevySpend() {
     var stored = localStorage.getItem('bevySpent');

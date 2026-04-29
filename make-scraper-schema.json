@@ -1,0 +1,200 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Credit Card Offer Scraper - Make.com Webhook Schema",
+  "description": "Schema for automated RSS/scraper data ingestion. Use as the webhook payload format in Make.com scenarios watching Doctor of Credit, View from the Wing, and LoyaltyLobby.",
+  "type": "object",
+  "required": ["source", "timestamp", "offers"],
+  "properties": {
+    "source": {
+      "type": "string",
+      "description": "RSS feed source identifier",
+      "enum": [
+        "doctor_of_credit",
+        "view_from_the_wing",
+        "loyalty_lobby",
+        "the_points_guy",
+        "one_mile_at_a_time",
+        "manual_entry"
+      ]
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of when the scrape occurred"
+    },
+    "scrape_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Original URL that was scraped"
+    },
+    "offers": {
+      "type": "array",
+      "description": "Array of credit card offers detected in the scraped content",
+      "items": {
+        "type": "object",
+        "required": ["card_name", "issuer", "bonus_amount", "bonus_currency"],
+        "properties": {
+          "card_name": {
+            "type": "string",
+            "description": "Full name of the credit card",
+            "examples": ["Chase Sapphire Reserve", "Amex Business Gold"]
+          },
+          "issuer": {
+            "type": "string",
+            "enum": ["Chase", "Amex", "Capital One", "Citi", "Bilt", "Barclays", "US Bank", "Wells Fargo", "Bank of America", "Other"],
+            "description": "Card issuer"
+          },
+          "bonus_amount": {
+            "type": "integer",
+            "description": "Sign-up bonus amount in points/miles",
+            "examples": [75000, 125000, 200000]
+          },
+          "bonus_currency": {
+            "type": "string",
+            "enum": ["Chase UR", "Amex MR", "Capital One Miles", "Citi TYP", "Bilt Points", "Hyatt", "Marriott", "Hilton", "Cash Back", "Other"],
+            "description": "Point/mile currency type"
+          },
+          "spend_requirement": {
+            "type": "object",
+            "description": "Minimum spending requirement to earn the bonus",
+            "properties": {
+              "amount": {
+                "type": "number",
+                "description": "Dollar amount required",
+                "examples": [4000, 6000, 15000]
+              },
+              "period_months": {
+                "type": "integer",
+                "description": "Number of months to complete spend",
+                "examples": [3, 6]
+              }
+            }
+          },
+          "annual_fee": {
+            "type": "number",
+            "description": "Annual fee in USD"
+          },
+          "is_elevated": {
+            "type": "boolean",
+            "description": "Whether this is above the card's standard/historical bonus"
+          },
+          "is_all_time_high": {
+            "type": "boolean",
+            "description": "Whether this matches or exceeds the highest recorded bonus for this card"
+          },
+          "standard_bonus": {
+            "type": "integer",
+            "description": "The card's typical/standard bonus amount for comparison"
+          },
+          "offer_expiration": {
+            "type": ["string", "null"],
+            "format": "date",
+            "description": "Known expiration date of the offer, null if unknown"
+          },
+          "application_url": {
+            "type": ["string", "null"],
+            "format": "uri",
+            "description": "Direct application link if available"
+          },
+          "counts_toward_524": {
+            "type": "boolean",
+            "description": "Whether this card counts toward Chase 5/24"
+          },
+          "is_business_card": {
+            "type": "boolean",
+            "description": "Whether this is a business card"
+          },
+          "transferable_points": {
+            "type": "boolean",
+            "description": "Whether the points are transferable to airline/hotel partners"
+          },
+          "hyatt_transfer": {
+            "type": "boolean",
+            "description": "Whether points can transfer directly to World of Hyatt"
+          },
+          "earning_rates": {
+            "type": "array",
+            "description": "Key earning rate categories",
+            "items": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "string",
+                  "examples": ["dining", "travel", "groceries", "flights", "all purchases"]
+                },
+                "multiplier": {
+                  "type": "number",
+                  "description": "Points per dollar",
+                  "examples": [1, 2, 3, 4, 5]
+                }
+              }
+            }
+          },
+          "computed_values": {
+            "type": "object",
+            "description": "Auto-calculated valuation metrics",
+            "properties": {
+              "hyatt_value_usd": {
+                "type": "number",
+                "description": "Bonus value at 2.0 cpp Hyatt redemption"
+              },
+              "ana_first_value_usd": {
+                "type": "number",
+                "description": "Bonus value at ANA First Class rates (~2.5 cpp)"
+              },
+              "portal_floor_usd": {
+                "type": "number",
+                "description": "Minimum portal cashout value at 1.0-1.5 cpp"
+              },
+              "net_value_year1": {
+                "type": "number",
+                "description": "Hyatt/top value minus annual fee for first year"
+              },
+              "exceeds_threshold": {
+                "type": "boolean",
+                "description": "True if Hyatt value > $1,000 threshold"
+              }
+            }
+          }
+        }
+      }
+    },
+    "alerts": {
+      "type": "array",
+      "description": "Non-offer alerts (fee increases, benefit changes, policy updates)",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["fee_increase", "benefit_change", "policy_change", "new_partner", "devaluation", "bonus_refresh"],
+            "description": "Type of alert"
+          },
+          "card_name": {
+            "type": "string"
+          },
+          "issuer": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string",
+            "description": "Brief description of the change"
+          },
+          "effective_date": {
+            "type": ["string", "null"],
+            "format": "date"
+          },
+          "action_required": {
+            "type": "string",
+            "enum": ["urgent_apply", "apply_before_date", "monitor", "no_action"],
+            "description": "Recommended action"
+          },
+          "grandfather_eligible": {
+            "type": "boolean",
+            "description": "Whether applying now locks in current terms"
+          }
+        }
+      }
+    }
+  }
+}
