@@ -213,6 +213,7 @@
             .total-bar { flex-direction: column; gap: 8px; text-align: center; }
             .strategy-rules { grid-template-columns: 1fr; }
             .tl-item { grid-template-columns: 1fr; }
+            #bevyTracker > div[style*="grid-template-columns"] { grid-template-columns: 1fr 1fr !important; }
         }
     </style>
 </head>
@@ -357,18 +358,34 @@
     <!-- ═══════════ BEVY SPEND TRACKER ═══════════ -->
     <div class="tracker-box" id="bevyTracker">
         <h3>Marriott Bonvoy Bevy — Bonus Spend Tracker</h3>
-        <div class="tracker-sub">Spend <strong>$5,000 in 6 months</strong> (by Oct 12, 2026) to earn <strong>175,000 Marriott Bonvoy points</strong></div>
+        <div class="tracker-sub">Spend <strong>$5,000 in eligible purchases</strong> by <strong>Oct 12, 2026</strong> to earn <strong>175,000 Marriott Bonvoy points</strong> (post 8-12 weeks after threshold)</div>
 
-        <div class="tracker-progress-bar">
-            <div class="tracker-progress-fill" id="bevyProgressBar" style="width: 0%;"></div>
-        </div>
-        <div class="tracker-stats">
-            <span><strong id="bevySpent">$0</strong> of $5,000 spent</span>
-            <span><strong id="bevyPct">0%</strong></span>
-            <span><strong id="bevyRemaining">$5,000</strong> remaining</span>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+            <div style="background: white; border: 1px solid #e9d5ff; border-radius: 8px; padding: 12px;">
+                <div style="font-size: 10px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Spent</div>
+                <div style="font-size: 22px; font-weight: 800; color: #9333ea;" id="bevySpent">$0</div>
+            </div>
+            <div style="background: white; border: 1px solid #e9d5ff; border-radius: 8px; padding: 12px;">
+                <div style="font-size: 10px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Remaining</div>
+                <div style="font-size: 22px; font-weight: 800; color: #1a1a2e;" id="bevyRemaining">$5,000</div>
+            </div>
+            <div style="background: white; border: 1px solid #e9d5ff; border-radius: 8px; padding: 12px;">
+                <div style="font-size: 10px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Deadline</div>
+                <div style="font-size: 16px; font-weight: 800; color: #1a1a2e;">Oct 12, 2026</div>
+                <div style="font-size: 11px; color: #dc2626; font-weight: 600;" id="bevyDaysLeft">— days left</div>
+            </div>
+            <div style="background: white; border: 1px solid #e9d5ff; border-radius: 8px; padding: 12px;">
+                <div style="font-size: 10px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Required Pace</div>
+                <div style="font-size: 16px; font-weight: 800; color: #1a1a2e;" id="bevyPace">$0/mo</div>
+                <div style="font-size: 11px; color: #6b7280;" id="bevyPaceSub">to hit target</div>
+            </div>
         </div>
 
-        <div class="tracker-input-row">
+        <div class="tracker-progress-bar" style="height: 22px;">
+            <div class="tracker-progress-fill" id="bevyProgressBar" style="width: 0%; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; color: white; font-size: 11px; font-weight: 700;"><span id="bevyPct">0%</span></div>
+        </div>
+
+        <div class="tracker-input-row" style="margin-top: 16px;">
             <span style="font-size: 13px; font-weight: 600;">Update spending:</span>
             <input type="text" class="tracker-input" id="bevyInput" placeholder="e.g. 250 or total 1500">
             <button class="tracker-btn" onclick="updateBevySpend()">Add</button>
@@ -376,7 +393,7 @@
         </div>
 
         <div class="tracker-milestone" id="bevyMilestone">
-            <strong>Tip:</strong> At your current monthly spend (~$2,192), put everything on the Bevy and you'll hit $5,000 in <strong>~2.5 months</strong>. Then switch back to Amex Gold for 4x dining/groceries.
+            <strong>Tip:</strong> Amex only counts <em>posted</em> charges (not pending). Check official progress at amex.com → Bevy card → Benefits → Welcome Offer.
         </div>
     </div>
 
@@ -699,7 +716,7 @@
 // ═══════════ BEVY SPEND TRACKER ═══════════
 function loadBevySpend() {
     var stored = localStorage.getItem('bevySpent');
-    var spent = stored !== null ? parseFloat(stored) : 1206.64; // default: latest statement total as of May 22, 2026
+    var spent = stored !== null ? parseFloat(stored) : 956.64; // default: Amex official qualified spend per chat (excludes pending)
     updateBevyUI(spent);
 }
 
@@ -729,24 +746,32 @@ function resetBevySpend() {
 
 function updateBevyUI(spent) {
     var target = 5000;
+    var deadline = new Date('2026-10-12T23:59:59');
+    var now = new Date();
+    var msPerDay = 1000 * 60 * 60 * 24;
+    var daysLeft = Math.max(0, Math.ceil((deadline - now) / msPerDay));
+    var monthsLeft = daysLeft / 30.44;
     var pct = Math.min(100, (spent / target) * 100);
     var remaining = Math.max(0, target - spent);
+    var requiredPerMonth = monthsLeft > 0 ? remaining / monthsLeft : remaining;
 
-    document.getElementById('bevySpent').textContent = '$' + spent.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+    document.getElementById('bevySpent').textContent = '$' + spent.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
     document.getElementById('bevyPct').textContent = Math.round(pct) + '%';
-    document.getElementById('bevyRemaining').textContent = '$' + remaining.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+    document.getElementById('bevyRemaining').textContent = '$' + remaining.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
     document.getElementById('bevyProgressBar').style.width = pct + '%';
+    document.getElementById('bevyDaysLeft').textContent = daysLeft + ' days left';
+    document.getElementById('bevyPace').textContent = '$' + requiredPerMonth.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0}) + '/mo';
 
     var milestone = document.getElementById('bevyMilestone');
     if (spent >= target) {
         milestone.className = 'tracker-milestone tracker-complete';
-        milestone.innerHTML = '<strong>&#10003; Bonus target reached!</strong> Your 175,000 Marriott Bonvoy points should post within 1-2 billing cycles. You can now switch everyday spending back to your Amex Gold for 4x dining/groceries.';
+        milestone.innerHTML = '<strong>&#10003; Bonus target reached!</strong> 175,000 Marriott Bonvoy points post 8-12 weeks after threshold. Switch everyday spending back to Amex Gold for 4x dining/groceries.';
         document.getElementById('bevyProgressBar').style.background = 'linear-gradient(90deg, #059669, #10b981)';
-    } else if (spent > 0) {
-        var monthlyRate = 2192;
-        var monthsLeft = remaining / monthlyRate;
+        document.getElementById('bevyPaceSub').textContent = 'COMPLETE';
+    } else {
         milestone.className = 'tracker-milestone';
-        milestone.innerHTML = '<strong>On track:</strong> At ~$2,192/mo spend, you\'ll hit $5,000 in <strong>~' + monthsLeft.toFixed(1) + ' months</strong>. Keep all non-rent spending on the Bevy until you reach the target.';
+        milestone.innerHTML = '<strong>Pace check:</strong> Need <strong>$' + requiredPerMonth.toFixed(0) + '/mo</strong> on Bevy to hit $5K by Oct 12. Tip: Amex only counts <em>posted</em> charges (not pending). Verify at amex.com → Bevy → Benefits → Welcome Offer.';
+        document.getElementById('bevyPaceSub').textContent = monthsLeft.toFixed(1) + ' months left';
     }
 }
 
