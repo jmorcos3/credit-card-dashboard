@@ -698,7 +698,8 @@
 <script>
 // ═══════════ BEVY SPEND TRACKER ═══════════
 function loadBevySpend() {
-    var spent = parseFloat(localStorage.getItem('bevySpent') || '0');
+    var stored = localStorage.getItem('bevySpent');
+    var spent = stored !== null ? parseFloat(stored) : 1206.64; // default: latest statement total as of May 22, 2026
     updateBevyUI(spent);
 }
 
