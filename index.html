@@ -958,7 +958,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // ═══════════ BEVY SPEND TRACKER ═══════════
 function loadBevySpend() {
     var stored = localStorage.getItem('bevySpent');
-    var spent = stored !== null ? parseFloat(stored) : 2555.96; // default: total Apr 12-May 22 (prev $273.76 + charges $2,282.20). Amex official qualified may be lower if any pending.
+    var spent = stored !== null ? parseFloat(stored) : 3591.14; // default: total Apr 12-May 22 statement (prev $273.76 + charges $3,317.38). Amex official qualified may be lower if any pending.
     updateBevyUI(spent);
 }
 
