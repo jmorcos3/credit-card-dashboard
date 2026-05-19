@@ -8,17 +8,7 @@
       "published": "2026-05-16T13:45:08+00:00",
       "score": 10,
       "tier": "tier1",
-      "is_new": true
-    },
-    {
-      "source": "Frequent Miler",
-      "title": "30% transfer bonus from Chase Ultimate Rewards to Southwest Rapid Rewards",
-      "summary": "Chase has launched a new transfer bonus today, and it&#8217;s one that we don&#8217;t often see. Until June 5th, you can receive an additional 30% when transferring Ultimate Rewards to Southwest Rapid Rewards. The Deal Receive a 30% bonus when transferring Chase Ultimate Rewards points to Southwest ",
-      "link": "https://frequentmiler.com/30-transfer-bonus-from-chase-ultimate-rewards-to-southwest-rapid-rewards/",
-      "published": "2026-05-15T15:45:52+00:00",
-      "score": 10,
-      "tier": "tier1",
-      "is_new": true
+      "is_new": false
     },
     {
       "source": "One Mile at a Time",
@@ -28,7 +18,7 @@
       "published": "2026-05-18T11:30:16+00:00",
       "score": 8,
       "tier": "tier1",
-      "is_new": true
+      "is_new": false
     },
     {
       "source": "One Mile at a Time",
@@ -38,34 +28,34 @@
       "published": "2026-05-16T17:41:00+00:00",
       "score": 8,
       "tier": "tier1",
-      "is_new": true
+      "is_new": false
     },
     {
-      "source": "Doctor of Credit",
-      "title": "[Reminder To Change] Rakuten Cashback Can Now Be Earned As Bilt Points (Also, Limited-Time 1:1 Conversion)",
-      "summary": "Bilt members can now earn rewards in Bilt currency instead of cash or Membership Rewards points (for 6 months it's 1:1 conversion; afterwards it's half)",
-      "link": "https://www.doctorofcredit.com/rakuten-cashback-can-now-be-earned-as-bilt-points-temporarily-11-conversion/",
-      "published": "2026-05-16T21:25:53+00:00",
+      "source": "The Points Guy",
+      "title": "Atmos Rewards Summit vs. Citi / AAdvantage Globe: Which airline card should you get?",
+      "summary": "Let's compare the key differences \u2014 and similarities \u2014 between the Atmos Rewards Summit and the Citi / AAdvantage Globe to decide which comes out on top.",
+      "link": "https://thepointsguy.com/credit-cards/atmos-summit-vs-citi-globe-showdown/",
+      "published": "2026-05-18T20:00:07+00:00",
       "score": 7,
       "tier": "tier1",
       "is_new": true
     },
     {
       "source": "The Points Guy",
-      "title": "United elite status vs. United cardholder perks: What gets you more?",
-      "summary": "Trying to decide between United Airlines status and a United card? We break down the similarities and differences, and how to get the most out of both.",
-      "link": "https://thepointsguy.com/credit-cards/united-elite-status-vs-united-cardholder-perks-what-gets-you-more/",
-      "published": "2026-05-15T18:00:12+00:00",
+      "title": "Credit card transfer bonuses (May): 55% bonus to Marriott, 30% to Southwest, 25% to Aeroplan and more",
+      "summary": "Here's a look at all the current transfer bonuses involving major credit cards and airline and hotel loyalty programs.",
+      "link": "https://thepointsguy.com/loyalty-programs/current-transfer-bonuses/",
+      "published": "2026-05-18T19:00:47+00:00",
       "score": 7,
       "tier": "tier1",
       "is_new": true
     },
     {
       "source": "Frequent Miler",
-      "title": "Chase Sapphire and Freedom promo for 10x when using Paze is worth a look",
-      "summary": "Until yesterday, I&#8217;d never heard of Paze. Today, I&#8217;m very interested. That&#8217;s because Doctor of Credit posted about a promo that Chase quietly added to most Freedom and Sapphire cards that gives you a bonus 10x when you use that card to check out with Paze. The promo is limited to 1",
-      "link": "https://frequentmiler.com/chase-sapphire-and-freedom-for-10x-when-using-paze/",
-      "published": "2026-05-15T17:45:35+00:00",
+      "title": "(Update) JetBlue and United Blue Sky reciprocal elite benefits go live this week",
+      "summary": "Last year, United and JetBlue announced a new partnership\u00a0they&#8217;re calling &#8220;Blue Sky,&#8221;\u00a0a name that&#8217;s likely raised some digital eyebrows at the social media app\u00a0&#8220;Bluesky.&#8221; Reciprocal earning and redemption began late last year, and now the previously announced elit",
+      "link": "https://frequentmiler.com/jetblue-and-united-announce-partnership/",
+      "published": "2026-05-18T16:45:44+00:00",
       "score": 7,
       "tier": "tier1",
       "is_new": true
@@ -78,17 +68,7 @@
       "published": "2026-05-17T23:04:21+00:00",
       "score": 7,
       "tier": "tier1",
-      "is_new": true
-    },
-    {
-      "source": "View from the Wing",
-      "title": "3 American Airlines Passengers Each Left $4,500 Richer After Delaying Greece Vacation By One Day",
-      "summary": "American Airlines is not known for Delta-style bidding wars when flights are oversold. But on a Philadelphia\u2013Athens flight, the airline reportedly kept raising the offer until three passengers got $4,500 each to delay their Greece trip by one day \u2014 an unusually rich payout from a carrier that normal",
-      "link": "https://viewfromthewing.com/3-american-airlines-passengers-each-left-4500-richer-after-delaying-greece-vacation-by-one-day/",
-      "published": "2026-05-17T14:04:58+00:00",
-      "score": 7,
-      "tier": "tier1",
-      "is_new": true
+      "is_new": false
     },
     {
       "source": "One Mile at a Time",
@@ -98,7 +78,7 @@
       "published": "2026-05-17T14:07:45+00:00",
       "score": 7,
       "tier": "tier1",
-      "is_new": true
+      "is_new": false
     },
     {
       "source": "One Mile at a Time",
@@ -108,7 +88,7 @@
       "published": "2026-05-17T10:25:19+00:00",
       "score": 7,
       "tier": "tier1",
-      "is_new": true
+      "is_new": false
     }
   ]
 }

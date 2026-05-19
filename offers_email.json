@@ -1,4 +1,36 @@
 {
-  "generated_at": "2026-05-19T02:07:21.116612+00:00",
-  "items": []
+  "generated_at": "2026-05-19T02:35:28.880671+00:00",
+  "item_count": 3,
+  "items": [
+    {
+      "source": "TPG Newsletter",
+      "title": "✈ New Offer: Earn 90,000 AAdvantage Miles, 14 Things to Know About Global Entry & More From TPG ✈",
+      "summary": "THE POINTS GUYAlso: Free snacks for Delta cardholders on some flights May 13, 2026 View in browser TOGETHER WITH TOGETHER WITH Best-ever 90,000-mile bonus has returned! by Clint Henderson, TPG managing editor Lounge passes, status boosts, a slew of great travel credits and a huge welcome bonus. Ther",
+      "link": "http://thepointsguy.com/",
+      "published": "2026-05-13T14:05:06+00:00",
+      "score": 10,
+      "tier": "tier1",
+      "from_email": true
+    },
+    {
+      "source": "TPG Newsletter",
+      "title": "✈ New Rules: Who's Eligible For Chase's Best-Ever Bonus, Best International Airport Hotels & More From TPG ✈",
+      "summary": "THE POINTS GUYAlso: How Spirit's collapse will impact all airfare May 6, 2026 View in browser The rules have loosened in the past year by Summer Hull, Senior director of content Last week, the highest-ever bonus for theChase Sapphire Reserve® dropped — and since then, one question keeps coming up: A",
+      "link": "http://thepointsguy.com/",
+      "published": "2026-05-06T14:05:21+00:00",
+      "score": 8,
+      "tier": "tier1",
+      "from_email": true
+    },
+    {
+      "source": "TPG Newsletter",
+      "title": "✈ Flying Delta? Here’s How to Access the Lounge, a 10-Day Stay For $0 & More from TPG ✈",
+      "summary": "THE POINTS GUYEnding soon: These best-ever Atmos card offers include a Companion Fare and 50% discount code May 8, 2026 View in browser Which premium card is best for Delta flyers? by Sean Cudahy, Senior aviation reporter Delta Sky Club may be the nicest airline lounge network in America, with food,",
+      "link": "http://thepointsguy.com/",
+      "published": "2026-05-08T14:05:10+00:00",
+      "score": 5,
+      "tier": "tier1",
+      "from_email": true
+    }
+  ]
 }
