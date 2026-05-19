@@ -22,16 +22,23 @@ jobs:
       - name: Install deps
         run: pip install feedparser requests
 
-      - name: Run scraper
+      - name: Run RSS scraper
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: python scrape.py
+
+      - name: Run Gmail scraper
+        env:
+          GMAIL_CLIENT_ID: ${{ secrets.GMAIL_CLIENT_ID }}
+          GMAIL_CLIENT_SECRET: ${{ secrets.GMAIL_CLIENT_SECRET }}
+          GMAIL_REFRESH_TOKEN: ${{ secrets.GMAIL_REFRESH_TOKEN }}
+        run: python scrape_email.py
 
       - name: Commit data files
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add offers.json history/ high_signal.json
+          git add offers.json offers_email.json history/ high_signal.json
           git diff --staged --quiet || git commit -m "chore: weekly offers refresh [skip ci]"
           git push
 

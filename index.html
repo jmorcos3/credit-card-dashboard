@@ -829,7 +829,7 @@
     <div class="live-offers">
         <h2>Live Offers Watch</h2>
         <p style="color: #6b7280; font-size: 14px; margin-top: -12px; margin-bottom: 8px;">
-            Auto-refreshed weekly from TPG, Doctor of Credit, Frequent Miler, View from the Wing, One Mile at a Time, r/churning. Tiered: <strong>YOUR CARDS</strong> (Marriott, United, AA, Amex Gold/Plat/Bevy, Sapphire, Bilt) prioritized; other issuers only if extremely compelling (score ≥ 7). All business cards excluded. Top 10 get Claude one-line TL;DRs.
+            Auto-refreshed weekly from RSS (TPG, DoC, FM, VFTW, OMAAT, r/churning) <strong>+ your Gmail inbox</strong> (TPG/DoC/FM newsletters). Tiered: <strong>YOUR CARDS</strong> (Marriott, United, AA, Amex Gold/Plat/Bevy, Sapphire, Bilt) prioritized; other issuers only if extremely compelling (score ≥ 7). All business cards excluded. Top 10 get Claude one-line TL;DRs. Items from email tagged <strong>FROM INBOX</strong>.
         </p>
         <div class="lo-meta" id="loMeta">Loading...</div>
         <div class="lo-grid" id="loGrid">
@@ -912,13 +912,42 @@
 <script>
 // ═══════════ LIVE OFFERS LOADER ═══════════
 function loadLiveOffers() {
-    fetch('offers.json?t=' + Date.now())
-        .then(r => r.ok ? r.json() : Promise.reject(r.status))
-        .then(data => {
-            var meta = document.getElementById('loMeta');
-            var grid = document.getElementById('loGrid');
-            var dt = new Date(data.generated_at);
-            meta.textContent = 'Last refresh: ' + dt.toLocaleString('en-US', {dateStyle:'medium',timeStyle:'short'}) + ' • ' + data.item_count + ' relevant items from ' + data.feed_count + ' feeds';
+    Promise.all([
+        fetch('offers.json?t=' + Date.now()).then(r => r.ok ? r.json() : {items:[]}),
+        fetch('offers_email.json?t=' + Date.now()).then(r => r.ok ? r.json() : {items:[]}).catch(() => ({items:[]})),
+    ]).then(function(results) {
+        var rss = results[0];
+        var email = results[1];
+        var merged = (rss.items || []).concat(email.items || []);
+        // Dedup fuzzy title
+        var seen = {};
+        var unique = [];
+        merged.sort(function(a, b) { return (b.score||0) - (a.score||0); });
+        merged.forEach(function(i) {
+            var key = (i.title || '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 60);
+            if (seen[key]) return;
+            seen[key] = true;
+            unique.push(i);
+        });
+        var data = {
+            generated_at: rss.generated_at || new Date().toISOString(),
+            item_count: unique.length,
+            feed_count: (rss.feed_count || 0) + (email.items && email.items.length > 0 ? 1 : 0),
+            items: unique,
+            email_count: (email.items || []).length,
+        };
+        renderLiveOffers(data);
+    }).catch(function() {
+        document.getElementById('loMeta').textContent = 'Offers feed unavailable.';
+        document.getElementById('loGrid').innerHTML = '';
+    });
+}
+
+function renderLiveOffers(data) {
+    var meta = document.getElementById('loMeta');
+    var grid = document.getElementById('loGrid');
+    var dt = new Date(data.generated_at);
+    meta.textContent = 'Last refresh: ' + dt.toLocaleString('en-US', {dateStyle:'medium',timeStyle:'short'}) + ' • ' + data.item_count + ' relevant items from ' + data.feed_count + ' feeds (' + data.email_count + ' from your inbox)';
 
             if (!data.items || data.items.length === 0) {
                 grid.innerHTML = '<div class="lo-loading">No high-signal offers this week.</div>';
@@ -930,11 +959,12 @@ function loadLiveOffers() {
                 var pubDate = i.published ? new Date(i.published).toLocaleDateString('en-US', {month:'short',day:'numeric'}) : '';
                 var newBadge = i.is_new ? '<span style="background:#dcfce7;color:#166534;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:700;margin-left:6px;">NEW</span>' : '';
                 var tierBadge = i.tier === 'tier1' ? '<span style="background:#fef3c7;color:#92400e;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:700;margin-left:6px;">YOUR CARDS</span>' : '';
+                var emailBadge = i.from_email ? '<span style="background:#dbeafe;color:#1d4ed8;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:700;margin-left:6px;">FROM INBOX</span>' : '';
                 var tldr = i.tldr ? '<div style="font-size:13px;color:#1a1a2e;font-weight:500;margin:6px 0;padding:6px 10px;background:#faf5ff;border-left:3px solid #9333ea;border-radius:4px;">' + i.tldr + '</div>' : '';
                 return '<div class="lo-item">' +
                     '<div class="lo-score ' + cls + '">' + i.score + '</div>' +
                     '<div class="lo-content">' +
-                        '<div class="lo-source">' + i.source + (pubDate ? ' • ' + pubDate : '') + newBadge + tierBadge + '</div>' +
+                        '<div class="lo-source">' + i.source + (pubDate ? ' • ' + pubDate : '') + newBadge + tierBadge + emailBadge + '</div>' +
                         '<div class="lo-title"><a href="' + i.link + '" target="_blank" rel="noopener">' + i.title + '</a></div>' +
                         tldr +
                         '<div class="lo-summary">' + (i.summary || '').slice(0, 200) + (i.summary && i.summary.length > 200 ? '…' : '') + '</div>' +
