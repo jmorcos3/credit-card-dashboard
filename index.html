@@ -988,7 +988,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // ═══════════ BEVY SPEND TRACKER ═══════════
 function loadBevySpend() {
     var stored = localStorage.getItem('bevySpent');
-    var spent = stored !== null ? parseFloat(stored) : 4250.98; // default: Amex official qualified spend per chat (excludes pending/refunds). Remaining $749.02. 85% to target.
+    var spent = stored !== null ? parseFloat(stored) : 4500.98; // default: Bevy statement total Apr 12-May 22 ($273.76 prior + $4,227.22 charges). 90% to target. Remaining ~$499.
     updateBevyUI(spent);
 }
 
