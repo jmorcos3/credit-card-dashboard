@@ -13,6 +13,7 @@ import base64
 import json
 import os
 import re
+import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
@@ -110,8 +111,20 @@ def get_access_token():
         "grant_type": "refresh_token",
     }).encode()
     req = urllib.request.Request("https://oauth2.googleapis.com/token", data=data)
-    with urllib.request.urlopen(req, timeout=15) as resp:
-        return json.loads(resp.read())["access_token"]
+    try:
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            return json.loads(resp.read())["access_token"]
+    except urllib.error.HTTPError as e:
+        detail = e.read().decode("utf-8", errors="ignore")
+        if "invalid_grant" in detail:
+            raise RuntimeError(
+                "Gmail refresh token rejected (invalid_grant) — it has likely "
+                "expired or been revoked. Re-mint it with gen_gmail_token.py and "
+                "update the GMAIL_REFRESH_TOKEN secret. (Tokens for OAuth apps in "
+                "'Testing' publishing status expire after 7 days; move the app to "
+                "'Production' to stop this recurring.)"
+            ) from e
+        raise RuntimeError(f"Gmail token exchange failed: HTTP {e.code} {detail}") from e
 
 
 def gmail_get(path, token, **params):
@@ -231,7 +244,18 @@ def main():
             json.dump({"generated_at": datetime.now(timezone.utc).isoformat(), "items": []}, f, indent=2)
         return
 
-    items = fetch_emails()
+    try:
+        items = fetch_emails()
+    except Exception as e:
+        # The email scraper is supplementary. A Gmail/auth failure must NOT take
+        # down the weekly pipeline (RSS scrape commit + digest issue), so log it
+        # loudly, keep any existing offers_email.json, and exit cleanly.
+        print(f"::warning::Gmail scrape failed, keeping existing offers_email.json: {e}")
+        if not os.path.exists("offers_email.json"):
+            with open("offers_email.json", "w", encoding="utf-8") as f:
+                json.dump({"generated_at": datetime.now(timezone.utc).isoformat(), "items": []}, f, indent=2)
+        return
+
     # Dedup by fuzzy title
     seen = set()
     unique = []
