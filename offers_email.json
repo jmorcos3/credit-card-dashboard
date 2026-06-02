@@ -1,17 +1,7 @@
 {
-  "generated_at": "2026-05-25T15:50:09.726134+00:00",
+  "generated_at": "2026-06-02T00:17:59.168125+00:00",
   "item_count": 3,
   "items": [
-    {
-      "source": "TPG Newsletter",
-      "title": "✈ New Offer: Earn 90,000 AAdvantage Miles, 14 Things to Know About Global Entry & More From TPG ✈",
-      "summary": "THE POINTS GUYAlso: Free snacks for Delta cardholders on some flights May 13, 2026 View in browser TOGETHER WITH TOGETHER WITH Best-ever 90,000-mile bonus has returned! by Clint Henderson, TPG managing editor Lounge passes, status boosts, a slew of great travel credits and a huge welcome bonus. Ther",
-      "link": "http://thepointsguy.com/",
-      "published": "2026-05-13T14:05:06+00:00",
-      "score": 10,
-      "tier": "tier1",
-      "from_email": true
-    },
     {
       "source": "TPG Newsletter",
       "title": "✈ Why the Refreshed Amex Gold Card Deserves Another Look, Another Big Airline Fee Hike & More From TPG ✈",
@@ -29,6 +19,16 @@
       "link": "http://thepointsguy.com/",
       "published": "2026-05-19T14:09:41+00:00",
       "score": 6,
+      "tier": "tier1",
+      "from_email": true
+    },
+    {
+      "source": "TPG Newsletter",
+      "title": "✈ Why This Card (and Its 150K Offer) Are Worth Getting, AA’s Starlink WiFi Upgrade & More From TPG ✈",
+      "summary": "THE POINTS GUYAlso: I used this booking trick to score an uber-fancy room at the Waldorf Astoria, even though Hilton said there was no availability May 27, 2026 View in browser Upgrade your airport experience by Colin Hogan, Senior editor There are definitely two types of people in airports these da",
+      "link": "http://thepointsguy.com/",
+      "published": "2026-05-27T14:07:08+00:00",
+      "score": 5,
       "tier": "tier1",
       "from_email": true
     }
