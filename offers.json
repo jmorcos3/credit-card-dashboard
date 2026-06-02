@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-06-02T00:17:54.630380+00:00",
+  "generated_at": "2026-06-02T00:32:45.566460+00:00",
   "feed_count": 6,
-  "item_count": 22,
+  "item_count": 23,
   "items": [
     {
       "source": "Frequent Miler",
@@ -99,6 +99,16 @@
       "summary": "If you are considering the Citi / AAdvantage Globe card, you may wonder if it's worth paying the $350 annual fee. We analyze the benefits to help you decide.",
       "link": "https://thepointsguy.com/credit-cards/citi-aadvantage-globe-mastercard-worth-annual-fee/",
       "published": "2026-05-29T18:00:26+00:00",
+      "score": 7,
+      "tier": "tier1",
+      "is_new": true
+    },
+    {
+      "source": "Frequent Miler",
+      "title": "Get a 25% bonus when converting hotel points to United",
+      "summary": "United is once again offering a bonus when converting points from hotel programs. This latest edition of the offer is giving a 25% bonus when making a transfer by the end of June. The Deal Get 25% bonus United miles when converting hotel points to your MileagePlus account. Direct link to registratio",
+      "link": "https://frequentmiler.com/get-a-25-bonus-when-converting-hotel-points-to-united/",
+      "published": "2026-06-01T23:45:07+00:00",
       "score": 7,
       "tier": "tier1",
       "is_new": true
