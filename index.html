@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Points Dashboard</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', -apple-system, sans-serif; background: #fff; color: #1a1a2e; line-height: 1.5; }
@@ -1134,271 +1133,190 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function createReport() {
     var btn = document.querySelector('.report-btn');
+    var origHTML = btn.innerHTML;
     btn.disabled = true;
-    btn.innerHTML = 'Generating...';
+    btn.innerHTML = 'Opening print dialog...';
 
     var today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    var fileDate = new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }).replace(/\//g, '-');
+    var fileName = 'JM Credit Card Points ' + fileDate;
 
-    var html = '<div style="font-family: Segoe UI, Arial, sans-serif; color: #1a1a2e; padding: 0; line-height: 1.4; font-size: 11px;">'
+    var doc = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>' + fileName + '</title>'
+      + '<style>'
+      + '@page { size: letter portrait; margin: 0.4in 0.5in; }'
+      + '* { box-sizing: border-box; margin: 0; padding: 0; }'
+      + 'body { font-family: Segoe UI, Arial, sans-serif; color: #1a1a2e; line-height: 1.35; font-size: 10.5px; }'
+      + '.page { page-break-after: always; }'
+      + '.page:last-child { page-break-after: auto; }'
+      + 'h1 { font-size: 19px; font-weight: 800; }'
+      + 'h2 { font-size: 13px; font-weight: 700; margin: 10px 0 5px; }'
+      + '.sub { color: #6b7280; font-size: 9.5px; }'
+      + '.hdr { border-bottom: 2px solid #1a1a2e; padding-bottom: 6px; margin-bottom: 10px; }'
+      + '.row { display: table; width: 100%; table-layout: fixed; border-spacing: 6px 0; margin-bottom: 10px; }'
+      + '.col { display: table-cell; vertical-align: top; padding: 9px 10px; border-radius: 6px; }'
+      + '.pts-card { color: white; }'
+      + '.pts-card .lbl { font-size: 8.5px; opacity: 0.85; text-transform: uppercase; letter-spacing: 0.5px; }'
+      + '.pts-card .num { font-size: 19px; font-weight: 800; margin: 2px 0; }'
+      + '.pts-card .val { font-size: 8.5px; opacity: 0.9; }'
+      + '.pts-card .use { font-size: 8px; opacity: 0.8; margin-top: 2px; }'
+      + '.bg-chase { background: #003087; }'
+      + '.bg-amex { background: #006fcf; }'
+      + '.bg-marriott { background: #5b21b6; }'
+      + '.bg-bilt { background: #1a1a2e; }'
+      + '.total { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 8px 12px; display: flex; justify-content: space-between; margin-bottom: 10px; }'
+      + '.total .l { font-weight: 700; color: #166534; }'
+      + '.total .r { font-size: 16px; font-weight: 800; color: #166534; }'
+      + '.warn { background: #fef2f2; border: 1px solid #fecaca; border-radius: 6px; padding: 8px 10px; }'
+      + '.warn .t { font-weight: 700; color: #dc2626; font-size: 10px; }'
+      + '.warn .b { font-size: 9px; color: #7f1d1d; margin-top: 2px; }'
+      + '.info { background: #fef3c7; border: 1px solid #fcd34d; border-radius: 6px; padding: 8px 10px; }'
+      + '.info .t { font-weight: 700; color: #92400e; font-size: 10px; }'
+      + '.info .b { font-size: 9px; color: #78350f; margin-top: 2px; }'
+      + '.ok { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 8px 10px; }'
+      + '.ok .t { font-weight: 700; color: #166534; font-size: 10px; }'
+      + '.ok .b { font-size: 9px; color: #14532d; margin-top: 2px; }'
+      + '.strategy { background: #faf5ff; border: 1px solid #e9d5ff; border-radius: 6px; padding: 8px 10px; margin-bottom: 10px; }'
+      + '.strategy .t { font-size: 11px; font-weight: 700; margin-bottom: 4px; }'
+      + '.s-row { display: table; width: 100%; table-layout: fixed; border-spacing: 4px 0; }'
+      + '.s-col { display: table-cell; background: white; border: 1px solid #e9d5ff; border-radius: 4px; padding: 6px 8px; vertical-align: top; }'
+      + '.s-col .h { font-weight: 700; font-size: 9.5px; }'
+      + '.s-col .p { font-size: 8.5px; color: #6b7280; }'
+      + 'table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }'
+      + 'th { text-align: left; padding: 5px 6px; font-size: 8.5px; text-transform: uppercase; color: #6b7280; background: #f9fafb; border-bottom: 2px solid #e5e7eb; }'
+      + 'td { padding: 5px 6px; font-size: 9.5px; border-bottom: 1px solid #f3f4f6; vertical-align: top; }'
+      + '.green { color: #059669; font-weight: 700; }'
+      + '.red { color: #dc2626; font-weight: 700; }'
+      + '.amber { color: #d97706; font-weight: 700; }'
+      + '.gray { color: #6b7280; }'
+      + '.elig-row { display: table; width: 100%; table-layout: fixed; border-spacing: 5px 0; margin-bottom: 10px; }'
+      + '.elig-col { display: table-cell; padding: 7px 9px; border-left: 3px solid; border-radius: 4px; background: #f9fafb; vertical-align: top; }'
+      + '.elig-col .n { font-weight: 700; font-size: 9.5px; }'
+      + '.elig-col .d { font-size: 8.5px; color: #6b7280; margin-top: 2px; }'
+      + 'footer { margin-top: 12px; padding-top: 6px; border-top: 1px solid #e5e7eb; font-size: 8px; color: #9ca3af; text-align: center; }'
+      + '@media print { .noprint { display: none; } }'
+      + '.noprint { position: fixed; top: 10px; right: 10px; background: #1a1a2e; color: white; padding: 8px 16px; border-radius: 6px; font-size: 12px; cursor: pointer; border: none; z-index: 999; }'
+      + '</style></head><body>'
 
-    // HEADER
-    + '<div style="border-bottom: 2px solid #1a1a2e; padding-bottom: 8px; margin-bottom: 12px;">'
-    + '<div style="font-size: 20px; font-weight: 800;">Credit Card Points Report</div>'
-    + '<div style="color: #6b7280; font-size: 10px;">Generated ' + today + ' &bull; Goal: Marriott Bonvoy Hotels + United Flights to Europe</div>'
-    + '</div>'
+      + '<button class="noprint" onclick="window.print()">Print / Save PDF</button>'
 
-    // POINTS SUMMARY
-    + '<div style="display: flex; gap: 8px; margin-bottom: 12px;">'
-    + '<div style="flex: 1; background: #003087; color: white; border-radius: 8px; padding: 10px;">'
-    + '<div style="font-size: 9px; opacity: 0.8; text-transform: uppercase;">Chase UR</div>'
-    + '<div style="font-size: 22px; font-weight: 800;">93,957</div>'
-    + '<div style="font-size: 9px; opacity: 0.8;">~2.0&cent;/pt &bull; $1,879 value</div>'
-    + '<div style="font-size: 8px; opacity: 0.7; margin-top: 2px;">LOCKED &mdash; need Sapphire card</div>'
-    + '</div>'
-    + '<div style="flex: 1; background: #006fcf; color: white; border-radius: 8px; padding: 10px;">'
-    + '<div style="font-size: 9px; opacity: 0.8; text-transform: uppercase;">Amex MR</div>'
-    + '<div style="font-size: 22px; font-weight: 800;">227,143</div>'
-    + '<div style="font-size: 9px; opacity: 0.8;">~2.0&cent;/pt &bull; $4,071 value</div>'
-    + '<div style="font-size: 8px; opacity: 0.7; margin-top: 2px;">Best for Europe flights (ANA, Delta One)</div>'
-    + '</div>'
-    + '<div style="flex: 1; background: #1a1a2e; color: white; border-radius: 8px; padding: 10px;">'
-    + '<div style="font-size: 9px; opacity: 0.8; text-transform: uppercase;">Bilt</div>'
-    + '<div style="font-size: 22px; font-weight: 800;">38,300</div>'
-    + '<div style="font-size: 9px; opacity: 0.8;">~1.8&cent;/pt &bull; $689 value</div>'
-    + '<div style="font-size: 8px; opacity: 0.7; margin-top: 2px;">Transfers to United &amp; Marriott 1:1</div>'
-    + '</div>'
-    + '</div>'
+      // ===== PAGE 1 =====
+      + '<div class="page">'
+      + '<div class="hdr"><h1>JM Credit Card Points Report</h1>'
+      + '<div class="sub">' + today + ' &bull; Goal: Marriott Bonvoy Hotels + United Flights to Europe</div></div>'
 
-    // TOTAL
-    + '<div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">'
-    + '<div><span style="font-weight: 700; color: #166534;">Total Portfolio:</span> <span style="color: #6b7280;">335,795 points</span></div>'
-    + '<div style="font-size: 18px; font-weight: 800; color: #166534;">$6,639</div>'
-    + '</div>'
+      // Points cards (4 cols)
+      + '<div class="row">'
+      + '<div class="col pts-card bg-amex"><div class="lbl">Amex MR</div><div class="num">227,143</div><div class="val">~2.0&cent;/pt &bull; $4,543</div><div class="use">Primary card. Europe via ANA/Virgin</div></div>'
+      + '<div class="col pts-card bg-marriott"><div class="lbl">Marriott Bonvoy</div><div class="num">188,870</div><div class="val">~0.8&cent;/pt &bull; $1,511</div><div class="use">Bonus POSTED. 5-7 nights Cat 5 Europe</div></div>'
+      + '<div class="col pts-card bg-chase"><div class="lbl">Chase UR</div><div class="num">93,957</div><div class="val">~2.0&cent;/pt &bull; $1,879</div><div class="use">LOCKED until Aug 2029</div></div>'
+      + '<div class="col pts-card bg-bilt"><div class="lbl">Bilt</div><div class="num">38,300</div><div class="val">~1.8&cent;/pt &bull; $689</div><div class="use">Dormant. Transfer rail only.</div></div>'
+      + '</div>'
 
-    // STRATEGY RULES
-    + '<div style="background: #faf5ff; border: 1px solid #e9d5ff; border-radius: 8px; padding: 10px 12px; margin-bottom: 14px;">'
-    + '<div style="font-size: 12px; font-weight: 700; margin-bottom: 6px;">Core Strategy</div>'
-    + '<div style="display: flex; gap: 8px;">'
-    + '<div style="flex: 1; background: white; border-radius: 6px; padding: 8px; border: 1px solid #e9d5ff;">'
-    + '<div style="font-weight: 700; font-size: 10px;">1. Flights = MR + UR</div>'
-    + '<div style="font-size: 9px; color: #6b7280;">Transfer to airlines (2&cent;/pt). Never transfer to Marriott (0.7&cent;).</div>'
-    + '</div>'
-    + '<div style="flex: 1; background: white; border-radius: 6px; padding: 8px; border: 1px solid #e9d5ff;">'
-    + '<div style="font-weight: 700; font-size: 10px;">2. Hotels = Marriott Cards</div>'
-    + '<div style="font-size: 9px; color: #6b7280;">Earn Bonvoy pts from card bonuses &amp; Bilt. Don\'t waste premium currencies.</div>'
-    + '</div>'
-    + '<div style="flex: 1; background: white; border-radius: 6px; padding: 8px; border: 1px solid #e9d5ff;">'
-    + '<div style="font-weight: 700; font-size: 10px;">3. Daily = Amex Gold</div>'
-    + '<div style="font-size: 9px; color: #6b7280;">4x dining &amp; groceries builds most versatile currency.</div>'
-    + '</div>'
-    + '</div>'
-    + '</div>'
+      + '<div class="total"><div><span class="l">Total Portfolio:</span> <span class="gray">548,270 points across 4 currencies</span></div><div class="r">$8,622</div></div>'
 
-    // WARNINGS
-    + '<div style="display: flex; gap: 8px; margin-bottom: 14px;">'
-    + '<div style="flex: 1; background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 10px;">'
-    + '<div style="font-weight: 700; color: #dc2626; font-size: 10px;">93,957 Chase UR Points LOCKED</div>'
-    + '<div style="font-size: 9px; color: #7f1d1d; margin-top: 3px;">CSP opened Jul 2025, now closed. Need new Sapphire card to transfer to United/Marriott. Next bonus eligible: <strong>July 2029</strong> (48-month rule).</div>'
-    + '</div>'
-    + '<div style="flex: 1; background: #fef3c7; border: 1px solid #fcd34d; border-radius: 8px; padding: 10px;">'
-    + '<div style="font-weight: 700; color: #92400e; font-size: 10px;">Marriott 200K Bonus Expires May 13, 2026</div>'
-    + '<div style="font-size: 9px; color: #78350f; margin-top: 3px;">All-time high on Marriott Brilliant. 200K Bonvoy points = 6-8 free hotel nights. No indication this returns after deadline.</div>'
-    + '</div>'
-    + '</div>'
+      // Strategy
+      + '<div class="strategy"><div class="t">Core Strategy</div><div class="s-row">'
+      + '<div class="s-col"><div class="h">1. Flights = Amex MR</div><div class="p">Transfer to airlines (2&cent;/pt). ANA First, Virgin Atlantic Delta One. Never to Marriott (0.7&cent;).</div></div>'
+      + '<div class="s-col"><div class="h">2. Hotels = Marriott (via Bevy)</div><div class="p">175K bonus banked. Use for Europe Cat 4-5. Don\'t convert MR to Marriott.</div></div>'
+      + '<div class="s-col"><div class="h">3. Daily Spend = Amex Gold</div><div class="p">4x dining, 4x groceries, 5x prepaid hotels. Switched back from Bevy post-bonus.</div></div>'
+      + '</div></div>'
 
-    // RECOMMENDED CARDS TABLE
-    + '<div style="font-size: 13px; font-weight: 700; margin-bottom: 6px;">Recommended Cards</div>'
-    + '<table style="width: 100%; border-collapse: collapse; font-size: 10px; margin-bottom: 14px;">'
-    + '<thead><tr style="background: #f9fafb; border-bottom: 2px solid #e5e7eb;">'
-    + '<th style="text-align: left; padding: 6px 8px; font-size: 9px; text-transform: uppercase; color: #6b7280;">#</th>'
-    + '<th style="text-align: left; padding: 6px 8px; font-size: 9px; text-transform: uppercase; color: #6b7280;">Card</th>'
-    + '<th style="text-align: left; padding: 6px 8px; font-size: 9px; text-transform: uppercase; color: #6b7280;">Bonus</th>'
-    + '<th style="text-align: left; padding: 6px 8px; font-size: 9px; text-transform: uppercase; color: #6b7280;">Annual Fee</th>'
-    + '<th style="text-align: left; padding: 6px 8px; font-size: 9px; text-transform: uppercase; color: #6b7280;">Spend Req.</th>'
-    + '<th style="text-align: left; padding: 6px 8px; font-size: 9px; text-transform: uppercase; color: #6b7280;">Year 1 Net Value</th>'
-    + '<th style="text-align: left; padding: 6px 8px; font-size: 9px; text-transform: uppercase; color: #6b7280;">Why</th>'
-    + '</tr></thead>'
-    + '<tbody>'
-    + '<tr style="border-bottom: 1px solid #f3f4f6; background: #fffbeb;">'
-    + '<td style="padding: 7px 8px; font-weight: 700;">1</td>'
-    + '<td style="padding: 7px 8px;"><strong>Marriott Bonvoy Brilliant</strong><br><span style="color: #6b7280;">Amex</span></td>'
-    + '<td style="padding: 7px 8px; font-weight: 700;">200K Marriott</td>'
-    + '<td style="padding: 7px 8px;">$650</td>'
-    + '<td style="padding: 7px 8px;">$6K / 6 mo</td>'
-    + '<td style="padding: 7px 8px; color: #059669; font-weight: 700;">+$1,950</td>'
-    + '<td style="padding: 7px 8px;">All-time high. 6-8 free nights. Platinum Elite. <span style="color: #dc2626; font-weight: 600;">Expires May 13.</span></td>'
-    + '</tr>'
-    + '<tr style="border-bottom: 1px solid #f3f4f6;">'
-    + '<td style="padding: 7px 8px; font-weight: 700;">2</td>'
-    + '<td style="padding: 7px 8px;"><strong>Marriott Bonvoy Bevy</strong><br><span style="color: #6b7280;">Amex</span></td>'
-    + '<td style="padding: 7px 8px; font-weight: 700;">175K Marriott</td>'
-    + '<td style="padding: 7px 8px;">$250</td>'
-    + '<td style="padding: 7px 8px;">$5K / 6 mo</td>'
-    + '<td style="padding: 7px 8px; color: #059669; font-weight: 700;">+$1,450</td>'
-    + '<td style="padding: 7px 8px;">87% of Brilliant pts at 38% of fee. Better cost-per-point (0.14&cent; vs 0.33&cent;). <span style="color: #dc2626; font-weight: 600;">Expires May 13.</span></td>'
-    + '</tr>'
-    + '<tr style="border-bottom: 1px solid #f3f4f6;">'
-    + '<td style="padding: 7px 8px; font-weight: 700;">3</td>'
-    + '<td style="padding: 7px 8px;"><strong>Chase Sapphire Reserve</strong><br><span style="color: #6b7280;">Chase</span></td>'
-    + '<td style="padding: 7px 8px; font-weight: 700;">150K Chase UR</td>'
-    + '<td style="padding: 7px 8px;">$795</td>'
-    + '<td style="padding: 7px 8px;">$6K / 3 mo</td>'
-    + '<td style="padding: 7px 8px; color: #059669; font-weight: 700;">+$6,034</td>'
-    + '<td style="padding: 7px 8px;">Bonus increased 125K&rarr;150K. Unlocks 93,957 existing UR for United. Massive credit stack post-Jun 2025 refresh.</td>'
-    + '</tr>'
-    + '<tr>'
-    + '<td style="padding: 7px 8px; font-weight: 700;">4</td>'
-    + '<td style="padding: 7px 8px;"><strong>Amex Platinum</strong><br><span style="color: #6b7280;">Amex</span></td>'
-    + '<td style="padding: 7px 8px; font-weight: 700;">80K Amex MR</td>'
-    + '<td style="padding: 7px 8px;">$895</td>'
-    + '<td style="padding: 7px 8px;">$8K / 6 mo</td>'
-    + '<td style="padding: 7px 8px; color: #059669; font-weight: 700;">+$1,610</td>'
-    + '<td style="padding: 7px 8px;">Adds to 203K MR for premium Europe flights. Centurion Lounges. $200 airline + $200 hotel credits.</td>'
-    + '</tr>'
-    + '</tbody></table>'
+      // Status boxes
+      + '<div class="row">'
+      + '<div class="col ok" style="background: #f0fdf4;"><div class="t">&#10003; Bevy 175K Marriott Bonus POSTED Jun 2026</div><div class="b">Bonvoy account: 188,870 pts. Next: plan Europe Marriott trip (5-7 nights Cat 4-5). Bevy retention call due Apr 2027.</div></div>'
+      + '<div class="col warn"><div class="t">93,957 Chase UR LOCKED until Aug 2029</div><div class="b">CSP closed Jul 2025. Sapphire family rule blocks CSP/CSR bonus 48 mo. Bilt &rarr; United 1:1 works without Sapphire.</div></div>'
+      + '</div>'
 
-    // PAGE BREAK
-    + '<div style="page-break-before: always;"></div>'
+      // Eligibility for new cards
+      + '<h2>Eligible New Cards (Ranked)</h2>'
+      + '<table><thead><tr>'
+      + '<th>#</th><th>Card</th><th>Bonus</th><th>Fee</th><th>Spend Req</th><th>Year 1 Net</th><th>Notes</th>'
+      + '</tr></thead><tbody>'
+      + '<tr><td>1</td><td><strong>Amex Platinum</strong><br><span class="gray">Amex</span></td><td><strong>80K-175K MR</strong></td><td>$895</td><td>$8K/6mo</td><td class="green">+$1,860 to +$3,260</td><td>Only major eligible card. Check CardMatch for 150K+ targeted offer first.</td></tr>'
+      + '<tr><td>2</td><td><strong>United Explorer</strong><br><span class="gray">Chase</span></td><td><strong>50-60K United</strong></td><td>$0 Y1, $150</td><td>$3K/3mo</td><td class="green">+$1,240</td><td>Bypasses Sapphire family. Free 1st bag United. Direct United for Europe.</td></tr>'
+      + '<tr><td>3</td><td><strong>Citi AAdvantage Platinum</strong><br><span class="gray">Citi</span></td><td><strong>50-75K AA</strong></td><td>$0 Y1, $99</td><td>$2.5K/4mo</td><td class="green">+$890</td><td>Diversifies into AA/oneworld. Free 1st bag AA.</td></tr>'
+      + '</tbody></table>'
 
-    // PAGE 2 HEADER
-    + '<div style="border-bottom: 2px solid #1a1a2e; padding-bottom: 6px; margin-bottom: 12px;">'
-    + '<div style="font-size: 16px; font-weight: 800;">Redemption Options &amp; Timeline</div>'
-    + '<div style="color: #6b7280; font-size: 9px;">' + today + '</div>'
-    + '</div>'
+      + '<h2 style="color: #991b1b;">BLOCKED (Do Not Apply)</h2>'
+      + '<table><tbody>'
+      + '<tr><td><strong>Chase Sapphire Reserve</strong> (Chase $795)</td><td class="red">Eligible Aug 2029 (Sapphire family 48-mo rule)</td></tr>'
+      + '<tr><td><strong>Marriott Bonvoy Brilliant</strong> (Amex $650)</td><td class="red">Lifetime blocked (Bevy used Marriott family slot)</td></tr>'
+      + '<tr><td><strong>Chase Sapphire Preferred</strong> (Chase $95)</td><td class="red">Eligible Aug 2029 (same Sapphire family rule)</td></tr>'
+      + '<tr><td><strong>Amex Green</strong> (Amex $150)</td><td class="amber">WAIT &mdash; refresh imminent, new SUB expected Q2-Q3 2026</td></tr>'
+      + '<tr><td><strong>Any business card</strong> (Ink, Spark, Biz Gold/Plat)</td><td class="red">Excluded &mdash; user has no business</td></tr>'
+      + '</tbody></table>'
 
-    // BRILLIANT VS BEVY
-    + '<div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 10px 12px; margin-bottom: 12px;">'
-    + '<div style="font-weight: 700; font-size: 11px; color: #1d4ed8; margin-bottom: 4px;">Brilliant ($650) vs Bevy ($250) &mdash; The Math</div>'
-    + '<div style="display: flex; gap: 12px; font-size: 10px;">'
-    + '<div style="flex: 1;">'
-    + '<strong>Brilliant:</strong> $650 &divide; 200K = 0.33&cent;/pt<br>'
-    + 'Perks: $300 dining credit, 85K free night cert, Platinum Elite, Priority Pass<br>'
-    + 'Net cost after perks: ~$0 &rarr; <strong>200K pts effectively free</strong>'
-    + '</div>'
-    + '<div style="flex: 1;">'
-    + '<strong>Bevy:</strong> $250 &divide; 175K = 0.14&cent;/pt<br>'
-    + 'Perks: 50K free night cert, Gold Elite<br>'
-    + 'Net cost after perks: ~$0 &rarr; <strong>175K pts effectively free</strong><br>'
-    + '<span style="color: #059669; font-weight: 600;">Better if you just want bonus pts &amp; plan to cancel after Year 1</span>'
-    + '</div>'
-    + '</div>'
-    + '</div>'
+      + '</div>'
 
-    // WHAT YOUR POINTS CAN GET
-    + '<div style="font-size: 12px; font-weight: 700; margin-bottom: 6px;">What Your Points Can Get You</div>'
-    + '<table style="width: 100%; border-collapse: collapse; font-size: 10px; margin-bottom: 14px;">'
-    + '<thead><tr style="background: #f9fafb; border-bottom: 2px solid #e5e7eb;">'
-    + '<th style="text-align: left; padding: 5px 8px; font-size: 9px; text-transform: uppercase; color: #6b7280;">Redemption</th>'
-    + '<th style="text-align: left; padding: 5px 8px; font-size: 9px; text-transform: uppercase; color: #6b7280;">Points Needed</th>'
-    + '<th style="text-align: left; padding: 5px 8px; font-size: 9px; text-transform: uppercase; color: #6b7280;">You Have</th>'
-    + '<th style="text-align: left; padding: 5px 8px; font-size: 9px; text-transform: uppercase; color: #6b7280;">Status</th>'
-    + '</tr></thead>'
-    + '<tbody>'
-    + '<tr style="border-bottom: 1px solid #f3f4f6;">'
-    + '<td style="padding: 6px 8px;">Marriott: 6 nights Westin/W Hotel</td>'
-    + '<td style="padding: 6px 8px;">~180K Bonvoy</td>'
-    + '<td style="padding: 6px 8px;">0 (apply for 200K)</td>'
-    + '<td style="padding: 6px 8px; color: #d97706; font-weight: 600;">Apply by May 13</td>'
-    + '</tr>'
-    + '<tr style="border-bottom: 1px solid #f3f4f6;">'
-    + '<td style="padding: 6px 8px;">United: RT economy to Europe</td>'
-    + '<td style="padding: 6px 8px;">~60K United</td>'
-    + '<td style="padding: 6px 8px;">93,957 UR</td>'
-    + '<td style="padding: 6px 8px; color: #dc2626; font-weight: 600;">Locked (CSP closed)</td>'
-    + '</tr>'
-    + '<tr style="border-bottom: 1px solid #f3f4f6;">'
-    + '<td style="padding: 6px 8px;">United: RT Polaris biz class to Europe</td>'
-    + '<td style="padding: 6px 8px;">~120-160K United</td>'
-    + '<td style="padding: 6px 8px;">93,957 UR + 38,300 Bilt</td>'
-    + '<td style="padding: 6px 8px; color: #dc2626; font-weight: 600;">Bilt ready, UR locked</td>'
-    + '</tr>'
-    + '<tr style="border-bottom: 1px solid #f3f4f6;">'
-    + '<td style="padding: 6px 8px;">ANA First Class RT to Europe (via Tokyo)</td>'
-    + '<td style="padding: 6px 8px;">~110K MR</td>'
-    + '<td style="padding: 6px 8px;">227,143 MR</td>'
-    + '<td style="padding: 6px 8px; color: #059669; font-weight: 600;">Ready now</td>'
-    + '</tr>'
-    + '<tr style="border-bottom: 1px solid #f3f4f6;">'
-    + '<td style="padding: 6px 8px;">Virgin Atlantic &rarr; Delta One to Europe</td>'
-    + '<td style="padding: 6px 8px;">~50K MR</td>'
-    + '<td style="padding: 6px 8px;">227,143 MR</td>'
-    + '<td style="padding: 6px 8px; color: #059669; font-weight: 600;">Ready now (x4 trips)</td>'
-    + '</tr>'
-    + '<tr>'
-    + '<td style="padding: 6px 8px;">Bilt &rarr; United economy to Europe</td>'
-    + '<td style="padding: 6px 8px;">~60K United</td>'
-    + '<td style="padding: 6px 8px;">38,300 Bilt</td>'
-    + '<td style="padding: 6px 8px; color: #dc2626; font-weight: 600;">Need 21,700 more</td>'
-    + '</tr>'
-    + '</tbody></table>'
+      // ===== PAGE 2 =====
+      + '<div class="page">'
+      + '<div class="hdr"><h1 style="font-size: 16px;">Daily Card Cheat Sheet &amp; Redemption Plan</h1>'
+      + '<div class="sub">' + today + '</div></div>'
 
-    // CURRENT CARDS
-    + '<div style="font-size: 12px; font-weight: 700; margin-bottom: 6px;">Current Cards</div>'
-    + '<div style="display: flex; gap: 8px; margin-bottom: 14px;">'
-    + '<div style="flex: 1; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 6px; padding: 8px; border-left: 3px solid #dc2626;">'
-    + '<div style="font-weight: 600; font-size: 10px;">Chase Sapphire Preferred <span style="color: #dc2626;">CLOSED</span></div>'
-    + '<div style="font-size: 9px; color: #6b7280;">Opened Jul 2025 &bull; Next bonus: Jul 2029</div>'
-    + '</div>'
-    + '<div style="flex: 1; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 6px; padding: 8px; border-left: 3px solid #003087;">'
-    + '<div style="font-weight: 600; font-size: 10px;">Chase Freedom Unlimited</div>'
-    + '<div style="font-size: 9px; color: #6b7280;">$0/yr &bull; 93,957 pts &bull; Transfers locked</div>'
-    + '</div>'
-    + '<div style="flex: 1; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 6px; padding: 8px; border-left: 3px solid #006fcf;">'
-    + '<div style="font-weight: 600; font-size: 10px;">Amex Gold Card</div>'
-    + '<div style="font-size: 9px; color: #6b7280;">$325/yr &bull; 227,143 pts &bull; 4x dining/groceries</div>'
-    + '</div>'
-    + '<div style="flex: 1; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 6px; padding: 8px; border-left: 3px solid #1a1a2e;">'
-    + '<div style="font-weight: 600; font-size: 10px;">Bilt Mastercard 2.0</div>'
-    + '<div style="font-size: 9px; color: #6b7280;">$0/yr &bull; 38,300 pts dormant &bull; transfer rail only</div>'
-    + '</div>'
-    + '</div>'
+      // Cheat sheet
+      + '<h2>Which Card to Swipe</h2>'
+      + '<div class="elig-row">'
+      + '<div class="elig-col" style="border-color: #b8860b;"><div class="n">Amex Gold &mdash; PRIMARY</div><div class="d">Dining (4x), Groceries (4x), Flights (3x), Prepaid Hotels (5x via Amex Travel)</div></div>'
+      + '<div class="elig-col" style="border-color: #7c3aed;"><div class="n">Bevy &mdash; MARRIOTT ONLY</div><div class="d">Marriott direct (6x). Don\'t use elsewhere &mdash; Gold beats 2x on dining/groceries.</div></div>'
+      + '<div class="elig-col" style="border-color: #1a1a2e;"><div class="n">Bilt &mdash; TRANSFERS ONLY</div><div class="d">No new earning. 38,300 stash transfers 1:1 to United / Marriott.</div></div>'
+      + '<div class="elig-col" style="border-color: #6b7280;"><div class="n">CFU &mdash; SOCK DRAWER</div><div class="d">UR locked, 1.5x earn wasted vs Gold. Skip until Aug 2029.</div></div>'
+      + '</div>'
 
-    // KEY DATES TIMELINE
-    + '<div style="font-size: 12px; font-weight: 700; margin-bottom: 6px;">Key Dates &amp; Deadlines</div>'
-    + '<table style="width: 100%; border-collapse: collapse; font-size: 10px;">'
-    + '<tbody>'
-    + '<tr style="border-bottom: 1px solid #f3f4f6;">'
-    + '<td style="padding: 5px 8px; width: 100px; font-weight: 700; color: #dc2626;">May 13, 2026</td>'
-    + '<td style="padding: 5px 8px;">Marriott Brilliant 200K &amp; Bevy 175K all-time high bonuses expire</td>'
-    + '</tr>'
-    + '<tr style="border-bottom: 1px solid #f3f4f6;">'
-    + '<td style="padding: 5px 8px; font-weight: 700; color: #d97706;">Q2-Q3 2026</td>'
-    + '<td style="padding: 5px 8px;">Amex Green Card refresh &mdash; new SUB expected, wait and evaluate</td>'
-    + '</tr>'
-    + '<tr style="border-bottom: 1px solid #f3f4f6;">'
-    + '<td style="padding: 5px 8px; font-weight: 700; color: #6b7280;">2026 TBD</td>'
-    + '<td style="padding: 5px 8px;">Chase x Hyatt premium card launch (lower priority for Marriott strategy)</td>'
-    + '</tr>'
-    + '<tr>'
-    + '<td style="padding: 5px 8px; font-weight: 700; color: #6b7280;">July 2029</td>'
-    + '<td style="padding: 5px 8px;">Chase Sapphire bonus eligible again (48-month rule from Jul 2025)</td>'
-    + '</tr>'
-    + '</tbody></table>'
+      // Active credits
+      + '<div class="info" style="margin-bottom: 10px;"><div class="t">Active Credits / Perks to Use (Don\'t Forget)</div>'
+      + '<div class="b">Gold $96 Uber One (expires Oct 30, 2026) &bull; $120 Resy (use it) &bull; $84 Dunkin\' &bull; $120 Uber Cash &bull; Hertz Five Star (enroll free) &bull; Bevy free night cert (~Apr 2027 anniversary)</div></div>'
 
-    // FOOTER
-    + '<div style="margin-top: 16px; padding-top: 8px; border-top: 1px solid #e5e7eb; font-size: 8px; color: #9ca3af; text-align: center;">'
-    + 'Sources: The Points Guy &bull; Doctor of Credit &bull; Point valuations are estimates based on community consensus (TPG, Frequent Miler). Actual value depends on redemption.'
-    + '</div>'
+      // Redemption table
+      + '<h2>What Your Points Can Get You Today</h2>'
+      + '<table><thead><tr>'
+      + '<th>Redemption</th><th>Points Needed</th><th>You Have</th><th>Status</th>'
+      + '</tr></thead><tbody>'
+      + '<tr><td><strong>Marriott: 5-6 nights Cat 5 Europe (Westin Athens, Renaissance Paris)</strong></td><td>~150K Bonvoy (5th-night free)</td><td>188,870 Bonvoy</td><td class="green">Ready now</td></tr>'
+      + '<tr><td><strong>Marriott: 2-3 nights Cat 7 luxury (W, JW)</strong></td><td>~140-200K Bonvoy</td><td>188,870 Bonvoy</td><td class="green">Ready now</td></tr>'
+      + '<tr><td><strong>ANA First Class RT to Europe via Tokyo</strong></td><td>~110K MR</td><td>227,143 MR</td><td class="green">Ready now</td></tr>'
+      + '<tr><td><strong>Virgin Atlantic &rarr; Delta One RT to Europe</strong></td><td>~50K MR</td><td>227,143 MR</td><td class="green">Ready (~4 trips)</td></tr>'
+      + '<tr><td><strong>United RT economy to Europe (via Bilt &rarr; United)</strong></td><td>~60K United</td><td>38,300 Bilt</td><td class="amber">Need 21,700 more</td></tr>'
+      + '<tr><td><strong>United Polaris business RT to Europe</strong></td><td>~120-160K United</td><td>93,957 UR (locked) + 38,300 Bilt</td><td class="red">UR locked until 2029</td></tr>'
+      + '</tbody></table>'
 
-    + '</div>';
+      // Current cards
+      + '<h2>Current Cards</h2>'
+      + '<div class="elig-row">'
+      + '<div class="elig-col" style="border-color: #b8860b;"><div class="n">Amex Gold (...83000)</div><div class="d">$325/yr &bull; 227,143 MR &bull; primary card</div></div>'
+      + '<div class="elig-col" style="border-color: #5b21b6;"><div class="n">Marriott Bevy (...41008)</div><div class="d">$250/yr &bull; Opened Apr 12, 2026 &bull; 175K bonus posted</div></div>'
+      + '<div class="elig-col" style="border-color: #003087;"><div class="n">Chase Freedom Unlimited (...9058)</div><div class="d">$0/yr &bull; 93,957 UR locked &bull; sock drawer</div></div>'
+      + '<div class="elig-col" style="border-color: #1a1a2e;"><div class="n">Bilt Mastercard 2.0</div><div class="d">$0/yr &bull; 38,300 dormant &bull; transfer rail</div></div>'
+      + '</div>'
 
-    var container = document.createElement('div');
-    container.innerHTML = html;
-    container.style.position = 'absolute';
-    container.style.left = '-9999px';
-    document.body.appendChild(container);
+      // Key dates
+      + '<h2>Key Dates &amp; Deadlines</h2>'
+      + '<table><tbody>'
+      + '<tr><td style="width: 110px;" class="red">Oct 30, 2026</td><td>Amex Gold $96 Uber One anniversary credit expires</td></tr>'
+      + '<tr><td class="amber">Apr 12, 2027</td><td>Bevy anniversary &mdash; free night cert (up to 50K) posts. Call retention BEFORE $250 fee for offers.</td></tr>'
+      + '<tr><td class="gray">Q2-Q3 2026</td><td>Amex Green Card refresh expected &mdash; wait for new SUB before evaluating</td></tr>'
+      + '<tr><td class="gray">Aug 2029</td><td>Chase Sapphire family eligible again (48-mo from CSP bonus Jul 2025) &mdash; CSR window opens</td></tr>'
+      + '</tbody></table>'
 
-    html2pdf().set({
-        margin: [0.4, 0.5, 0.4, 0.5],
-        filename: 'JM Credit Card Points ' + new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }).replace(/\//g, '-') + '.pdf',
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
-        pagebreak: { mode: ['css'] }
-    }).from(container.firstChild).save().then(function() {
-        document.body.removeChild(container);
+      + '<footer>Sources: The Points Guy &bull; Doctor of Credit &bull; Frequent Miler &bull; Direct issuer pages. Point valuations are community-consensus estimates. Actual value depends on redemption.</footer>'
+
+      + '</div>'
+
+      + '<script>window.onload = function(){ setTimeout(function(){ window.print(); }, 300); };<\/script>'
+      + '</body></html>';
+
+    var win = window.open('', '_blank');
+    if (!win) {
         btn.disabled = false;
-        btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg> Create Report';
-    });
+        btn.innerHTML = origHTML;
+        alert('Pop-up blocked. Allow pop-ups for this site, then click Create Report again.');
+        return;
+    }
+    win.document.write(doc);
+    win.document.close();
+    win.document.title = fileName;
+
+    btn.disabled = false;
+    btn.innerHTML = origHTML;
 }
 </script>
 
