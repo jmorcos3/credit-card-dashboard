@@ -228,6 +228,30 @@
         .lo-summary { font-size: 12px; color: #6b7280; line-height: 1.4; }
         .lo-loading { text-align: center; padding: 24px; color: #9ca3af; font-size: 13px; }
 
+        .quick-ref {
+            border: 2px solid #1a1a2e; border-radius: 14px; padding: 20px;
+            margin-bottom: 32px; background: linear-gradient(135deg, #fafafa 0%, #fff 100%);
+        }
+        .quick-ref h2 { border: none; padding: 0; margin-bottom: 4px; font-size: 18px; }
+        .quick-ref .qr-sub { color: #6b7280; font-size: 13px; margin-bottom: 16px; }
+        .qr-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        .qr-card {
+            border-radius: 10px; padding: 14px 16px; color: white; position: relative;
+        }
+        .qr-card.gold { background: linear-gradient(135deg, #b8860b, #d4a73d); }
+        .qr-card.bevy { background: linear-gradient(135deg, #5b21b6, #7c3aed); }
+        .qr-card.bilt { background: linear-gradient(135deg, #1a1a2e, #2d2d44); }
+        .qr-card.skip { background: linear-gradient(135deg, #6b7280, #9ca3af); }
+        .qr-card .qr-label { font-size: 10px; opacity: 0.85; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+        .qr-card .qr-name { font-size: 15px; font-weight: 800; margin: 4px 0 8px; }
+        .qr-card .qr-use { font-size: 12px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
+        .qr-card .qr-detail { font-size: 11px; opacity: 0.9; line-height: 1.4; }
+        .qr-card .qr-badge {
+            position: absolute; top: 12px; right: 12px;
+            background: rgba(255,255,255,0.25); padding: 2px 8px; border-radius: 4px;
+            font-size: 10px; font-weight: 700;
+        }
+
         .footer { font-size: 12px; color: #9ca3af; text-align: center; padding: 24px; border-top: 1px solid #e5e7eb; }
 
         @media (max-width: 768px) {
@@ -238,6 +262,7 @@
             .strategy-rules { grid-template-columns: 1fr; }
             .tl-item { grid-template-columns: 1fr; }
             .lo-grid { grid-template-columns: 1fr; }
+            .qr-grid { grid-template-columns: 1fr 1fr; }
             #bevyTracker > div[style*="grid-template-columns"] { grid-template-columns: 1fr 1fr !important; }
         }
     </style>
@@ -253,6 +278,45 @@
         </button>
     </div>
     <div class="subtitle">Goal: Marriott Bonvoy hotels + United flights to Europe &mdash; Chase Private Client &mdash; <span id="lastUpdated">Loading…</span></div>
+
+    <!-- ═══════════ DAILY CARD CHEAT SHEET ═══════════ -->
+    <div class="quick-ref">
+        <h2>Which Card to Swipe — Quick Reference</h2>
+        <div class="qr-sub">Bevy bonus complete (Jun 1, 2026). Switch back to Gold as primary. Use Bevy <strong>only at Marriott</strong>.</div>
+        <div class="qr-grid">
+            <div class="qr-card gold">
+                <span class="qr-badge">PRIMARY</span>
+                <div class="qr-label">Amex Gold</div>
+                <div class="qr-name">Everyday Card</div>
+                <div class="qr-use">Dining · Groceries · Flights · Prepaid Hotels</div>
+                <div class="qr-detail">4x dining (worldwide) · 4x US groceries · 3x flights direct · <strong>5x prepaid hotels via Amex Travel</strong></div>
+            </div>
+            <div class="qr-card bevy">
+                <span class="qr-badge">MARRIOTT ONLY</span>
+                <div class="qr-label">Bevy</div>
+                <div class="qr-name">Marriott Stays</div>
+                <div class="qr-use">Marriott / Bonvoy properties</div>
+                <div class="qr-detail">6x Marriott direct · 4x restaurants worldwide (refreshed) · 2x other. Skip non-Marriott — Gold beats it.</div>
+            </div>
+            <div class="qr-card bilt">
+                <span class="qr-badge">RENT + 1ST OF MONTH</span>
+                <div class="qr-label">Bilt 2.0</div>
+                <div class="qr-name">Rent + Rent Day</div>
+                <div class="qr-use">Rent (only path to points) · Rent Day dining</div>
+                <div class="qr-detail">1x rent (no fee) · 3x dining on 1st of month (Rent Day) · transfers 1:1 to United &amp; Marriott</div>
+            </div>
+            <div class="qr-card skip">
+                <span class="qr-badge">SOCK DRAWER</span>
+                <div class="qr-label">Chase Freedom Unlimited</div>
+                <div class="qr-name">Don't Use</div>
+                <div class="qr-use">Skip — UR locked until Aug 2029</div>
+                <div class="qr-detail">UR points trapped without Sapphire card. 1.5x earn wasted vs Gold's 4x on dining/groceries.</div>
+            </div>
+        </div>
+        <div style="margin-top: 14px; padding: 12px 14px; background: #fffbeb; border: 1px solid #fcd34d; border-radius: 8px; font-size: 12px; color: #78350f;">
+            <strong>Active credit grabs (use before expiry):</strong> Gold $96 Uber One (expires Oct 30, 2026) · Gold $84 Dunkin' · Gold $120 Resy ($50 earned) · Gold $120 Uber Cash · Enroll Hertz Five Star (free via Gold)
+        </div>
+    </div>
 
     <!-- ═══════════ YOUR POINTS ═══════════ -->
     <div class="points-grid">
