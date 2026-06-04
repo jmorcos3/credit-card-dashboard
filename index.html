@@ -595,29 +595,29 @@
             </div>
         </div>
 
-        <!-- #2 Marriott Bevy — SIGNED UP -->
-        <div class="signup-card" style="border-color: #bbf7d0; background: #f0fdf4;">
+        <!-- #2 Marriott Bevy — THRESHOLD HIT -->
+        <div class="signup-card" style="border-color: #059669; background: #f0fdf4;">
             <div>
                 <div>
-                    <span class="card-rank" style="background: #dcfce7; color: #166534;">&#10003;</span>
+                    <span class="card-rank" style="background: #059669; color: white;">&#10003;</span>
                     <div class="card-title">Marriott Bonvoy Bevy</div>
-                    <span class="issuer-tag">Amex &bull; $250/yr &bull; <strong style="color: #059669;">SIGNED UP Apr 12, 2026</strong></span>
+                    <span class="issuer-tag">Amex &bull; $250/yr &bull; <strong style="color: #059669;">THRESHOLD MET Jun 1, 2026</strong></span>
                 </div>
                 <div class="why">
-                    <strong style="color: #059669;">You opened this card!</strong> Now spend <strong>$5,000 in 6 months</strong> (by Oct 12) to earn 175,000 Marriott Bonvoy points. Put all everyday spending on this card until you hit the target, then switch back to Amex Gold.
+                    <strong style="color: #059669;">$5,000 spend complete! 175,000 Marriott Bonvoy points pending.</strong> Bonus posts to your Bonvoy account 8-12 weeks after threshold = <strong>Aug 24 - Sep 21, 2026</strong>. Now <strong>switch primary spend back to Amex Gold</strong> (4x dining vs 2x Marriott; MR worth 2&cent; vs Marriott 0.7&cent;). Bevy still useful for Marriott stays (6x) and rare 2x categories.
                 </div>
                 <div class="details">
-                    <div class="detail-item">Target: <span>$5,000 by Oct 12, 2026</span></div>
-                    <div class="detail-item">Bonus: <span>175,000 Marriott Bonvoy points</span></div>
-                    <div class="detail-item">Then: <span>Switch back to Amex Gold for 4x dining/groceries</span></div>
+                    <div class="detail-item">Threshold hit: <span>Jun 1, 2026</span></div>
+                    <div class="detail-item">Bonus posts by: <span>~Sep 21, 2026</span></div>
+                    <div class="detail-item">Next move: <span>Switch primary to Amex Gold</span></div>
                 </div>
-                <span class="tag" style="background: #dcfce7; color: #166534;">SIGNED UP</span>
-                <span class="tag tag-marriott">175K MARRIOTT PENDING</span>
+                <span class="tag" style="background: #059669; color: white;">&#10003; THRESHOLD MET</span>
+                <span class="tag tag-marriott">175K MARRIOTT POSTING</span>
             </div>
-            <div class="bonus-box" style="background: #dcfce7; border-color: #bbf7d0;">
-                <div class="bonus-pts">175K</div>
-                <div class="bonus-label">Marriott Points</div>
-                <div class="bonus-value" style="color: #166534;">Pending — hit $5K spend</div>
+            <div class="bonus-box" style="background: #059669; border-color: #047857;">
+                <div class="bonus-pts" style="color: white;">175K</div>
+                <div class="bonus-label" style="color: #d1fae5;">Marriott Points</div>
+                <div class="bonus-value" style="color: white;">Posting Aug-Sep 2026</div>
             </div>
         </div>
 
@@ -988,7 +988,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // ═══════════ BEVY SPEND TRACKER ═══════════
 function loadBevySpend() {
     var stored = localStorage.getItem('bevySpent');
-    var spent = stored !== null ? parseFloat(stored) : 4500.98; // default: Bevy statement total Apr 12-May 22 ($273.76 prior + $4,227.22 charges). 90% to target. Remaining ~$499.
+    var spent = stored !== null ? parseFloat(stored) : 5000; // THRESHOLD HIT Jun 1, 2026 per Amex chat. 175K Marriott bonus posts in 8-12 weeks (Aug-Sep 2026).
     updateBevyUI(spent);
 }
 
