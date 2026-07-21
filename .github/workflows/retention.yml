@@ -1,0 +1,54 @@
+name: Retention Call Reminders
+
+on:
+  schedule:
+    - cron: '0 14 * * *'  # Daily 10am ET (14:00 UTC)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const now = new Date();
+            // Card fee dates: [MM-DD, cardName, annualFee]
+            const cards = [
+              { fee_date: '04-12', card: 'Marriott Bonvoy Bevy', fee: 250, tips: 'Ask for $100-200 statement credit or 10-30K MR retention bonus. Free night cert (~$300-400 value at Cat 5) still makes card worth keeping. If no offer, use Bonvoy points before cancel (24mo expiry).' },
+              { fee_date: '05-11', card: 'Amex Gold', fee: 325, tips: 'Ask for bonus MR (10-30K common) or statement credit. Card pays for itself via credits ($100 Resy + $84 Dunkin + $120 Dining + $120 Uber Cash = $424) — keep regardless.' },
+            ];
+
+            const currentYear = now.getUTCFullYear();
+            for (const c of cards) {
+              // Compute next fee date this year or next
+              let feeDate = new Date(`${currentYear}-${c.fee_date}T14:00:00Z`);
+              if (feeDate < now) feeDate = new Date(`${currentYear + 1}-${c.fee_date}T14:00:00Z`);
+              const daysUntil = Math.floor((feeDate - now) / (1000 * 60 * 60 * 24));
+
+              // Fire at exactly 30 days out
+              if (daysUntil === 30) {
+                const feeStr = feeDate.toISOString().slice(0, 10);
+                const title = `Retention call: ${c.card} fee ($${c.fee}) posts in 30 days (${feeStr})`;
+                const body = `Your **${c.card}** $${c.fee} annual fee posts on **${feeStr}**.\n\n` +
+                             `**Call retention BEFORE the fee posts.**\n\n` +
+                             `Path: Amex chat (fastest) or 1-800-528-4800.\n\n` +
+                             `**Script:** "Hi, I'm reviewing my card and see the $${c.fee} fee is about to post. Are there any retention offers available?" If they say no: "Any statement credits, bonus points, or fee waivers I'd qualify for if I keep the card?"\n\n` +
+                             `**Notes for this card:** ${c.tips}\n\n` +
+                             `**Try chat first, then call if no luck.** Reps have discretion — sometimes trying again a day later gets a better offer.`;
+                await github.rest.issues.create({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  title: title,
+                  body: body,
+                  labels: ['retention', 'action-required']
+                });
+                console.log(`Created retention issue for ${c.card}`);
+              } else {
+                console.log(`${c.card}: ${daysUntil} days until fee — no action`);
+              }
+            }

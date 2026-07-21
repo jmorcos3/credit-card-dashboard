@@ -228,6 +228,45 @@
         .lo-summary { font-size: 12px; color: #6b7280; line-height: 1.4; }
         .lo-loading { text-align: center; padding: 24px; color: #9ca3af; font-size: 13px; }
 
+        /* Portfolio chart */
+        .chart-section { margin-bottom: 48px; }
+        .chart-wrap { background: white; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px; }
+        .chart-legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; font-size: 12px; }
+        .chart-legend .lg-item { display: flex; align-items: center; gap: 6px; }
+        .chart-legend .lg-dot { width: 12px; height: 12px; border-radius: 3px; }
+        .chart-svg { width: 100%; height: 300px; }
+
+        /* Trip planner */
+        .trip-planner { background: #eff6ff; border: 2px solid #bfdbfe; border-radius: 14px; padding: 24px; margin-bottom: 48px; }
+        .trip-form { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 12px; margin-bottom: 16px; align-items: end; }
+        .trip-form label { font-size: 12px; color: #6b7280; font-weight: 600; display: block; margin-bottom: 4px; }
+        .trip-form select, .trip-form input { padding: 8px 12px; border: 1px solid #bfdbfe; border-radius: 8px; font-size: 14px; width: 100%; font-family: inherit; }
+        .trip-btn { padding: 8px 20px; background: #2563eb; color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; }
+        .trip-btn:hover { background: #1d4ed8; }
+        .trip-result { background: white; border-radius: 10px; padding: 18px; margin-top: 12px; }
+        .trip-result h4 { font-size: 15px; margin-bottom: 10px; }
+        .trip-opt { padding: 10px 12px; margin: 8px 0; border-radius: 8px; background: #f9fafb; border-left: 3px solid #059669; font-size: 13px; }
+        .trip-opt.warn { border-left-color: #d97706; }
+        .trip-opt.bad { border-left-color: #dc2626; }
+        .trip-opt strong { color: #1a1a2e; }
+
+        /* Category calculator */
+        .cat-calc { background: #fef3c7; border: 2px solid #fcd34d; border-radius: 14px; padding: 24px; margin-bottom: 48px; }
+        .cat-form { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+        .cat-form label { font-size: 12px; color: #78350f; font-weight: 600; display: block; margin-bottom: 4px; }
+        .cat-form input { padding: 8px 12px; border: 1px solid #fcd34d; border-radius: 8px; font-size: 14px; width: 100%; font-family: inherit; }
+        .cat-result { background: white; border-radius: 10px; padding: 16px; margin-top: 12px; }
+        .cat-result table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .cat-result th { text-align: left; padding: 8px; background: #fffbeb; font-size: 11px; text-transform: uppercase; color: #78350f; }
+        .cat-result td { padding: 8px; border-bottom: 1px solid #fef3c7; }
+        .cat-result .total-row { font-weight: 700; background: #fffbeb; }
+
+        /* Transfer bonus alert */
+        .xfer-alert { background: #f0fdf4; border: 2px solid #bbf7d0; border-radius: 12px; padding: 16px 20px; margin-bottom: 24px; display: none; }
+        .xfer-alert.show { display: block; }
+        .xfer-alert h4 { font-size: 14px; color: #166534; margin-bottom: 6px; }
+        .xfer-alert p { font-size: 13px; color: #14532d; }
+
         .quick-ref {
             border: 2px solid #1a1a2e; border-radius: 14px; padding: 20px;
             margin-bottom: 32px; background: linear-gradient(135deg, #fafafa 0%, #fff 100%);
@@ -263,6 +302,8 @@
             .tl-item { grid-template-columns: 1fr; }
             .lo-grid { grid-template-columns: 1fr; }
             .qr-grid { grid-template-columns: 1fr 1fr; }
+            .trip-form { grid-template-columns: 1fr; }
+            .cat-form { grid-template-columns: 1fr 1fr; }
             #bevyTracker > div[style*="grid-template-columns"] { grid-template-columns: 1fr 1fr !important; }
         }
     </style>
@@ -388,6 +429,88 @@
             <div class="total-pts">572,035 points across 4 currencies &bull; Amex MR $4,950 + Marriott $1,538 + Chase UR $1,879 + Bilt $689</div>
         </div>
         <div class="total-value">$9,056</div>
+    </div>
+
+    <!-- ═══════════ PORTFOLIO GROWTH CHART ═══════════ -->
+    <div class="chart-section">
+        <h2>Portfolio Growth Over Time</h2>
+        <p style="color: #6b7280; font-size: 14px; margin-top: -12px; margin-bottom: 16px;">
+            Points balance history since Apr 2026. Big jump = Bevy 175K Marriott bonus posted Jun 15.
+        </p>
+        <div class="chart-wrap">
+            <div class="chart-legend">
+                <div class="lg-item"><div class="lg-dot" style="background: #006fcf;"></div>Amex MR</div>
+                <div class="lg-item"><div class="lg-dot" style="background: #7c3aed;"></div>Marriott</div>
+                <div class="lg-item"><div class="lg-dot" style="background: #003087;"></div>Chase UR</div>
+                <div class="lg-item"><div class="lg-dot" style="background: #1a1a2e;"></div>Bilt</div>
+                <div class="lg-item"><div class="lg-dot" style="background: #059669;"></div>Total $ value</div>
+            </div>
+            <svg class="chart-svg" id="portfolioChart" viewBox="0 0 800 300" preserveAspectRatio="none"></svg>
+        </div>
+    </div>
+
+    <!-- ═══════════ TRIP PLANNER ═══════════ -->
+    <div class="trip-planner">
+        <h2 style="border-bottom-color: #bfdbfe;">Trip Planner &mdash; Cheapest Points Path</h2>
+        <p style="color: #6b7280; font-size: 14px; margin-top: -12px; margin-bottom: 16px;">
+            Pick a destination and trip type. Dashboard suggests optimal points path from your current balances.
+        </p>
+        <div class="trip-form">
+            <div>
+                <label>Destination</label>
+                <select id="tripDest">
+                    <option value="paris">Paris</option>
+                    <option value="rome">Rome</option>
+                    <option value="london">London</option>
+                    <option value="barcelona">Barcelona</option>
+                    <option value="athens">Athens</option>
+                    <option value="amsterdam">Amsterdam</option>
+                    <option value="tokyo">Tokyo</option>
+                    <option value="domestic">Domestic US</option>
+                </select>
+            </div>
+            <div>
+                <label>Flight Class</label>
+                <select id="tripClass">
+                    <option value="economy">Economy</option>
+                    <option value="premium">Premium Economy</option>
+                    <option value="business">Business/Polaris</option>
+                    <option value="first">First Class</option>
+                </select>
+            </div>
+            <div>
+                <label>Hotel Nights</label>
+                <select id="tripNights">
+                    <option value="0">No hotel</option>
+                    <option value="3">3 nights</option>
+                    <option value="5" selected>5 nights (5th free)</option>
+                    <option value="7">7 nights</option>
+                    <option value="10">10 nights</option>
+                </select>
+            </div>
+            <button class="trip-btn" onclick="planTrip()">Plan Trip</button>
+        </div>
+        <div class="trip-result" id="tripResult" style="display: none;"></div>
+    </div>
+
+    <!-- ═══════════ CATEGORY SPEND CALCULATOR ═══════════ -->
+    <div class="cat-calc">
+        <h2 style="border-bottom-color: #fcd34d; color: #78350f;">Category Spend Optimizer</h2>
+        <p style="color: #78350f; font-size: 14px; margin-top: -12px; margin-bottom: 16px;">
+            Enter monthly spend by category. Dashboard shows optimal card + annual MR/Marriott earned. Saved locally.
+        </p>
+        <div class="cat-form">
+            <div><label>Dining ($/mo)</label><input type="number" id="catDining" placeholder="1076"></div>
+            <div><label>Groceries ($/mo)</label><input type="number" id="catGroceries" placeholder="374"></div>
+            <div><label>Travel/Flights ($/mo)</label><input type="number" id="catTravel" placeholder="90"></div>
+            <div><label>Marriott stays ($/mo)</label><input type="number" id="catMarriott" placeholder="0"></div>
+            <div><label>Prepaid hotels (Amex Travel)</label><input type="number" id="catPrepaid" placeholder="0"></div>
+            <div><label>Uber/rideshare ($/mo)</label><input type="number" id="catUber" placeholder="0"></div>
+            <div><label>Gas ($/mo)</label><input type="number" id="catGas" placeholder="0"></div>
+            <div><label>Everything else ($/mo)</label><input type="number" id="catOther" placeholder="652"></div>
+        </div>
+        <button class="trip-btn" style="background: #d97706;" onclick="calcCategories()">Calculate Optimal Spend</button>
+        <div class="cat-result" id="catResult" style="display: none;"></div>
     </div>
 
     <!-- ═══════════ YOUR STRATEGY ═══════════ -->
@@ -1064,12 +1187,14 @@ function renderLiveOffers(data) {
                 var tierBadge = i.tier === 'tier1' ? '<span style="background:#fef3c7;color:#92400e;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:700;margin-left:6px;">YOUR CARDS</span>' : '';
                 var emailBadge = i.from_email ? '<span style="background:#dbeafe;color:#1d4ed8;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:700;margin-left:6px;">FROM INBOX</span>' : '';
                 var tldr = i.tldr ? '<div style="font-size:13px;color:#1a1a2e;font-weight:500;margin:6px 0;padding:6px 10px;background:#faf5ff;border-left:3px solid #9333ea;border-radius:4px;">' + i.tldr + '</div>' : '';
+                var breakEven = computeXferBreakEven(i);
                 return '<div class="lo-item">' +
                     '<div class="lo-score ' + cls + '">' + i.score + '</div>' +
                     '<div class="lo-content">' +
                         '<div class="lo-source">' + i.source + (pubDate ? ' • ' + pubDate : '') + newBadge + tierBadge + emailBadge + '</div>' +
                         '<div class="lo-title"><a href="' + i.link + '" target="_blank" rel="noopener">' + i.title + '</a></div>' +
                         tldr +
+                        breakEven +
                         '<div class="lo-summary">' + (i.summary || '').slice(0, 200) + (i.summary && i.summary.length > 200 ? '…' : '') + '</div>' +
                     '</div>' +
                 '</div>';
@@ -1087,6 +1212,287 @@ document.addEventListener('DOMContentLoaded', function() {
     var el = document.getElementById('lastUpdated');
     if (el) el.textContent = 'Updated ' + new Date().toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
 });
+
+// ═══════════ TRANSFER BONUS BREAK-EVEN ═══════════
+function computeXferBreakEven(item) {
+    var text = (item.title + ' ' + (item.summary || '')).toLowerCase();
+    if (!/transfer bonus|conversion bonus/.test(text)) return '';
+    // Extract percentage
+    var pctMatch = text.match(/(\d{2,3})\s*%/);
+    if (!pctMatch) return '';
+    var pct = parseInt(pctMatch[1]);
+    if (pct < 15 || pct > 200) return '';
+
+    // Detect source currency
+    var isMR = /amex|membership rewards|mr\b/.test(text);
+    var isUR = /chase|ultimate rewards|\bur\b/.test(text);
+
+    // Detect target
+    var target = 'partner';
+    var isMarriott = /marriott|bonvoy/.test(text);
+    var isFlyingBlue = /flying blue|air france|klm/.test(text);
+    var isVirgin = /virgin atlantic/.test(text);
+    var isANA = /\bana\b/.test(text);
+    var isUnited = /united|mileageplus/.test(text);
+    var isBA = /british airways|\bba\b|avios/.test(text);
+
+    var baseValueCents = 0.02;  // MR/UR baseline
+    var partnerValueCents = 2.0;  // Default airline transfer
+    var partnerName = 'partner';
+
+    if (isMarriott) { partnerName = 'Marriott'; partnerValueCents = 0.8; }
+    else if (isVirgin) { partnerName = 'Virgin Atlantic'; partnerValueCents = 2.0; }
+    else if (isANA) { partnerName = 'ANA'; partnerValueCents = 2.2; }
+    else if (isFlyingBlue) { partnerName = 'Flying Blue'; partnerValueCents = 1.5; }
+    else if (isUnited) { partnerName = 'United'; partnerValueCents = 1.4; }
+    else if (isBA) { partnerName = 'BA/Avios'; partnerValueCents = 1.4; }
+
+    var srcBalance = isUR ? BALANCES.ur : BALANCES.mr;
+    var srcName = isUR ? 'UR' : 'MR';
+    if (isUR && BALANCES.urLocked) {
+        return '<div style="font-size:12px;margin:6px 0;padding:8px 10px;background:#fef2f2;border-left:3px solid #dc2626;border-radius:4px;color:#7f1d1d;"><strong>Not useful for you:</strong> Your ' + srcBalance.toLocaleString() + ' UR is LOCKED (no Sapphire until Aug 2029).</div>';
+    }
+
+    // Effective value per source point after bonus
+    var effectiveValue = partnerValueCents * (1 + pct / 100);
+    var isCompelling = effectiveValue >= baseValueCents * 100 * 0.9;  // >=1.8¢
+
+    // Example calc: transfer 100K of source
+    var partnerReceived = Math.round(100 * (1 + pct / 100));
+    var partnerDollarValue = Math.round(partnerReceived * partnerValueCents);
+
+    var verdict, color;
+    if (isCompelling) {
+        verdict = 'COMPELLING — beats baseline airline transfer';
+        color = '#059669';
+    } else if (effectiveValue >= 1.5) {
+        verdict = 'DECENT — use only if you need ' + partnerName + ' points for specific trip';
+        color = '#d97706';
+    } else {
+        verdict = 'SKIP — still worse than direct airline transfer at 2.0¢/pt';
+        color = '#dc2626';
+    }
+
+    return '<div style="font-size:12px;margin:6px 0;padding:8px 10px;background:#f0fdf4;border-left:3px solid ' + color + ';border-radius:4px;">' +
+        '<strong style="color:' + color + ';">Break-even for you:</strong> ' +
+        '100K ' + srcName + ' → ' + partnerReceived + 'K ' + partnerName + ' = ~$' + partnerDollarValue + ' (effective ' + effectiveValue.toFixed(2) + '¢/pt). ' +
+        'You have ' + srcBalance.toLocaleString() + ' ' + srcName + '. ' +
+        '<strong>' + verdict + '.</strong>' +
+        '</div>';
+}
+
+// ═══════════ PORTFOLIO GROWTH CHART ═══════════
+function renderPortfolioChart() {
+    fetch('portfolio_history.json?t=' + Date.now())
+        .then(r => r.json())
+        .then(data => {
+            var snaps = data.snapshots;
+            var svg = document.getElementById('portfolioChart');
+            if (!svg || !snaps || !snaps.length) return;
+
+            var W = 800, H = 300, PAD_L = 60, PAD_R = 20, PAD_T = 20, PAD_B = 40;
+            var plotW = W - PAD_L - PAD_R, plotH = H - PAD_T - PAD_B;
+
+            var series = {
+                mr: { color: '#006fcf', values: snaps.map(s => s.mr) },
+                marriott: { color: '#7c3aed', values: snaps.map(s => s.marriott) },
+                ur: { color: '#003087', values: snaps.map(s => s.ur) },
+                bilt: { color: '#1a1a2e', values: snaps.map(s => s.bilt) },
+            };
+            var allPts = Object.values(series).flatMap(s => s.values);
+            var maxY = Math.max.apply(null, allPts) * 1.1;
+            maxY = Math.ceil(maxY / 50000) * 50000;
+
+            var n = snaps.length;
+            var xAt = i => PAD_L + (n > 1 ? (i / (n - 1)) * plotW : plotW / 2);
+            var yAt = v => PAD_T + plotH - (v / maxY) * plotH;
+
+            var svgContent = '';
+
+            // Y-axis gridlines
+            for (var i = 0; i <= 5; i++) {
+                var y = PAD_T + (plotH * i / 5);
+                var val = maxY * (1 - i / 5);
+                svgContent += '<line x1="' + PAD_L + '" y1="' + y + '" x2="' + (W - PAD_R) + '" y2="' + y + '" stroke="#f3f4f6" stroke-width="1"/>';
+                svgContent += '<text x="' + (PAD_L - 8) + '" y="' + (y + 4) + '" text-anchor="end" font-size="10" fill="#6b7280">' + Math.round(val / 1000) + 'K</text>';
+            }
+
+            // X-axis labels (every other date)
+            snaps.forEach(function(s, i) {
+                if (i % Math.max(1, Math.floor(n / 6)) === 0 || i === n - 1) {
+                    var x = xAt(i);
+                    var lbl = s.date.slice(5); // MM-DD
+                    svgContent += '<text x="' + x + '" y="' + (H - PAD_B + 16) + '" text-anchor="middle" font-size="10" fill="#6b7280">' + lbl + '</text>';
+                }
+            });
+
+            // Lines
+            Object.keys(series).forEach(function(key) {
+                var s = series[key];
+                var pathD = s.values.map(function(v, i) {
+                    return (i === 0 ? 'M' : 'L') + xAt(i) + ',' + yAt(v);
+                }).join(' ');
+                svgContent += '<path d="' + pathD + '" fill="none" stroke="' + s.color + '" stroke-width="2.5"/>';
+                s.values.forEach(function(v, i) {
+                    svgContent += '<circle cx="' + xAt(i) + '" cy="' + yAt(v) + '" r="4" fill="' + s.color + '"/>';
+                });
+            });
+
+            svg.innerHTML = svgContent;
+        })
+        .catch(function(err) { console.error('Chart load failed:', err); });
+}
+document.addEventListener('DOMContentLoaded', renderPortfolioChart);
+
+// ═══════════ TRIP PLANNER ═══════════
+var BALANCES = { mr: 247524, marriott: 192254, ur: 93957, urLocked: true, bilt: 38300 };
+
+var FLIGHT_COST = {
+    // dest: { economy, premium, business, first } — round-trip miles for each program
+    paris:     { economy: { va: 50, un: 60, aa: 60 }, premium: { va: 85, un: 100 }, business: { va: 120, un: 140, ana: 110 }, first:    { ana: 220 } },
+    rome:      { economy: { va: 50, un: 60, aa: 60 }, premium: { va: 85, un: 100 }, business: { va: 120, un: 140 }, first:    {} },
+    london:    { economy: { va: 40, un: 60, aa: 55 }, premium: { va: 75, un: 90  }, business: { va: 110, un: 140 }, first:    {} },
+    barcelona: { economy: { va: 50, un: 60, aa: 60 }, premium: { va: 85, un: 100 }, business: { va: 130, un: 150 }, first:    {} },
+    athens:    { economy: { va: 60, un: 70, aa: 70 }, premium: { va: 100, un: 110 }, business: { va: 140, un: 160 }, first:    {} },
+    amsterdam: { economy: { va: 45, un: 60, aa: 60 }, premium: { va: 80, un: 100 }, business: { va: 115, un: 140 }, first:    {} },
+    tokyo:     { economy: { va: 60, un: 70, ana: 55 }, premium: { va: 100, un: 120 }, business: { un: 160, ana: 90 }, first:    { ana: 130 } },
+    domestic:  { economy: { va: 25, un: 25, aa: 25 }, premium: { va: 40, un: 40 }, business: { va: 60, un: 70 }, first:    {} },
+};
+
+var HOTEL_TIER = {
+    // dest: { hotel name, points per night, category }
+    paris:     { name: 'Renaissance Paris Hotel Vendôme', ptsPerNight: 50, cat: 5 },
+    rome:      { name: 'Sheraton Roma / Westin Excelsior', ptsPerNight: 55, cat: 5 },
+    london:    { name: 'London Marriott County Hall', ptsPerNight: 60, cat: 6 },
+    barcelona: { name: 'W Barcelona (peak)', ptsPerNight: 70, cat: 6 },
+    athens:    { name: 'Athens Marriott', ptsPerNight: 40, cat: 4 },
+    amsterdam: { name: 'Renaissance Amsterdam', ptsPerNight: 50, cat: 5 },
+    tokyo:     { name: 'Westin Tokyo', ptsPerNight: 60, cat: 6 },
+    domestic:  { name: 'Various US Marriott', ptsPerNight: 40, cat: 4 },
+};
+
+function planTrip() {
+    var dest = document.getElementById('tripDest').value;
+    var cls = document.getElementById('tripClass').value;
+    var nights = parseInt(document.getElementById('tripNights').value);
+    var flightOpts = (FLIGHT_COST[dest] || {})[cls] || {};
+
+    var result = document.getElementById('tripResult');
+    var html = '<h4>Best Points Path to ' + dest.charAt(0).toUpperCase() + dest.slice(1) + '</h4>';
+
+    // Flight suggestions
+    html += '<div style="font-weight: 700; margin: 10px 0 6px; font-size: 13px;">FLIGHT (RT, ' + cls + '):</div>';
+    var flightSuggestions = [];
+    if (flightOpts.va) {
+        var mrCost = flightOpts.va * 1000;
+        var ok = BALANCES.mr >= mrCost;
+        flightSuggestions.push({ok: ok, path: 'Amex MR &rarr; Virgin Atlantic', cost: mrCost, unit: 'MR', have: BALANCES.mr, tag: ok ? 'BEST' : 'need more'});
+    }
+    if (flightOpts.ana) {
+        var mrCost = flightOpts.ana * 1000;
+        var ok = BALANCES.mr >= mrCost;
+        flightSuggestions.push({ok: ok, path: 'Amex MR &rarr; ANA', cost: mrCost, unit: 'MR', have: BALANCES.mr, tag: (cls === 'first' ? 'BEST for First' : 'good')});
+    }
+    if (flightOpts.un) {
+        var unCost = flightOpts.un * 1000;
+        var biltOk = BALANCES.bilt >= unCost;
+        flightSuggestions.push({ok: biltOk, path: 'Bilt &rarr; United (1:1, no Sapphire needed)', cost: unCost, unit: 'Bilt', have: BALANCES.bilt, tag: biltOk ? 'ready' : 'need ' + (unCost - BALANCES.bilt).toLocaleString() + ' more Bilt'});
+    }
+    if (flightOpts.aa) {
+        var aaCost = flightOpts.aa * 1000;
+        flightSuggestions.push({ok: false, path: 'AA miles (no card yet)', cost: aaCost, unit: 'AA', have: 0, tag: 'need Citi AAdvantage card first'});
+    }
+
+    // Sort by feasibility
+    flightSuggestions.sort(function(a, b) { return (b.ok ? 1 : 0) - (a.ok ? 1 : 0); });
+    flightSuggestions.forEach(function(s) {
+        var cls = s.ok ? '' : (s.unit === 'AA' ? 'bad' : 'warn');
+        html += '<div class="trip-opt ' + cls + '"><strong>' + s.path + '</strong> &mdash; ' + s.cost.toLocaleString() + ' ' + s.unit + ' (' + s.tag + ')<br><span style="color: #6b7280; font-size: 12px;">You have: ' + s.have.toLocaleString() + ' ' + s.unit + '</span></div>';
+    });
+    if (flightSuggestions.length === 0) {
+        html += '<div class="trip-opt bad">No good options for ' + cls + ' to ' + dest + '. Consider mixed cash + points.</div>';
+    }
+
+    // Hotel
+    if (nights > 0) {
+        var hotel = HOTEL_TIER[dest];
+        if (hotel) {
+            var perNight = hotel.ptsPerNight * 1000;
+            var totalNights = nights;
+            var chargedNights = nights >= 5 ? nights - 1 : nights; // 5th-night-free applies to 5+
+            var totalPts = perNight * chargedNights;
+            var ok = BALANCES.marriott >= totalPts;
+            var savings = nights >= 5 ? '<span style="color: #059669; font-weight: 700;"> (5th-night-free saves ' + perNight.toLocaleString() + ')</span>' : '';
+            html += '<div style="font-weight: 700; margin: 14px 0 6px; font-size: 13px;">HOTEL (' + nights + ' nights):</div>';
+            html += '<div class="trip-opt ' + (ok ? '' : 'warn') + '"><strong>' + hotel.name + '</strong> (Cat ' + hotel.cat + ')<br>' + totalPts.toLocaleString() + ' Bonvoy pts total' + savings + '<br><span style="color: #6b7280; font-size: 12px;">You have: ' + BALANCES.marriott.toLocaleString() + ' Bonvoy ' + (ok ? '&mdash; READY' : '&mdash; need ' + (totalPts - BALANCES.marriott).toLocaleString() + ' more') + '</span></div>';
+        }
+    }
+
+    // Summary
+    html += '<div style="margin-top: 14px; padding: 12px 14px; background: #fffbeb; border: 1px solid #fcd34d; border-radius: 8px; font-size: 12px; color: #78350f;"><strong>Tip:</strong> Book flights first (award space is scarce), then transfer points. Amex MR transfers to Virgin Atlantic/ANA are instant. Bilt to United takes ~24hr.</div>';
+
+    result.innerHTML = html;
+    result.style.display = 'block';
+}
+
+// ═══════════ CATEGORY SPEND CALCULATOR ═══════════
+var CAT_DEFAULTS = { dining: 1076, groceries: 374, travel: 90, marriott: 0, prepaid: 0, uber: 0, gas: 0, other: 652 };
+
+function loadCategories() {
+    var stored = JSON.parse(localStorage.getItem('categorySpend') || 'null') || CAT_DEFAULTS;
+    ['dining','groceries','travel','marriott','prepaid','uber','gas','other'].forEach(function(k) {
+        var el = document.getElementById('cat' + k.charAt(0).toUpperCase() + k.slice(1));
+        if (el && stored[k] != null) el.value = stored[k];
+    });
+}
+document.addEventListener('DOMContentLoaded', loadCategories);
+
+function calcCategories() {
+    var vals = {};
+    ['dining','groceries','travel','marriott','prepaid','uber','gas','other'].forEach(function(k) {
+        var el = document.getElementById('cat' + k.charAt(0).toUpperCase() + k.slice(1));
+        vals[k] = parseFloat(el.value) || 0;
+    });
+    localStorage.setItem('categorySpend', JSON.stringify(vals));
+
+    // Optimal card per category (post-Gold refresh Apr 2026)
+    // Multipliers: Gold=4x dining/groceries, 3x flights, 5x prepaid hotels; Bevy=6x Marriott, 2x other; CFU=1.5x other
+    // MR ~2¢/pt, Marriott ~0.8¢/pt, UR locked
+    var rows = [
+        { cat: 'Dining',              spend: vals.dining,    card: 'Amex Gold',  rate: '4x MR',        annualPts: vals.dining * 12 * 4,    ptsType: 'MR' },
+        { cat: 'Groceries (US)',      spend: vals.groceries, card: 'Amex Gold',  rate: '4x MR',        annualPts: vals.groceries * 12 * 4, ptsType: 'MR' },
+        { cat: 'Flights direct',      spend: vals.travel,    card: 'Amex Gold',  rate: '3x MR',        annualPts: vals.travel * 12 * 3,    ptsType: 'MR' },
+        { cat: 'Marriott stays',      spend: vals.marriott,  card: 'Bevy',       rate: '6x Marriott',  annualPts: vals.marriott * 12 * 6,  ptsType: 'Marriott' },
+        { cat: 'Prepaid hotels (Amex Travel)', spend: vals.prepaid, card: 'Amex Gold', rate: '5x MR', annualPts: vals.prepaid * 12 * 5, ptsType: 'MR' },
+        { cat: 'Uber/rideshare',      spend: vals.uber,      card: 'Amex Gold',  rate: '1x MR',        annualPts: vals.uber * 12 * 1,      ptsType: 'MR' },
+        { cat: 'Gas',                 spend: vals.gas,       card: 'Amex Gold',  rate: '1x MR',        annualPts: vals.gas * 12 * 1,       ptsType: 'MR' },
+        { cat: 'Everything else',     spend: vals.other,     card: 'Amex Gold',  rate: '1x MR',        annualPts: vals.other * 12 * 1,     ptsType: 'MR' },
+    ];
+
+    var totalMR = 0, totalMarriott = 0, totalSpend = 0;
+    rows.forEach(function(r) {
+        totalSpend += r.spend * 12;
+        if (r.ptsType === 'MR') totalMR += r.annualPts;
+        if (r.ptsType === 'Marriott') totalMarriott += r.annualPts;
+    });
+
+    var mrValue = totalMR * 0.02;
+    var marriottValue = totalMarriott * 0.008;
+    var totalValue = mrValue + marriottValue;
+    var effectiveReturn = totalSpend > 0 ? ((totalValue / totalSpend) * 100).toFixed(2) : 0;
+
+    var html = '<h4 style="font-size: 15px; margin-bottom: 12px;">Annual Earnings on Your Spending</h4><table><thead><tr><th>Category</th><th>Monthly $</th><th>Best Card</th><th>Rate</th><th>Annual Pts</th></tr></thead><tbody>';
+    rows.filter(function(r) { return r.spend > 0; }).forEach(function(r) {
+        html += '<tr><td>' + r.cat + '</td><td>$' + r.spend.toLocaleString() + '</td><td><strong>' + r.card + '</strong></td><td>' + r.rate + '</td><td>' + r.annualPts.toLocaleString() + ' ' + r.ptsType + '</td></tr>';
+    });
+    html += '<tr class="total-row"><td colspan="2">TOTAL ($' + totalSpend.toLocaleString() + '/yr spend)</td><td colspan="2">MR: ' + totalMR.toLocaleString() + ' ($' + Math.round(mrValue).toLocaleString() + ')<br>Marriott: ' + totalMarriott.toLocaleString() + ' ($' + Math.round(marriottValue).toLocaleString() + ')</td><td><strong>$' + Math.round(totalValue).toLocaleString() + ' value<br>' + effectiveReturn + '% effective return</strong></td></tr>';
+    html += '</tbody></table>';
+    html += '<div style="margin-top: 10px; padding: 10px 12px; background: #eff6ff; border-radius: 6px; font-size: 12px; color: #1e40af;"><strong>Tip:</strong> Effective return &gt;3% = you\'re optimizing well. Under 2% = missing category multipliers.</div>';
+
+    var result = document.getElementById('catResult');
+    result.innerHTML = html;
+    result.style.display = 'block';
+}
 
 // ═══════════ BEVY SPEND TRACKER ═══════════
 function loadBevySpend() {
