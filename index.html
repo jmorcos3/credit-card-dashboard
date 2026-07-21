@@ -455,18 +455,34 @@
         <p style="color: #6b7280; font-size: 14px; margin-top: -12px; margin-bottom: 16px;">
             Pick a destination and trip type. Dashboard suggests optimal points path from your current balances.
         </p>
-        <div class="trip-form">
+        <div class="trip-form" style="grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr auto;">
             <div>
                 <label>Destination</label>
                 <select id="tripDest">
-                    <option value="paris">Paris</option>
-                    <option value="rome">Rome</option>
-                    <option value="london">London</option>
-                    <option value="barcelona">Barcelona</option>
-                    <option value="athens">Athens</option>
-                    <option value="amsterdam">Amsterdam</option>
-                    <option value="tokyo">Tokyo</option>
-                    <option value="domestic">Domestic US</option>
+                    <optgroup label="Europe">
+                        <option value="paris">Paris</option>
+                        <option value="london">London</option>
+                        <option value="rome">Rome</option>
+                        <option value="barcelona">Barcelona</option>
+                        <option value="madrid">Madrid</option>
+                        <option value="lisbon">Lisbon</option>
+                        <option value="athens">Athens</option>
+                        <option value="amsterdam">Amsterdam</option>
+                        <option value="dublin">Dublin</option>
+                        <option value="milan">Milan</option>
+                        <option value="prague">Prague</option>
+                        <option value="reykjavik">Reykjavik</option>
+                    </optgroup>
+                    <optgroup label="Asia/Pacific">
+                        <option value="tokyo">Tokyo</option>
+                        <option value="dubai">Dubai</option>
+                        <option value="sydney">Sydney</option>
+                    </optgroup>
+                    <optgroup label="Americas">
+                        <option value="cancun">Cancun</option>
+                        <option value="mexicocity">Mexico City</option>
+                        <option value="domestic">Domestic US</option>
+                    </optgroup>
                 </select>
             </div>
             <div>
@@ -479,13 +495,37 @@
                 </select>
             </div>
             <div>
+                <label>Trip Type</label>
+                <select id="tripDirection">
+                    <option value="rt">Round-trip</option>
+                    <option value="ow">One-way</option>
+                </select>
+            </div>
+            <div>
+                <label>Travelers</label>
+                <select id="tripPax">
+                    <option value="1">1</option>
+                    <option value="2" selected>2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+            </div>
+            <div>
                 <label>Hotel Nights</label>
                 <select id="tripNights">
                     <option value="0">No hotel</option>
                     <option value="3">3 nights</option>
                     <option value="5" selected>5 nights (5th free)</option>
                     <option value="7">7 nights</option>
-                    <option value="10">10 nights</option>
+                    <option value="10">10 nights (2x 5th free)</option>
+                </select>
+            </div>
+            <div>
+                <label>Hotel Tier</label>
+                <select id="tripHotel">
+                    <option value="mid" selected>Mid (Cat 4-5)</option>
+                    <option value="premium">Premium (Cat 6)</option>
+                    <option value="luxury">Luxury (Cat 7-8)</option>
                 </select>
             </div>
             <button class="trip-btn" onclick="planTrip()">Plan Trip</button>
@@ -1290,18 +1330,27 @@ function renderPortfolioChart() {
             var svg = document.getElementById('portfolioChart');
             if (!svg || !snaps || !snaps.length) return;
 
-            var W = 800, H = 300, PAD_L = 60, PAD_R = 20, PAD_T = 20, PAD_B = 40;
+            var W = 800, H = 300, PAD_L = 60, PAD_R = 75, PAD_T = 20, PAD_B = 40;
             var plotW = W - PAD_L - PAD_R, plotH = H - PAD_T - PAD_B;
 
+            // Compute total $ value per snapshot
+            var totalValues = snaps.map(function(s) {
+                return Math.round(s.mr * 0.02 + s.marriott * 0.008 + s.ur * 0.02 + s.bilt * 0.018);
+            });
+
             var series = {
-                mr: { color: '#006fcf', values: snaps.map(s => s.mr) },
-                marriott: { color: '#7c3aed', values: snaps.map(s => s.marriott) },
-                ur: { color: '#003087', values: snaps.map(s => s.ur) },
-                bilt: { color: '#1a1a2e', values: snaps.map(s => s.bilt) },
+                mr: { color: '#006fcf', label: 'Amex MR', values: snaps.map(s => s.mr) },
+                marriott: { color: '#7c3aed', label: 'Marriott', values: snaps.map(s => s.marriott) },
+                ur: { color: '#003087', label: 'Chase UR', values: snaps.map(s => s.ur) },
+                bilt: { color: '#1a1a2e', label: 'Bilt', values: snaps.map(s => s.bilt) },
             };
             var allPts = Object.values(series).flatMap(s => s.values);
             var maxY = Math.max.apply(null, allPts) * 1.1;
             maxY = Math.ceil(maxY / 50000) * 50000;
+
+            // Total value axis: scale to same visual height
+            var maxTotal = Math.max.apply(null, totalValues) * 1.1;
+            maxTotal = Math.ceil(maxTotal / 500) * 500;
 
             var n = snaps.length;
             var xAt = i => PAD_L + (n > 1 ? (i / (n - 1)) * plotW : plotW / 2);
@@ -1309,12 +1358,14 @@ function renderPortfolioChart() {
 
             var svgContent = '';
 
-            // Y-axis gridlines
+            // Y-axis gridlines (left: points, right: $ value)
             for (var i = 0; i <= 5; i++) {
                 var y = PAD_T + (plotH * i / 5);
                 var val = maxY * (1 - i / 5);
+                var dollVal = maxTotal * (1 - i / 5);
                 svgContent += '<line x1="' + PAD_L + '" y1="' + y + '" x2="' + (W - PAD_R) + '" y2="' + y + '" stroke="#f3f4f6" stroke-width="1"/>';
                 svgContent += '<text x="' + (PAD_L - 8) + '" y="' + (y + 4) + '" text-anchor="end" font-size="10" fill="#6b7280">' + Math.round(val / 1000) + 'K</text>';
+                svgContent += '<text x="' + (W - PAD_R + 6) + '" y="' + (y + 4) + '" text-anchor="start" font-size="10" fill="#059669">$' + Math.round(dollVal).toLocaleString() + '</text>';
             }
 
             // X-axis labels (every other date)
@@ -1326,7 +1377,7 @@ function renderPortfolioChart() {
                 }
             });
 
-            // Lines
+            // Points lines
             Object.keys(series).forEach(function(key) {
                 var s = series[key];
                 var pathD = s.values.map(function(v, i) {
@@ -1334,8 +1385,22 @@ function renderPortfolioChart() {
                 }).join(' ');
                 svgContent += '<path d="' + pathD + '" fill="none" stroke="' + s.color + '" stroke-width="2.5"/>';
                 s.values.forEach(function(v, i) {
-                    svgContent += '<circle cx="' + xAt(i) + '" cy="' + yAt(v) + '" r="4" fill="' + s.color + '"/>';
+                    svgContent += '<circle cx="' + xAt(i) + '" cy="' + yAt(v) + '" r="4" fill="' + s.color + '">' +
+                        '<title>' + s.label + ' on ' + snaps[i].date + ': ' + v.toLocaleString() + ' pts' + (snaps[i].note ? '\n' + snaps[i].note : '') + '</title>' +
+                        '</circle>';
                 });
+            });
+
+            // Total $ value line (scaled to right axis)
+            var yAtTotal = v => PAD_T + plotH - (v / maxTotal) * plotH;
+            var totalPath = totalValues.map(function(v, i) {
+                return (i === 0 ? 'M' : 'L') + xAt(i) + ',' + yAtTotal(v);
+            }).join(' ');
+            svgContent += '<path d="' + totalPath + '" fill="none" stroke="#059669" stroke-width="3" stroke-dasharray="4,3"/>';
+            totalValues.forEach(function(v, i) {
+                svgContent += '<circle cx="' + xAt(i) + '" cy="' + yAtTotal(v) + '" r="4.5" fill="#059669" stroke="white" stroke-width="1.5">' +
+                    '<title>Total $ value on ' + snaps[i].date + ': $' + v.toLocaleString() + (snaps[i].note ? '\n' + snaps[i].note : '') + '</title>' +
+                    '</circle>';
             });
 
             svg.innerHTML = svgContent;
@@ -1347,89 +1412,158 @@ document.addEventListener('DOMContentLoaded', renderPortfolioChart);
 // ═══════════ TRIP PLANNER ═══════════
 var BALANCES = { mr: 247524, marriott: 192254, ur: 93957, urLocked: true, bilt: 38300 };
 
+// Round-trip miles per program + typical cash prices (USD)
 var FLIGHT_COST = {
-    // dest: { economy, premium, business, first } — round-trip miles for each program
-    paris:     { economy: { va: 50, un: 60, aa: 60 }, premium: { va: 85, un: 100 }, business: { va: 120, un: 140, ana: 110 }, first:    { ana: 220 } },
-    rome:      { economy: { va: 50, un: 60, aa: 60 }, premium: { va: 85, un: 100 }, business: { va: 120, un: 140 }, first:    {} },
-    london:    { economy: { va: 40, un: 60, aa: 55 }, premium: { va: 75, un: 90  }, business: { va: 110, un: 140 }, first:    {} },
-    barcelona: { economy: { va: 50, un: 60, aa: 60 }, premium: { va: 85, un: 100 }, business: { va: 130, un: 150 }, first:    {} },
-    athens:    { economy: { va: 60, un: 70, aa: 70 }, premium: { va: 100, un: 110 }, business: { va: 140, un: 160 }, first:    {} },
-    amsterdam: { economy: { va: 45, un: 60, aa: 60 }, premium: { va: 80, un: 100 }, business: { va: 115, un: 140 }, first:    {} },
-    tokyo:     { economy: { va: 60, un: 70, ana: 55 }, premium: { va: 100, un: 120 }, business: { un: 160, ana: 90 }, first:    { ana: 130 } },
-    domestic:  { economy: { va: 25, un: 25, aa: 25 }, premium: { va: 40, un: 40 }, business: { va: 60, un: 70 }, first:    {} },
+    paris:      { rtEcon: 850,  rtBiz: 4200, ow:0.6, economy: { va: 50, un: 60, aa: 60 }, premium: { va: 85, un: 100 }, business: { va: 120, un: 140, ana: 110 }, first: { ana: 220 } },
+    london:     { rtEcon: 700,  rtBiz: 3800, ow:0.6, economy: { va: 40, un: 60, aa: 55 }, premium: { va: 75, un: 90 },  business: { va: 110, un: 140 }, first: {} },
+    rome:       { rtEcon: 900,  rtBiz: 4400, ow:0.6, economy: { va: 50, un: 60, aa: 60 }, premium: { va: 85, un: 100 }, business: { va: 120, un: 140 }, first: {} },
+    barcelona:  { rtEcon: 850,  rtBiz: 4300, ow:0.6, economy: { va: 50, un: 60, aa: 60 }, premium: { va: 85, un: 100 }, business: { va: 130, un: 150 }, first: {} },
+    madrid:     { rtEcon: 800,  rtBiz: 4200, ow:0.6, economy: { va: 50, un: 60, aa: 60 }, premium: { va: 85, un: 100 }, business: { va: 130, un: 150 }, first: {} },
+    lisbon:     { rtEcon: 800,  rtBiz: 4000, ow:0.6, economy: { va: 50, un: 60, aa: 60 }, premium: { va: 85, un: 100 }, business: { va: 130, un: 150 }, first: {} },
+    athens:     { rtEcon: 950,  rtBiz: 4700, ow:0.6, economy: { va: 60, un: 70, aa: 70 }, premium: { va: 100, un: 110 }, business: { va: 140, un: 160 }, first: {} },
+    amsterdam:  { rtEcon: 750,  rtBiz: 4000, ow:0.6, economy: { va: 45, un: 60, aa: 60 }, premium: { va: 80, un: 100 }, business: { va: 115, un: 140 }, first: {} },
+    dublin:     { rtEcon: 700,  rtBiz: 3600, ow:0.6, economy: { va: 40, un: 60, aa: 55 }, premium: { va: 75, un: 90 },  business: { va: 110, un: 140 }, first: {} },
+    milan:      { rtEcon: 850,  rtBiz: 4300, ow:0.6, economy: { va: 50, un: 60, aa: 60 }, premium: { va: 85, un: 100 }, business: { va: 130, un: 150 }, first: {} },
+    prague:     { rtEcon: 900,  rtBiz: 4500, ow:0.6, economy: { va: 60, un: 70, aa: 60 }, premium: { va: 100, un: 110 }, business: { va: 140, un: 160 }, first: {} },
+    reykjavik:  { rtEcon: 650,  rtBiz: 3400, ow:0.6, economy: { va: 45, un: 60, aa: 55 }, premium: { va: 80, un: 100 }, business: { va: 115, un: 140 }, first: {} },
+    tokyo:      { rtEcon: 1400, rtBiz: 6500, ow:0.55, economy: { va: 60, un: 70, ana: 55 }, premium: { va: 100, un: 120 }, business: { un: 160, ana: 90 }, first: { ana: 130 } },
+    dubai:      { rtEcon: 1200, rtBiz: 6000, ow:0.6, economy: { va: 60, un: 90, aa: 70 }, premium: { va: 100, un: 130 }, business: { va: 150, un: 180 }, first: {} },
+    sydney:     { rtEcon: 1600, rtBiz: 8000, ow:0.55, economy: { un: 80, aa: 80 }, premium: { un: 130 }, business: { un: 200, ana: 120 }, first: {} },
+    cancun:     { rtEcon: 400,  rtBiz: 1500, ow:0.6, economy: { va: 25, un: 30, aa: 25 }, premium: { va: 45, un: 50 },  business: { va: 65, un: 80 }, first: {} },
+    mexicocity: { rtEcon: 400,  rtBiz: 1400, ow:0.6, economy: { va: 25, un: 30, aa: 25 }, premium: { va: 45, un: 50 },  business: { va: 65, un: 80 }, first: {} },
+    domestic:   { rtEcon: 350,  rtBiz: 1200, ow:0.55, economy: { va: 25, un: 25, aa: 25 }, premium: { va: 40, un: 40 }, business: { va: 60, un: 70 }, first: {} },
 };
 
+// Hotel: pts per night by tier + typical cash rate
 var HOTEL_TIER = {
-    // dest: { hotel name, points per night, category }
-    paris:     { name: 'Renaissance Paris Hotel Vendôme', ptsPerNight: 50, cat: 5 },
-    rome:      { name: 'Sheraton Roma / Westin Excelsior', ptsPerNight: 55, cat: 5 },
-    london:    { name: 'London Marriott County Hall', ptsPerNight: 60, cat: 6 },
-    barcelona: { name: 'W Barcelona (peak)', ptsPerNight: 70, cat: 6 },
-    athens:    { name: 'Athens Marriott', ptsPerNight: 40, cat: 4 },
-    amsterdam: { name: 'Renaissance Amsterdam', ptsPerNight: 50, cat: 5 },
-    tokyo:     { name: 'Westin Tokyo', ptsPerNight: 60, cat: 6 },
-    domestic:  { name: 'Various US Marriott', ptsPerNight: 40, cat: 4 },
+    paris:      { mid: { name: 'Renaissance Paris Vendôme (Cat 5)', pts: 50, cash: 400 }, premium: { name: 'Westin Paris Vendôme (Cat 6)', pts: 60, cash: 550 }, luxury: { name: 'Ritz-Carlton / St Regis (Cat 8)', pts: 90, cash: 1200 } },
+    london:     { mid: { name: 'London Marriott Regents Park (Cat 5)', pts: 50, cash: 350 }, premium: { name: 'London Marriott County Hall (Cat 6)', pts: 60, cash: 500 }, luxury: { name: 'W London / EDITION (Cat 7)', pts: 75, cash: 800 } },
+    rome:       { mid: { name: 'Sheraton Roma (Cat 5)', pts: 50, cash: 300 }, premium: { name: 'Westin Excelsior Rome (Cat 6)', pts: 60, cash: 500 }, luxury: { name: 'St Regis Rome (Cat 8)', pts: 95, cash: 1400 } },
+    barcelona:  { mid: { name: 'AC Barcelona (Cat 5)', pts: 50, cash: 300 }, premium: { name: 'W Barcelona (Cat 6)', pts: 70, cash: 550 }, luxury: { name: 'Le Meridien / Cotton House (Cat 7)', pts: 75, cash: 700 } },
+    madrid:     { mid: { name: 'AC Madrid Feria (Cat 4)', pts: 30, cash: 200 }, premium: { name: 'Westin Palace Madrid (Cat 6)', pts: 60, cash: 500 }, luxury: { name: 'The Madrid EDITION (Cat 7)', pts: 75, cash: 700 } },
+    lisbon:     { mid: { name: 'AC Lisbon (Cat 4)', pts: 30, cash: 180 }, premium: { name: 'Sheraton Lisbon (Cat 5)', pts: 50, cash: 300 }, luxury: { name: 'Ritz-Carlton Penha Longa (Cat 7)', pts: 75, cash: 700 } },
+    athens:     { mid: { name: 'Athens Marriott (Cat 4)', pts: 30, cash: 200 }, premium: { name: 'Athens Capital MGallery (Cat 5)', pts: 50, cash: 350 }, luxury: { name: 'Grande Bretagne Luxury Collection (Cat 7)', pts: 75, cash: 800 } },
+    amsterdam:  { mid: { name: 'Renaissance Amsterdam (Cat 5)', pts: 50, cash: 350 }, premium: { name: 'W Amsterdam (Cat 7)', pts: 75, cash: 600 }, luxury: { name: 'De L\'Europe Amsterdam / Waldorf (Cat 8)', pts: 90, cash: 1000 } },
+    dublin:     { mid: { name: 'Dublin Marriott (Cat 4)', pts: 30, cash: 200 }, premium: { name: 'Westin Dublin (Cat 5)', pts: 50, cash: 400 }, luxury: { name: 'The Shelbourne Autograph (Cat 6)', pts: 60, cash: 550 } },
+    milan:      { mid: { name: 'AC Milano Sesto (Cat 4)', pts: 30, cash: 200 }, premium: { name: 'Westin Palace Milan (Cat 6)', pts: 60, cash: 450 }, luxury: { name: 'Bulgari Milan (Cat 8)', pts: 100, cash: 1500 } },
+    prague:     { mid: { name: 'Marriott Prague (Cat 4)', pts: 30, cash: 180 }, premium: { name: 'AC Prague Old Town (Cat 5)', pts: 50, cash: 300 }, luxury: { name: 'Cosmopolitan Prague Autograph (Cat 6)', pts: 60, cash: 450 } },
+    reykjavik:  { mid: { name: 'Reykjavik Marriott (Cat 5)', pts: 50, cash: 350 }, premium: { name: 'Reykjavik Konsulat Curio (Cat 6)', pts: 60, cash: 500 }, luxury: { name: 'The Reykjavik EDITION (Cat 7)', pts: 75, cash: 750 } },
+    tokyo:      { mid: { name: 'Sheraton Miyako Tokyo (Cat 5)', pts: 50, cash: 350 }, premium: { name: 'Westin Tokyo (Cat 6)', pts: 60, cash: 550 }, luxury: { name: 'St Regis / Ritz Tokyo (Cat 8)', pts: 95, cash: 1200 } },
+    dubai:      { mid: { name: 'JW Marriott Marquis Dubai (Cat 4)', pts: 30, cash: 250 }, premium: { name: 'W Dubai The Palm (Cat 6)', pts: 60, cash: 500 }, luxury: { name: 'Ritz-Carlton Dubai (Cat 7)', pts: 75, cash: 800 } },
+    sydney:     { mid: { name: 'Sydney Harbour Marriott (Cat 5)', pts: 50, cash: 400 }, premium: { name: 'W Sydney (Cat 6)', pts: 60, cash: 550 }, luxury: { name: 'The Fullerton Sydney (Cat 7)', pts: 75, cash: 800 } },
+    cancun:     { mid: { name: 'JW Marriott Cancun (Cat 5)', pts: 50, cash: 400 }, premium: { name: 'W Punta de Mita (Cat 6)', pts: 60, cash: 600 }, luxury: { name: 'St Regis Punta Mita (Cat 8)', pts: 95, cash: 1200 } },
+    mexicocity: { mid: { name: 'AC Mexico City (Cat 4)', pts: 30, cash: 200 }, premium: { name: 'W Mexico City (Cat 5)', pts: 50, cash: 350 }, luxury: { name: 'St Regis Mexico City (Cat 7)', pts: 75, cash: 700 } },
+    domestic:   { mid: { name: 'Various US Marriott (Cat 4)', pts: 30, cash: 200 }, premium: { name: 'Westin / W tier (Cat 6)', pts: 60, cash: 400 }, luxury: { name: 'Ritz-Carlton / St Regis US (Cat 7)', pts: 75, cash: 700 } },
 };
 
 function planTrip() {
     var dest = document.getElementById('tripDest').value;
     var cls = document.getElementById('tripClass').value;
+    var direction = document.getElementById('tripDirection').value;
+    var pax = parseInt(document.getElementById('tripPax').value);
     var nights = parseInt(document.getElementById('tripNights').value);
-    var flightOpts = (FLIGHT_COST[dest] || {})[cls] || {};
+    var hotelTier = document.getElementById('tripHotel').value;
 
+    var destData = FLIGHT_COST[dest] || {};
+    var flightOpts = destData[cls] || {};
+    var owMult = direction === 'ow' ? destData.ow : 1;
+    var owLabel = direction === 'ow' ? 'One-way' : 'Round-trip';
+
+    // Cash flight price
+    var cashPerPax = 0;
+    if (cls === 'economy') cashPerPax = destData.rtEcon || 0;
+    else if (cls === 'premium') cashPerPax = (destData.rtEcon || 0) * 2;
+    else if (cls === 'business') cashPerPax = destData.rtBiz || 0;
+    else if (cls === 'first') cashPerPax = (destData.rtBiz || 0) * 1.8;
+    var totalCashFlight = Math.round(cashPerPax * owMult * pax);
+
+    var destName = dest.charAt(0).toUpperCase() + dest.slice(1);
     var result = document.getElementById('tripResult');
-    var html = '<h4>Best Points Path to ' + dest.charAt(0).toUpperCase() + dest.slice(1) + '</h4>';
+    var html = '<h4>Best Points Path: ' + destName + ' &mdash; ' + owLabel + ' ' + cls + ', ' + pax + 'x traveler(s)</h4>';
 
     // Flight suggestions
-    html += '<div style="font-weight: 700; margin: 10px 0 6px; font-size: 13px;">FLIGHT (RT, ' + cls + '):</div>';
+    html += '<div style="font-weight: 700; margin: 10px 0 6px; font-size: 13px;">FLIGHT (' + owLabel + ', ' + cls + ') &mdash; cash equivalent: <span style="color: #059669;">~$' + totalCashFlight.toLocaleString() + '</span></div>';
+
     var flightSuggestions = [];
+    var costMult = owMult * pax * 1000;
+
     if (flightOpts.va) {
-        var mrCost = flightOpts.va * 1000;
-        var ok = BALANCES.mr >= mrCost;
-        flightSuggestions.push({ok: ok, path: 'Amex MR &rarr; Virgin Atlantic', cost: mrCost, unit: 'MR', have: BALANCES.mr, tag: ok ? 'BEST' : 'need more'});
+        var cost = Math.round(flightOpts.va * costMult);
+        var ok = BALANCES.mr >= cost;
+        flightSuggestions.push({ok: ok, path: 'Amex MR &rarr; Virgin Atlantic', cost: cost, unit: 'MR', have: BALANCES.mr, priority: 1, note: cls === 'business' && (dest === 'paris' || dest === 'london' || dest === 'amsterdam') ? 'sweet spot: Delta One via VA partnership' : ''});
     }
     if (flightOpts.ana) {
-        var mrCost = flightOpts.ana * 1000;
-        var ok = BALANCES.mr >= mrCost;
-        flightSuggestions.push({ok: ok, path: 'Amex MR &rarr; ANA', cost: mrCost, unit: 'MR', have: BALANCES.mr, tag: (cls === 'first' ? 'BEST for First' : 'good')});
+        var cost = Math.round(flightOpts.ana * costMult);
+        var ok = BALANCES.mr >= cost;
+        flightSuggestions.push({ok: ok, path: 'Amex MR &rarr; ANA', cost: cost, unit: 'MR', have: BALANCES.mr, priority: cls === 'first' ? 0 : 2, note: cls === 'first' ? 'BEST for First Class' : ''});
     }
     if (flightOpts.un) {
-        var unCost = flightOpts.un * 1000;
-        var biltOk = BALANCES.bilt >= unCost;
-        flightSuggestions.push({ok: biltOk, path: 'Bilt &rarr; United (1:1, no Sapphire needed)', cost: unCost, unit: 'Bilt', have: BALANCES.bilt, tag: biltOk ? 'ready' : 'need ' + (unCost - BALANCES.bilt).toLocaleString() + ' more Bilt'});
+        var cost = Math.round(flightOpts.un * costMult);
+        var biltOk = BALANCES.bilt >= cost;
+        var shortfall = biltOk ? '' : ' (short ' + (cost - BALANCES.bilt).toLocaleString() + ')';
+        flightSuggestions.push({ok: biltOk, path: 'Bilt &rarr; United (1:1)', cost: cost, unit: 'Bilt', have: BALANCES.bilt, priority: 3, note: 'no Sapphire needed' + shortfall});
     }
     if (flightOpts.aa) {
-        var aaCost = flightOpts.aa * 1000;
-        flightSuggestions.push({ok: false, path: 'AA miles (no card yet)', cost: aaCost, unit: 'AA', have: 0, tag: 'need Citi AAdvantage card first'});
+        var cost = Math.round(flightOpts.aa * costMult);
+        flightSuggestions.push({ok: false, path: 'AA miles', cost: cost, unit: 'AA', have: 0, priority: 4, note: 'need Citi AAdvantage card first'});
     }
 
-    // Sort by feasibility
-    flightSuggestions.sort(function(a, b) { return (b.ok ? 1 : 0) - (a.ok ? 1 : 0); });
+    // Sort: ok first, then priority
+    flightSuggestions.sort(function(a, b) {
+        if (a.ok !== b.ok) return b.ok - a.ok;
+        return a.priority - b.priority;
+    });
+
     flightSuggestions.forEach(function(s) {
-        var cls = s.ok ? '' : (s.unit === 'AA' ? 'bad' : 'warn');
-        html += '<div class="trip-opt ' + cls + '"><strong>' + s.path + '</strong> &mdash; ' + s.cost.toLocaleString() + ' ' + s.unit + ' (' + s.tag + ')<br><span style="color: #6b7280; font-size: 12px;">You have: ' + s.have.toLocaleString() + ' ' + s.unit + '</span></div>';
+        var oCls = s.ok ? '' : (s.unit === 'AA' ? 'bad' : 'warn');
+        var savings = s.ok ? Math.round(totalCashFlight - (s.cost * 0.00)) : 0;  // full savings if using points
+        var savingsBlurb = s.ok ? ' &bull; <strong style="color:#059669;">Saves ~$' + totalCashFlight.toLocaleString() + '</strong>' : '';
+        html += '<div class="trip-opt ' + oCls + '"><strong>' + s.path + '</strong> &mdash; ' + s.cost.toLocaleString() + ' ' + s.unit + (s.note ? ' &bull; ' + s.note : '') + savingsBlurb + '<br><span style="color: #6b7280; font-size: 12px;">You have: ' + s.have.toLocaleString() + ' ' + s.unit + '</span></div>';
     });
     if (flightSuggestions.length === 0) {
-        html += '<div class="trip-opt bad">No good options for ' + cls + ' to ' + dest + '. Consider mixed cash + points.</div>';
+        html += '<div class="trip-opt bad">No good options for ' + cls + ' to ' + destName + '. Consider mixed cash + points.</div>';
     }
 
     // Hotel
     if (nights > 0) {
-        var hotel = HOTEL_TIER[dest];
+        var hotelSet = HOTEL_TIER[dest];
+        var hotel = hotelSet ? hotelSet[hotelTier] : null;
         if (hotel) {
-            var perNight = hotel.ptsPerNight * 1000;
-            var totalNights = nights;
-            var chargedNights = nights >= 5 ? nights - 1 : nights; // 5th-night-free applies to 5+
+            var perNight = hotel.pts * 1000;
+            // 5th-night-free: for each block of 5 consecutive nights, one is free
+            var freeNights = Math.floor(nights / 5);
+            var chargedNights = nights - freeNights;
             var totalPts = perNight * chargedNights;
+            var cashHotel = hotel.cash * nights;
             var ok = BALANCES.marriott >= totalPts;
-            var savings = nights >= 5 ? '<span style="color: #059669; font-weight: 700;"> (5th-night-free saves ' + perNight.toLocaleString() + ')</span>' : '';
-            html += '<div style="font-weight: 700; margin: 14px 0 6px; font-size: 13px;">HOTEL (' + nights + ' nights):</div>';
-            html += '<div class="trip-opt ' + (ok ? '' : 'warn') + '"><strong>' + hotel.name + '</strong> (Cat ' + hotel.cat + ')<br>' + totalPts.toLocaleString() + ' Bonvoy pts total' + savings + '<br><span style="color: #6b7280; font-size: 12px;">You have: ' + BALANCES.marriott.toLocaleString() + ' Bonvoy ' + (ok ? '&mdash; READY' : '&mdash; need ' + (totalPts - BALANCES.marriott).toLocaleString() + ' more') + '</span></div>';
+            var savingsNote = freeNights > 0 ? ' <span style="color: #059669; font-weight: 700;">(' + freeNights + ' free night' + (freeNights > 1 ? 's' : '') + ' saves ' + (freeNights * perNight).toLocaleString() + ' pts)</span>' : '';
+            var cashBlurb = ok ? ' &bull; <strong style="color:#059669;">Saves ~$' + cashHotel.toLocaleString() + '</strong>' : '';
+            html += '<div style="font-weight: 700; margin: 14px 0 6px; font-size: 13px;">HOTEL (' + nights + ' nights) &mdash; cash equivalent: <span style="color: #059669;">~$' + cashHotel.toLocaleString() + '</span></div>';
+            html += '<div class="trip-opt ' + (ok ? '' : 'warn') + '"><strong>' + hotel.name + '</strong>' + savingsNote + cashBlurb + '<br>' + totalPts.toLocaleString() + ' Bonvoy pts total &bull; <span style="color: #6b7280; font-size: 12px;">You have: ' + BALANCES.marriott.toLocaleString() + ' Bonvoy ' + (ok ? '&mdash; READY' : '&mdash; need ' + (totalPts - BALANCES.marriott).toLocaleString() + ' more') + '</span></div>';
+
+            // Also show cash option
+            if (!ok) {
+                var missing = totalPts - BALANCES.marriott;
+                var biltTransfer = Math.min(missing, BALANCES.bilt);
+                if (biltTransfer > 0) {
+                    html += '<div class="trip-opt warn"><strong>Or transfer Bilt &rarr; Marriott 1:1 to close gap</strong><br>' + biltTransfer.toLocaleString() + ' Bilt would cover ' + biltTransfer.toLocaleString() + ' pts of the ' + missing.toLocaleString() + ' shortfall</div>';
+                }
+            }
         }
     }
 
-    // Summary
-    html += '<div style="margin-top: 14px; padding: 12px 14px; background: #fffbeb; border: 1px solid #fcd34d; border-radius: 8px; font-size: 12px; color: #78350f;"><strong>Tip:</strong> Book flights first (award space is scarce), then transfer points. Amex MR transfers to Virgin Atlantic/ANA are instant. Bilt to United takes ~24hr.</div>';
+    // Grand total savings
+    var bestFlight = flightSuggestions.find(function(s) { return s.ok; });
+    if (bestFlight || nights > 0) {
+        var hotel = HOTEL_TIER[dest] && HOTEL_TIER[dest][hotelTier];
+        var totalCashSaved = (bestFlight ? totalCashFlight : 0) + (hotel && nights > 0 ? hotel.cash * nights : 0);
+        if (totalCashSaved > 0) {
+            html += '<div style="margin-top: 14px; padding: 12px 14px; background: #f0fdf4; border: 2px solid #bbf7d0; border-radius: 8px; font-size: 14px; color: #166534; text-align: center;"><strong>Total cash-equivalent value: ~$' + totalCashSaved.toLocaleString() + '</strong></div>';
+        }
+    }
+
+    // Tips
+    html += '<div style="margin-top: 10px; padding: 12px 14px; background: #fffbeb; border: 1px solid #fcd34d; border-radius: 8px; font-size: 12px; color: #78350f;"><strong>Booking order:</strong> Book flights first (award space scarce), then transfer points. Amex MR &rarr; Virgin Atlantic/ANA are instant. Bilt &rarr; United ~24hr. Prices are rough estimates; check actual award space at time of booking.</div>';
 
     result.innerHTML = html;
     result.style.display = 'block';
@@ -1455,12 +1589,16 @@ function calcCategories() {
     });
     localStorage.setItem('categorySpend', JSON.stringify(vals));
 
-    // Optimal card per category (post-Gold refresh Apr 2026)
-    // Multipliers: Gold=4x dining/groceries, 3x flights, 5x prepaid hotels; Bevy=6x Marriott, 2x other; CFU=1.5x other
-    // MR ~2¢/pt, Marriott ~0.8¢/pt, UR locked
+    // Gold $50K/yr dining cap (4x → 1x after), $25K/yr grocery cap
+    var annualDining = vals.dining * 12;
+    var annualGroc = vals.groceries * 12;
+    var diningCap = 50000, grocCap = 25000;
+    var diningPts = Math.min(annualDining, diningCap) * 4 + Math.max(0, annualDining - diningCap) * 1;
+    var grocPts = Math.min(annualGroc, grocCap) * 4 + Math.max(0, annualGroc - grocCap) * 1;
+
     var rows = [
-        { cat: 'Dining',              spend: vals.dining,    card: 'Amex Gold',  rate: '4x MR',        annualPts: vals.dining * 12 * 4,    ptsType: 'MR' },
-        { cat: 'Groceries (US)',      spend: vals.groceries, card: 'Amex Gold',  rate: '4x MR',        annualPts: vals.groceries * 12 * 4, ptsType: 'MR' },
+        { cat: 'Dining',              spend: vals.dining,    card: 'Amex Gold',  rate: annualDining > diningCap ? '4x MR (capped at $50K, then 1x)' : '4x MR', annualPts: diningPts, ptsType: 'MR', capWarn: annualDining > diningCap },
+        { cat: 'Groceries (US)',      spend: vals.groceries, card: 'Amex Gold',  rate: annualGroc > grocCap ? '4x MR (capped at $25K, then 1x)' : '4x MR', annualPts: grocPts, ptsType: 'MR', capWarn: annualGroc > grocCap },
         { cat: 'Flights direct',      spend: vals.travel,    card: 'Amex Gold',  rate: '3x MR',        annualPts: vals.travel * 12 * 3,    ptsType: 'MR' },
         { cat: 'Marriott stays',      spend: vals.marriott,  card: 'Bevy',       rate: '6x Marriott',  annualPts: vals.marriott * 12 * 6,  ptsType: 'Marriott' },
         { cat: 'Prepaid hotels (Amex Travel)', spend: vals.prepaid, card: 'Amex Gold', rate: '5x MR', annualPts: vals.prepaid * 12 * 5, ptsType: 'MR' },
@@ -1478,16 +1616,59 @@ function calcCategories() {
 
     var mrValue = totalMR * 0.02;
     var marriottValue = totalMarriott * 0.008;
-    var totalValue = mrValue + marriottValue;
-    var effectiveReturn = totalSpend > 0 ? ((totalValue / totalSpend) * 100).toFixed(2) : 0;
+    var grossValue = mrValue + marriottValue;
+
+    // Net after fees + credits
+    // Gold: $325 fee - $424 credits realized = -$99 net (adds value)
+    // Bevy: $250 fee - $300 free night cert (only if used) = -$50 net (adds value)
+    var goldNet = 325 - 424;  // -99 (credit generates value beyond fee)
+    var bevyNet = vals.marriott > 0 ? (250 - 300) : 250;  // Bevy only "free" if you use free night cert
+    var totalFees = 325 + 250;
+    var totalCreditsRealized = 424 + (vals.marriott > 0 ? 300 : 0);
+    var netValue = grossValue - totalFees + totalCreditsRealized;
+    var effectiveReturn = totalSpend > 0 ? ((netValue / totalSpend) * 100).toFixed(2) : 0;
+
+    // Cash-back baseline (if all spend on 2% flat card)
+    var cashbackBaseline = totalSpend * 0.02;
+    var vsBaseline = netValue - cashbackBaseline;
 
     var html = '<h4 style="font-size: 15px; margin-bottom: 12px;">Annual Earnings on Your Spending</h4><table><thead><tr><th>Category</th><th>Monthly $</th><th>Best Card</th><th>Rate</th><th>Annual Pts</th></tr></thead><tbody>';
     rows.filter(function(r) { return r.spend > 0; }).forEach(function(r) {
-        html += '<tr><td>' + r.cat + '</td><td>$' + r.spend.toLocaleString() + '</td><td><strong>' + r.card + '</strong></td><td>' + r.rate + '</td><td>' + r.annualPts.toLocaleString() + ' ' + r.ptsType + '</td></tr>';
+        var capIcon = r.capWarn ? ' <span style="color: #d97706; font-size: 10px;">&#9888; cap</span>' : '';
+        html += '<tr><td>' + r.cat + capIcon + '</td><td>$' + r.spend.toLocaleString() + '</td><td><strong>' + r.card + '</strong></td><td>' + r.rate + '</td><td>' + r.annualPts.toLocaleString() + ' ' + r.ptsType + '</td></tr>';
     });
-    html += '<tr class="total-row"><td colspan="2">TOTAL ($' + totalSpend.toLocaleString() + '/yr spend)</td><td colspan="2">MR: ' + totalMR.toLocaleString() + ' ($' + Math.round(mrValue).toLocaleString() + ')<br>Marriott: ' + totalMarriott.toLocaleString() + ' ($' + Math.round(marriottValue).toLocaleString() + ')</td><td><strong>$' + Math.round(totalValue).toLocaleString() + ' value<br>' + effectiveReturn + '% effective return</strong></td></tr>';
+    html += '<tr class="total-row"><td colspan="2">TOTAL ($' + totalSpend.toLocaleString() + '/yr spend)</td><td colspan="2">MR: ' + totalMR.toLocaleString() + ' ($' + Math.round(mrValue).toLocaleString() + ')<br>Marriott: ' + totalMarriott.toLocaleString() + ' ($' + Math.round(marriottValue).toLocaleString() + ')</td><td><strong>Gross: $' + Math.round(grossValue).toLocaleString() + '</strong></td></tr>';
     html += '</tbody></table>';
-    html += '<div style="margin-top: 10px; padding: 10px 12px; background: #eff6ff; border-radius: 6px; font-size: 12px; color: #1e40af;"><strong>Tip:</strong> Effective return &gt;3% = you\'re optimizing well. Under 2% = missing category multipliers.</div>';
+
+    // Fee net-out
+    html += '<div style="margin-top: 12px; padding: 12px 14px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 12px;">'
+      + '<strong style="font-size: 13px;">Net after fees + credits:</strong><br>'
+      + 'Gross points value: <strong>+$' + Math.round(grossValue).toLocaleString() + '</strong><br>'
+      + 'Annual fees (Gold $325 + Bevy $250): <span style="color: #dc2626;">-$575</span><br>'
+      + 'Credits realized (Gold $424' + (vals.marriott > 0 ? ' + Bevy free night ~$300' : '') + '): <span style="color: #059669;">+$' + totalCreditsRealized.toLocaleString() + '</span><br>'
+      + '<strong style="font-size: 14px; color: #059669;">Net annual value: $' + Math.round(netValue).toLocaleString() + ' (' + effectiveReturn + '% effective return)</strong>'
+      + '</div>';
+
+    // vs cashback baseline
+    var betterOrWorse = vsBaseline > 0 ? 'better' : 'worse';
+    var color = vsBaseline > 0 ? '#059669' : '#dc2626';
+    html += '<div style="margin-top: 8px; padding: 10px 12px; background: #eff6ff; border-radius: 6px; font-size: 12px; color: #1e40af;">'
+      + '<strong>vs. 2% cashback baseline:</strong> Your points strategy earns <strong style="color: ' + color + ';">$' + Math.round(Math.abs(vsBaseline)).toLocaleString() + ' ' + betterOrWorse + '</strong> per year than a flat 2% cashback card. '
+      + (vsBaseline > 0 ? 'Points strategy wins.' : 'Reconsider — cashback may be simpler.')
+      + '</div>';
+
+    // Cap warnings
+    if (annualDining > diningCap || annualGroc > grocCap) {
+        html += '<div style="margin-top: 8px; padding: 10px 12px; background: #fef3c7; border: 1px solid #fcd34d; border-radius: 6px; font-size: 12px; color: #78350f;">'
+          + '<strong>&#9888; Gold cap warning:</strong> ';
+        if (annualDining > diningCap) html += 'Your dining exceeds $50K/yr &mdash; drops to 1x MR after cap. Consider Amex Green (3x dining, no cap) for overflow. ';
+        if (annualGroc > grocCap) html += 'Your groceries exceed $25K/yr &mdash; drops to 1x MR after cap. Buy grocery gift cards at office supply stores with a business card, or use Amex BCP.';
+        html += '</div>';
+    }
+
+    html += '<div style="margin-top: 8px; padding: 10px 12px; background: #f0fdf4; border-radius: 6px; font-size: 12px; color: #14532d;">'
+      + '<strong>Tip:</strong> Effective return &gt;3% = optimizing well. Under 2% = missing multipliers. Marriott stays on Bevy assume you\'d actually stay there &mdash; don\'t force it just for the 6x.'
+      + '</div>';
 
     var result = document.getElementById('catResult');
     result.innerHTML = html;

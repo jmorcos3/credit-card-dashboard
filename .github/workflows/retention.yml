@@ -30,25 +30,36 @@ jobs:
               if (feeDate < now) feeDate = new Date(`${currentYear + 1}-${c.fee_date}T14:00:00Z`);
               const daysUntil = Math.floor((feeDate - now) / (1000 * 60 * 60 * 24));
 
-              // Fire at exactly 30 days out
-              if (daysUntil === 30) {
+              // Fire at 60, 30, 14, 3 days out — escalating urgency
+              const triggers = { 60: 'HEADS UP', 30: 'CALL SOON', 14: 'URGENT', 3: 'FINAL WARNING' };
+              const urgency = triggers[daysUntil];
+              if (urgency) {
                 const feeStr = feeDate.toISOString().slice(0, 10);
-                const title = `Retention call: ${c.card} fee ($${c.fee}) posts in 30 days (${feeStr})`;
-                const body = `Your **${c.card}** $${c.fee} annual fee posts on **${feeStr}**.\n\n` +
-                             `**Call retention BEFORE the fee posts.**\n\n` +
+                const title = `[${urgency}] Retention: ${c.card} fee ($${c.fee}) posts in ${daysUntil} days (${feeStr})`;
+                const stageAdvice = daysUntil >= 60
+                  ? 'Plenty of time. Start monitoring for retention offer signals in the r/amex or churning subreddits — some months are better than others.'
+                  : daysUntil >= 30
+                  ? '**PRIME WINDOW.** Call retention now. Reps often can offer better deals 30 days before vs. day-of.'
+                  : daysUntil >= 14
+                  ? '**Getting late.** Call retention today or tomorrow. If no offer, decide keep vs cancel by day 7.'
+                  : '**FEE POSTS IN 3 DAYS.** Call today. If canceling, do it now to avoid fee. If keeping, no action.';
+                const body = `Your **${c.card}** $${c.fee} annual fee posts on **${feeStr}** (${daysUntil} days).\n\n` +
+                             `## ${stageAdvice}\n\n` +
                              `Path: Amex chat (fastest) or 1-800-528-4800.\n\n` +
                              `**Script:** "Hi, I'm reviewing my card and see the $${c.fee} fee is about to post. Are there any retention offers available?" If they say no: "Any statement credits, bonus points, or fee waivers I'd qualify for if I keep the card?"\n\n` +
                              `**Notes for this card:** ${c.tips}\n\n` +
-                             `**Try chat first, then call if no luck.** Reps have discretion — sometimes trying again a day later gets a better offer.`;
+                             `**Try chat first, then call if no luck.** Reps have discretion — sometimes trying again a day later gets a better offer.\n\n` +
+                             `---\n` +
+                             `**Log outcome:** Reply to this issue with what you were offered (or that you canceled). Helps track retention offer patterns over time.`;
                 await github.rest.issues.create({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   title: title,
                   body: body,
-                  labels: ['retention', 'action-required']
+                  labels: ['retention', 'action-required', `${daysUntil}-day-warning`]
                 });
-                console.log(`Created retention issue for ${c.card}`);
+                console.log(`Created ${urgency} retention issue for ${c.card}`);
               } else {
-                console.log(`${c.card}: ${daysUntil} days until fee — no action`);
+                console.log(`${c.card}: ${daysUntil} days until fee — no trigger`);
               }
             }
