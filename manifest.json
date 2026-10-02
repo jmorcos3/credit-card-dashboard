@@ -1,0 +1,17 @@
+{
+  "name": "JM Credit Card Points",
+  "short_name": "CC Points",
+  "description": "Personal credit card points dashboard, retention tracker, and trip planner",
+  "start_url": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#1a1a2e",
+  "icons": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOTIgMTkyIj48cmVjdCB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgcng9IjQwIiBmaWxsPSIjMWExYTJlIi8+PHRleHQgeD0iOTYiIHk9IjExNSIgZm9udC1zaXplPSI3MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmJiZjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5KTTwvdGV4dD48L3N2Zz4=",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    }
+  ]
+}

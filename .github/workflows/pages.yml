@@ -6,6 +6,10 @@ permissions:
   contents: read
   pages: write
   id-token: write
+# Cancel in-progress deploy when new one triggered — avoids concurrency conflict
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 jobs:
   deploy:
     runs-on: ubuntu-latest

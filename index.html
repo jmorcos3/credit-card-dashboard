@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Points Dashboard</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1a1a2e">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', -apple-system, sans-serif; background: #fff; color: #1a1a2e; line-height: 1.5; }
@@ -267,6 +269,49 @@
         .xfer-alert h4 { font-size: 14px; color: #166534; margin-bottom: 6px; }
         .xfer-alert p { font-size: 13px; color: #14532d; }
 
+        /* Travel countdown */
+        .trip-countdown { background: linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%); color: white; border-radius: 14px; padding: 20px 24px; margin-bottom: 24px; }
+        .trip-countdown h3 { font-size: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .tc-add-btn { font-size: 12px; background: rgba(255,255,255,0.2); border: none; color: white; padding: 4px 12px; border-radius: 6px; cursor: pointer; }
+        .tc-add-btn:hover { background: rgba(255,255,255,0.3); }
+        .tc-trip { background: rgba(255,255,255,0.1); border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .tc-trip .tc-info { flex: 1; }
+        .tc-trip .tc-title { font-weight: 700; font-size: 14px; }
+        .tc-trip .tc-detail { font-size: 11px; opacity: 0.85; margin-top: 2px; }
+        .tc-trip .tc-days { font-size: 22px; font-weight: 800; margin-left: 12px; }
+        .tc-trip .tc-days-label { font-size: 10px; opacity: 0.7; text-transform: uppercase; }
+        .tc-del { background: transparent; border: none; color: rgba(255,255,255,0.6); font-size: 18px; cursor: pointer; margin-left: 8px; }
+        .tc-del:hover { color: #fca5a5; }
+        .tc-empty { text-align: center; padding: 20px; opacity: 0.7; font-size: 13px; }
+
+        /* Credit utilization */
+        .utilization { background: white; border: 2px solid #e5e7eb; border-radius: 14px; padding: 20px 24px; margin-bottom: 24px; }
+        .util-row { display: grid; grid-template-columns: 150px 1fr 80px 80px; gap: 10px; align-items: center; margin-bottom: 10px; font-size: 13px; }
+        .util-bar { background: #f3f4f6; border-radius: 6px; height: 20px; position: relative; overflow: hidden; }
+        .util-bar-fill { height: 100%; border-radius: 6px; transition: width 0.4s; }
+        .util-overall { margin-top: 16px; padding: 12px; background: #f9fafb; border-radius: 8px; display: flex; justify-content: space-between; font-size: 14px; font-weight: 700; }
+
+        /* Glossary tooltip */
+        .glossary {
+            display: inline-block; border-bottom: 1px dotted #9333ea; cursor: help; position: relative;
+        }
+        .glossary:hover::after {
+            content: attr(data-def); position: absolute; bottom: 100%; left: 50%;
+            transform: translateX(-50%); background: #1a1a2e; color: white;
+            padding: 8px 12px; border-radius: 6px; white-space: normal; width: 240px;
+            font-size: 11px; z-index: 1000; margin-bottom: 6px; text-align: left;
+            line-height: 1.4; font-weight: 400;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        /* Section collapse */
+        .collapse-btn {
+            background: transparent; border: none; cursor: pointer; font-size: 14px;
+            color: #6b7280; margin-left: 8px; vertical-align: middle;
+        }
+        .collapse-btn:hover { color: #1a1a2e; }
+        .collapsible-content.collapsed { display: none; }
+
         .ticker-bar {
             background: linear-gradient(135deg, #1a1a2e 0%, #0f172a 100%);
             color: white; border-radius: 14px; padding: 20px 24px; margin-bottom: 24px;
@@ -387,6 +432,31 @@
         <div class="et-detail" id="eliteDetail">
             <strong>Boost options:</strong>
             Bevy card gives 15 Elite Night Credits automatically every calendar year (already counted). Each Marriott stay = 1 ENC + 1/night. Buy Elite Nights at ~$1,500 to hit Platinum (bad value). Status match from Hyatt/Hilton possible via Marriott's Status Match Challenge.
+        </div>
+    </div>
+
+    <!-- ═══════════ TRAVEL COUNTDOWN ═══════════ -->
+    <div class="trip-countdown" id="tripCountdown">
+        <h3>Upcoming Trips <button class="tc-add-btn" onclick="addTrip()">+ Add Trip</button></h3>
+        <div id="tcList"></div>
+    </div>
+
+    <!-- ═══════════ CREDIT UTILIZATION ═══════════ -->
+    <div class="utilization" id="utilizationBox">
+        <h2 style="border: none; padding: 0; margin-bottom: 4px;">Credit Utilization Monitor</h2>
+        <p style="color: #6b7280; font-size: 13px; margin-bottom: 16px;">
+            Target: <strong>&lt;10%</strong> overall for best <span class="glossary" data-def="FICO = your 300-850 credit score. Credit utilization = 30% of score. Below 10% is optimal.">FICO</span>. Enter current balances below (saved locally).
+        </p>
+        <div class="util-row" style="font-weight: 700; font-size: 11px; color: #6b7280; text-transform: uppercase;">
+            <div>Card</div><div>Utilization</div><div>Balance</div><div>Limit</div>
+        </div>
+        <div id="utilList"></div>
+        <div class="util-overall" id="utilOverall">
+            <span>Overall utilization:</span>
+            <span id="utilOverallPct">—</span>
+        </div>
+        <div style="margin-top: 12px; font-size: 12px; color: #6b7280;">
+            <strong>Tip:</strong> Pay down balance <em>before</em> statement cuts to show $0 on credit report. One-time trick before applying for new cards.
         </div>
     </div>
 
@@ -792,7 +862,7 @@
         </table>
 
         <div style="margin-top: 14px; padding: 12px 14px; background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; font-size: 13px; color: #7f1d1d;">
-            <strong>Chase 5/24 status:</strong> 2/24 (CSP Jul 2025 + CFU). You're well under the 5-card limit — Chase will approve new cards. The Sapphire family rule is the binding constraint.
+            <strong>Chase <span class="glossary" data-def="5/24 rule: Chase auto-denies you if you've opened 5+ consumer credit cards (any issuer) in the last 24 months. Count resets as old cards age past 24 months.">5/24</span> status:</strong> 2/24 (CSP Jul 2025 + CFU). You're well under the 5-card limit — Chase will approve new cards. The <span class="glossary" data-def="Sapphire family rule: You can only earn a welcome bonus on ONE Sapphire card (Preferred OR Reserve) every 48 months. Resets 48 mo after bonus posts.">Sapphire family rule</span> is the binding constraint.
         </div>
     </div>
 
@@ -1980,6 +2050,133 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// ═══════════ TRAVEL COUNTDOWN ═══════════
+function loadTrips() {
+    var trips = JSON.parse(localStorage.getItem('trips') || '[]');
+    // Default seed first time
+    if (trips.length === 0 && localStorage.getItem('tripsSeeded') !== '1') {
+        trips = [
+            { id: 1, destination: 'Miami (Friend 30th)', date: '2027-09-04', status: 'planned', points: 'Marriott 200K', note: 'Bar Taco birthday' }
+        ];
+        localStorage.setItem('tripsSeeded', '1');
+        localStorage.setItem('trips', JSON.stringify(trips));
+    }
+    renderTrips(trips);
+}
+
+function renderTrips(trips) {
+    var now = new Date();
+    now.setHours(0,0,0,0);
+    // Sort upcoming first, drop past trips
+    trips = trips.filter(function(t) { return new Date(t.date) >= now; });
+    trips.sort(function(a, b) { return new Date(a.date) - new Date(b.date); });
+
+    var list = document.getElementById('tcList');
+    if (!list) return;
+
+    if (trips.length === 0) {
+        list.innerHTML = '<div class="tc-empty">No upcoming trips. Click <strong>+ Add Trip</strong> above.</div>';
+        return;
+    }
+
+    list.innerHTML = trips.map(function(t) {
+        var days = Math.ceil((new Date(t.date) - now) / 86400000);
+        return '<div class="tc-trip">' +
+            '<div class="tc-info">' +
+                '<div class="tc-title">' + t.destination + '</div>' +
+                '<div class="tc-detail">' + new Date(t.date).toLocaleDateString('en-US', {weekday:'short',month:'short',day:'numeric',year:'numeric'}) + ' &bull; ' + t.status + (t.points ? ' &bull; ' + t.points : '') + (t.note ? ' &bull; ' + t.note : '') + '</div>' +
+            '</div>' +
+            '<div style="text-align: right;"><div class="tc-days">' + days + '</div><div class="tc-days-label">days away</div></div>' +
+            '<button class="tc-del" onclick="deleteTrip(' + t.id + ')" title="Remove">&times;</button>' +
+        '</div>';
+    }).join('');
+}
+
+function addTrip() {
+    var dest = prompt('Destination (e.g. Paris, Tokyo):');
+    if (!dest) return;
+    var date = prompt('Trip start date (YYYY-MM-DD):');
+    if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) { alert('Invalid date format'); return; }
+    var status = prompt('Status (planned / booked / paid):', 'planned');
+    var points = prompt('Points committed (optional, e.g. "150K Marriott + 50K MR"):', '');
+    var note = prompt('Note (optional):', '');
+
+    var trips = JSON.parse(localStorage.getItem('trips') || '[]');
+    trips.push({
+        id: Date.now(),
+        destination: dest,
+        date: date,
+        status: status || 'planned',
+        points: points || '',
+        note: note || ''
+    });
+    localStorage.setItem('trips', JSON.stringify(trips));
+    renderTrips(trips);
+}
+
+function deleteTrip(id) {
+    if (!confirm('Remove this trip?')) return;
+    var trips = JSON.parse(localStorage.getItem('trips') || '[]');
+    trips = trips.filter(function(t) { return t.id !== id; });
+    localStorage.setItem('trips', JSON.stringify(trips));
+    renderTrips(trips);
+}
+
+document.addEventListener('DOMContentLoaded', loadTrips);
+
+// ═══════════ CREDIT UTILIZATION ═══════════
+var UTIL_CARDS = [
+    { id: 'gold',   name: 'Amex Gold',           limit: 0,     balance: 0, note: 'No preset limit' },
+    { id: 'bevy',   name: 'Marriott Bevy',       limit: 25000, balance: 0 },
+    { id: 'cfu',    name: 'Chase Freedom Unlimited', limit: 33300, balance: 0 },
+    { id: 'bilt',   name: 'Bilt Mastercard',     limit: 10000, balance: 0 },
+];
+
+function loadUtil() {
+    var stored = JSON.parse(localStorage.getItem('utilization') || 'null');
+    if (stored) UTIL_CARDS = stored;
+    renderUtil();
+}
+
+function renderUtil() {
+    var list = document.getElementById('utilList');
+    if (!list) return;
+    var totalBalance = 0, totalLimit = 0;
+    list.innerHTML = UTIL_CARDS.map(function(c) {
+        totalBalance += (c.balance || 0);
+        totalLimit += (c.limit || 0);
+        var pct = c.limit > 0 ? Math.round((c.balance / c.limit) * 100) : 0;
+        var color = pct >= 30 ? '#dc2626' : pct >= 10 ? '#d97706' : '#059669';
+        return '<div class="util-row">' +
+            '<div style="font-weight: 600;">' + c.name + '</div>' +
+            '<div class="util-bar"><div class="util-bar-fill" style="width:' + Math.min(100, pct) + '%;background:' + color + ';"></div></div>' +
+            '<div><input type="number" value="' + (c.balance || 0) + '" onchange="updateUtil(\'' + c.id + '\', \'balance\', this.value)" style="width:100%;padding:4px 6px;border:1px solid #e5e7eb;border-radius:4px;font-size:12px;"></div>' +
+            '<div><input type="number" value="' + (c.limit || 0) + '" onchange="updateUtil(\'' + c.id + '\', \'limit\', this.value)" style="width:100%;padding:4px 6px;border:1px solid #e5e7eb;border-radius:4px;font-size:12px;"></div>' +
+        '</div>';
+    }).join('');
+
+    var overallPct = totalLimit > 0 ? Math.round((totalBalance / totalLimit) * 100) : 0;
+    var oColor = overallPct >= 30 ? '#dc2626' : overallPct >= 10 ? '#d97706' : '#059669';
+    var verdict = overallPct < 10 ? '&check; Optimal for FICO' : overallPct < 30 ? '&#9888; OK but could be better' : '&#10060; High — pay down';
+    document.getElementById('utilOverallPct').innerHTML = '<span style="color:' + oColor + ';">' + overallPct + '% ($' + totalBalance.toLocaleString() + ' / $' + totalLimit.toLocaleString() + ') &bull; ' + verdict + '</span>';
+}
+
+function updateUtil(id, field, value) {
+    var card = UTIL_CARDS.find(function(c) { return c.id === id; });
+    if (!card) return;
+    card[field] = parseFloat(value) || 0;
+    localStorage.setItem('utilization', JSON.stringify(UTIL_CARDS));
+    renderUtil();
+}
+
+document.addEventListener('DOMContentLoaded', loadUtil);
+
+// ═══════════ PWA install ═══════════
+if ('serviceWorker' in navigator) {
+    // Only register SW if present — skip to avoid 404
+    // (no SW file; manifest alone enables Add to Home Screen on iOS/Android)
+}
 
 // ═══════════ CSV SPEND IMPORT ═══════════
 function importSpendCsv(evt) {
