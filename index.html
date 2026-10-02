@@ -269,6 +269,39 @@
         .xfer-alert h4 { font-size: 14px; color: #166534; margin-bottom: 6px; }
         .xfer-alert p { font-size: 13px; color: #14532d; }
 
+        /* Airline tracker */
+        .airline-tracker { background: white; border: 2px solid #e5e7eb; border-radius: 14px; padding: 20px 24px; margin-bottom: 24px; }
+        .al-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
+        .al-card { padding: 16px; border-radius: 10px; color: white; position: relative; }
+        .al-card.united { background: linear-gradient(135deg, #002244, #0033a0); }
+        .al-card.delta { background: linear-gradient(135deg, #990000, #c8102e); }
+        .al-card.aa { background: linear-gradient(135deg, #1e4f91, #0078d2); }
+        .al-card .al-name { font-size: 10px; opacity: 0.85; text-transform: uppercase; letter-spacing: 1px; }
+        .al-card .al-balance { font-size: 20px; font-weight: 800; margin: 4px 0; }
+        .al-card input {
+            background: rgba(255,255,255,0.95); color: #1a1a2e; border: none; padding: 4px 8px;
+            border-radius: 4px; width: 110px; font-weight: 700; font-size: 16px; font-family: inherit;
+        }
+        .al-card .al-value { font-size: 11px; opacity: 0.9; margin-top: 4px; }
+        .al-card .al-use { font-size: 10px; opacity: 0.8; margin-top: 2px; }
+
+        @media (max-width: 768px) {
+            .al-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Financial tips */
+        .fin-tips { background: linear-gradient(135deg, #064e3b 0%, #047857 100%); color: white; border-radius: 14px; padding: 24px; margin-bottom: 48px; }
+        .fin-tips h2 { color: white; border-bottom: 2px solid rgba(255,255,255,0.2); padding-bottom: 10px; margin-bottom: 16px; }
+        .fin-tips .ft-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .fin-tips .ft-card { background: rgba(255,255,255,0.1); border-radius: 10px; padding: 14px 16px; border-left: 3px solid #fbbf24; }
+        .fin-tips .ft-card.priority { border-left-color: #fca5a5; }
+        .fin-tips .ft-title { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+        .fin-tips .ft-body { font-size: 12px; opacity: 0.95; line-height: 1.5; }
+        .fin-tips .ft-body strong { color: #fbbf24; }
+        @media (max-width: 768px) {
+            .fin-tips .ft-grid { grid-template-columns: 1fr; }
+        }
+
         /* Travel countdown */
         .trip-countdown { background: linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%); color: white; border-radius: 14px; padding: 20px 24px; margin-bottom: 24px; }
         .trip-countdown h3 { font-size: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
@@ -569,6 +602,37 @@
             <div class="total-pts">629,032 points across 4 currencies &bull; Amex MR $5,870 + Marriott $1,624 + Chase UR $1,885 + Bilt $689</div>
         </div>
         <div class="total-value">$10,068</div>
+    </div>
+
+    <!-- ═══════════ AIRLINE MILES TRACKER ═══════════ -->
+    <div class="airline-tracker">
+        <h2 style="border: none; padding: 0; margin-bottom: 4px;">Airline Miles Balances</h2>
+        <p style="color: #6b7280; font-size: 13px; margin-bottom: 4px;">
+            Click a balance to edit. Values saved locally. Direct airline programs are rigid (single-partner redemptions) but useful stockpiled for status matches + award flights.
+        </p>
+        <div class="al-grid">
+            <div class="al-card united">
+                <div class="al-name">United MileagePlus</div>
+                <div class="al-balance"><input type="number" id="milesUnited" value="0" onchange="saveAirlineMiles()"></div>
+                <div class="al-value">~1.4&cent;/pt &bull; Worth <strong id="milesUnitedValue">$0</strong></div>
+                <div class="al-use">+ 38,300 Bilt convertible 1:1</div>
+            </div>
+            <div class="al-card delta">
+                <div class="al-name">Delta SkyMiles</div>
+                <div class="al-balance"><input type="number" id="milesDelta" value="0" onchange="saveAirlineMiles()"></div>
+                <div class="al-value">~1.2&cent;/pt &bull; Worth <strong id="milesDeltaValue">$0</strong></div>
+                <div class="al-use">Weak transfer target — don't convert MR</div>
+            </div>
+            <div class="al-card aa">
+                <div class="al-name">American AAdvantage</div>
+                <div class="al-balance"><input type="number" id="milesAA" value="0" onchange="saveAirlineMiles()"></div>
+                <div class="al-value">~1.5&cent;/pt &bull; Worth <strong id="milesAAValue">$0</strong></div>
+                <div class="al-use">Sweet spots: Iberia / BA / JAL partners</div>
+            </div>
+        </div>
+        <div style="margin-top: 12px; padding: 10px 12px; background: #eff6ff; border-radius: 8px; font-size: 12px; color: #1e40af;">
+            <strong>Status match opportunity:</strong> You're Marriott Gold. Can match to Hilton Gold, IHG Platinum, or airline status in some promos. Check <strong>statusmatcher.com</strong> for current offers.
+        </div>
     </div>
 
     <!-- ═══════════ PORTFOLIO GROWTH CHART ═══════════ -->
@@ -1247,6 +1311,91 @@
 
         <div style="margin-top: 10px; padding: 12px 14px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; font-size: 12px; color: #166534;">
             <strong>&#10003; Both fee dates confirmed.</strong> Bevy: Apr 12 anniversary. Gold: May 11 anniversary. Set calendar reminders for retention call windows above.
+        </div>
+    </div>
+
+    <!-- ═══════════ FINANCIAL TIPS BEYOND CARDS ═══════════ -->
+    <div class="fin-tips">
+        <h2>Beyond Credit Cards &mdash; Personal Finance Opportunities</h2>
+        <p style="color: rgba(255,255,255,0.85); font-size: 13px; margin-bottom: 14px;">
+            Credit card points optimization caps out ~$10-15K/yr value. Real wealth-building happens here. Prioritized for your situation (Goldman Sachs, NYC renter, young, high-income).
+        </p>
+        <div class="ft-grid">
+            <div class="ft-card priority">
+                <div class="ft-title">1. Max your 401(k) match &mdash; HIGHEST priority</div>
+                <div class="ft-body">
+                    Confirm you're hitting <strong>100% of your Miura Global match</strong> (not full $23K limit — just the match). Free money. GS likely matches ~5-6% of base. If base is $150K and match is 5% → <strong>$7,500 free per year</strong>. One of only free-lunch moves in finance.
+                </div>
+            </div>
+            <div class="ft-card priority">
+                <div class="ft-title">2. Backdoor Roth IRA ($7K/yr)</div>
+                <div class="ft-body">
+                    As a GS employee, your income likely exceeds direct Roth limit ($161K single, 2026). <strong>Backdoor Roth</strong>: contribute $7K to Traditional IRA (non-deductible), convert to Roth immediately. Tax-free growth forever. 10+ years = <strong>$150K+ tax-free</strong> on $70K contributed.
+                </div>
+            </div>
+            <div class="ft-card priority">
+                <div class="ft-title">3. Mega Backdoor Roth (if available)</div>
+                <div class="ft-body">
+                    Check Miura's plan for <strong>after-tax contributions + in-plan Roth conversion</strong>. If allowed, lets you shovel up to <strong>$46K/yr</strong> extra into Roth. Huge if available. Call plan admin to confirm.
+                </div>
+            </div>
+            <div class="ft-card">
+                <div class="ft-title">4. HSA if you have HDHP</div>
+                <div class="ft-body">
+                    Triple tax-advantaged: deductible in, tax-free growth, tax-free out for medical. <strong>$4,300/yr limit (2026)</strong>. If GS offers HDHP as option, worth considering vs PPO. Treat HSA as stealth retirement account — invest it, don't spend it.
+                </div>
+            </div>
+            <div class="ft-card">
+                <div class="ft-title">5. Emergency fund in Marcus / Fidelity CMA</div>
+                <div class="ft-body">
+                    3-6 months expenses in HYSA. Current rate ~4-5%. <strong>Marcus by Goldman Sachs</strong> = your employer, zero friction + ~4.5%. Or <strong>Fidelity CMA</strong> auto-sweeps to money market at ~5%. For rent $4,100 + bills ~$3K/mo = $21-42K target.
+                </div>
+            </div>
+            <div class="ft-card">
+                <div class="ft-title">6. Schwab Investor Checking for travel</div>
+                <div class="ft-body">
+                    <strong>Zero FTX fees + unlimited ATM reimbursement worldwide</strong>. Opens as checking + Schwab brokerage pair. Perfect fix for your CFU 3% FTX problem. Use abroad instead of any credit card for cash needs.
+                </div>
+            </div>
+            <div class="ft-card">
+                <div class="ft-title">7. I-Bonds / Treasury Direct</div>
+                <div class="ft-body">
+                    <strong>$10K/yr limit, 30-yr tax-deferred</strong>. Current rate pegged to inflation. Rate reset May/Nov. Safer than any stock, beats most HYSAs for lump-sum emergency allocation. Treasurydirect.gov.
+                </div>
+            </div>
+            <div class="ft-card">
+                <div class="ft-title">8. Umbrella insurance ($200-400/yr)</div>
+                <div class="ft-body">
+                    NYC = high liability exposure. <strong>$1M umbrella policy</strong> on top of renters/auto covers catastrophic lawsuits. Cheap peace of mind at your income level. Required if net worth hits ~$500K.
+                </div>
+            </div>
+            <div class="ft-card">
+                <div class="ft-title">9. Tax-loss harvesting (year-end)</div>
+                <div class="ft-body">
+                    If your Chase CMA Edge brokerage has losers, <strong>sell to realize $3K/yr losses</strong> against ordinary income + unlimited vs gains. Repeat yearly. Buy similar-but-not-identical to maintain exposure (avoid wash sale rule).
+                </div>
+            </div>
+            <div class="ft-card">
+                <div class="ft-title">10. Beneficiary audit</div>
+                <div class="ft-body">
+                    Check all accounts: 401k, IRA, Roth, bank, Marcus, brokerage, life insurance. Beneficiaries bypass probate. Update whenever life changes. <strong>5-minute task</strong>, prevents family mess later.
+                </div>
+            </div>
+            <div class="ft-card">
+                <div class="ft-title">11. Renters insurance ($10-15/mo)</div>
+                <div class="ft-body">
+                    Covers theft, water damage, liability. NYC landlords often require it. Lemonade (<strong>$5-15/mo</strong>) or Toggl is easy. Protects $20-50K of stuff.
+                </div>
+            </div>
+            <div class="ft-card">
+                <div class="ft-title">12. Donor-Advised Fund (DAF)</div>
+                <div class="ft-body">
+                    If charitable + want tax deduction: contribute to Fidelity Charitable DAF, deduct immediately, distribute to charities over time. <strong>Donate appreciated stock</strong> instead of cash — avoid cap gains + full deduction. Best if you bunch donations (2-3 yrs worth in one year to exceed standard deduction).
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 16px; padding: 12px 14px; background: rgba(0,0,0,0.2); border-radius: 8px; font-size: 12px; color: rgba(255,255,255,0.9);">
+            <strong>Compound reality check:</strong> $500/mo invested at 8% real return for 30 years = <strong>$750K</strong>. $1,000/mo = <strong>$1.5M</strong>. Starting age 25-30 is the single biggest financial advantage you have. Credit card points are a rounding error vs this.
         </div>
     </div>
 
@@ -2050,6 +2199,40 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// ═══════════ AIRLINE MILES TRACKER ═══════════
+var AIRLINE_RATES = { united: 0.014, delta: 0.012, aa: 0.015 };
+
+function loadAirlineMiles() {
+    var stored = JSON.parse(localStorage.getItem('airlineMiles') || '{}');
+    ['united', 'delta', 'aa'].forEach(function(k) {
+        var el = document.getElementById('miles' + k.charAt(0).toUpperCase() + k.slice(1));
+        if (el && stored[k] != null) el.value = stored[k];
+    });
+    updateAirlineValues();
+}
+
+function saveAirlineMiles() {
+    var vals = {};
+    ['united', 'delta', 'aa'].forEach(function(k) {
+        var el = document.getElementById('miles' + k.charAt(0).toUpperCase() + k.slice(1));
+        vals[k] = parseInt(el.value) || 0;
+    });
+    localStorage.setItem('airlineMiles', JSON.stringify(vals));
+    updateAirlineValues();
+}
+
+function updateAirlineValues() {
+    ['united', 'delta', 'aa'].forEach(function(k) {
+        var inp = document.getElementById('miles' + k.charAt(0).toUpperCase() + k.slice(1));
+        var val = document.getElementById('miles' + k.charAt(0).toUpperCase() + k.slice(1) + 'Value');
+        if (!inp || !val) return;
+        var pts = parseInt(inp.value) || 0;
+        val.textContent = '$' + Math.round(pts * AIRLINE_RATES[k]).toLocaleString();
+    });
+}
+
+document.addEventListener('DOMContentLoaded', loadAirlineMiles);
 
 // ═══════════ TRAVEL COUNTDOWN ═══════════
 function loadTrips() {
