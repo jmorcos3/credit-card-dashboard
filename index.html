@@ -267,6 +267,37 @@
         .xfer-alert h4 { font-size: 14px; color: #166534; margin-bottom: 6px; }
         .xfer-alert p { font-size: 13px; color: #14532d; }
 
+        .ticker-bar {
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f172a 100%);
+            color: white; border-radius: 14px; padding: 20px 24px; margin-bottom: 24px;
+            display: flex; align-items: center; gap: 20px; position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .ticker-bar .ticker-icon {
+            width: 44px; height: 44px; background: rgba(255,255,255,0.1);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; font-size: 22px;
+        }
+        .ticker-bar .ticker-content { flex: 1; }
+        .ticker-bar .ticker-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.6; margin-bottom: 4px; }
+        .ticker-bar .ticker-text { font-size: 16px; font-weight: 600; line-height: 1.4; }
+        .ticker-bar .ticker-text strong { color: #fbbf24; }
+        .ticker-bar .ticker-action { font-size: 12px; margin-top: 6px; opacity: 0.75; }
+        .ticker-bar .ticker-next { font-size: 11px; opacity: 0.5; margin-top: 8px; cursor: pointer; }
+
+        .elite-tracker {
+            background: linear-gradient(135deg, #5b21b6 0%, #7c3aed 100%);
+            color: white; border-radius: 14px; padding: 20px 24px; margin-bottom: 24px;
+        }
+        .elite-tracker .et-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; }
+        .elite-tracker .et-title { font-size: 15px; font-weight: 700; }
+        .elite-tracker .et-current { font-size: 13px; opacity: 0.85; }
+        .elite-tracker .et-bar-wrap { background: rgba(255,255,255,0.15); border-radius: 10px; height: 28px; overflow: hidden; position: relative; }
+        .elite-tracker .et-bar-fill { height: 100%; background: linear-gradient(90deg, #fbbf24, #f59e0b); border-radius: 10px; transition: width 0.6s; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; font-size: 11px; font-weight: 700; color: #1a1a2e; }
+        .elite-tracker .et-tiers { display: flex; justify-content: space-between; font-size: 10px; opacity: 0.7; margin-top: 6px; }
+        .elite-tracker .et-tiers span.active { color: #fbbf24; opacity: 1; font-weight: 700; }
+        .elite-tracker .et-detail { font-size: 12px; margin-top: 12px; opacity: 0.85; line-height: 1.5; }
+
         .quick-ref {
             border: 2px solid #1a1a2e; border-radius: 14px; padding: 20px;
             margin-bottom: 32px; background: linear-gradient(135deg, #fafafa 0%, #fff 100%);
@@ -311,14 +342,53 @@
 <body>
 
 <div class="container">
-    <div style="display: flex; justify-content: space-between; align-items: center;">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
         <h1>My Credit Card Points</h1>
-        <button class="report-btn" onclick="createReport()">
-            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
-            Create Report
-        </button>
+        <div style="display: flex; gap: 8px;">
+            <button class="report-btn" style="background: #9333ea;" onclick="showScorecard()">
+                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM7 17H5v-5h2v5zm4 0H9V7h2v10zm4 0h-2v-7h2v7zm4 0h-2v-9h2v9z"/></svg>
+                Monthly Scorecard
+            </button>
+            <button class="report-btn" onclick="createReport()">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
+                Create Report
+            </button>
+        </div>
     </div>
     <div class="subtitle">Goal: Marriott Bonvoy hotels + United flights to Europe &mdash; Chase Private Client &mdash; <span id="lastUpdated">Loading…</span></div>
+
+    <!-- ═══════════ NEXT BEST MOVE TICKER ═══════════ -->
+    <div class="ticker-bar" id="nextMoveTicker">
+        <div class="ticker-icon" id="tickerIcon">&rarr;</div>
+        <div class="ticker-content">
+            <div class="ticker-label">Next Best Move</div>
+            <div class="ticker-text" id="tickerText">Loading...</div>
+            <div class="ticker-action" id="tickerAction"></div>
+            <div class="ticker-next" id="tickerNext" onclick="cycleTicker()" title="Click for next suggestion">&#9654; next suggestion</div>
+        </div>
+    </div>
+
+    <!-- ═══════════ MARRIOTT ELITE STATUS TRACKER ═══════════ -->
+    <div class="elite-tracker" id="eliteTracker">
+        <div class="et-header">
+            <div class="et-title">Marriott Elite Status Progress</div>
+            <div class="et-current">Current: <strong>Gold Elite</strong> &bull; <span id="etNightsCurrent">16</span>/50 nights to Platinum</div>
+        </div>
+        <div class="et-bar-wrap">
+            <div class="et-bar-fill" id="etBarFill" style="width: 32%;"><span id="etPct">32%</span></div>
+        </div>
+        <div class="et-tiers">
+            <span>Silver (10)</span>
+            <span class="active">Gold (25) &check;</span>
+            <span>Platinum (50)</span>
+            <span>Titanium (75)</span>
+            <span>Ambassador (100 + $23K)</span>
+        </div>
+        <div class="et-detail" id="eliteDetail">
+            <strong>Boost options:</strong>
+            Bevy card gives 15 Elite Night Credits automatically every calendar year (already counted). Each Marriott stay = 1 ENC + 1/night. Buy Elite Nights at ~$1,500 to hit Platinum (bad value). Status match from Hyatt/Hilton possible via Marriott's Status Match Challenge.
+        </div>
+    </div>
 
     <!-- ═══════════ DAILY CARD CHEAT SHEET ═══════════ -->
     <div class="quick-ref">
@@ -550,6 +620,13 @@
             <div><label>Everything else ($/mo)</label><input type="number" id="catOther" placeholder="652"></div>
         </div>
         <button class="trip-btn" style="background: #d97706;" onclick="calcCategories()">Calculate Optimal Spend</button>
+        <label style="display: inline-block; margin-left: 10px; padding: 8px 18px; background: white; border: 1px dashed #d97706; border-radius: 8px; font-size: 13px; cursor: pointer; color: #d97706; font-weight: 600;">
+            &uarr; Upload Amex/Chase CSV
+            <input type="file" accept=".csv" onchange="importSpendCsv(event)" style="display: none;">
+        </label>
+        <div style="margin-top: 8px; font-size: 11px; color: #78350f;">
+            Upload monthly statement CSV (Amex export, Chase export). Dashboard auto-fills categories above based on merchant category codes.
+        </div>
         <div class="cat-result" id="catResult" style="display: none;"></div>
     </div>
 
@@ -1377,6 +1454,25 @@ function renderPortfolioChart() {
                 }
             });
 
+            // Event annotations (vertical dashed lines + labels)
+            var events = [
+                { date: '2026-04-15', label: 'Bevy opened', color: '#7c3aed' },
+                { date: '2026-06-15', label: '175K Marriott posted', color: '#fbbf24' },
+                { date: '2026-10-01', label: '$10K portfolio', color: '#059669' },
+            ];
+            events.forEach(function(ev) {
+                // Find closest snapshot index to event date
+                var idx = -1;
+                var evTime = new Date(ev.date).getTime();
+                for (var k = 0; k < snaps.length; k++) {
+                    if (new Date(snaps[k].date).getTime() >= evTime) { idx = k; break; }
+                }
+                if (idx < 0) return;
+                var x = xAt(idx);
+                svgContent += '<line x1="' + x + '" y1="' + PAD_T + '" x2="' + x + '" y2="' + (H - PAD_B) + '" stroke="' + ev.color + '" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>';
+                svgContent += '<text x="' + x + '" y="' + (PAD_T + 12) + '" text-anchor="middle" font-size="9" fill="' + ev.color + '" font-weight="700">' + ev.label + '</text>';
+            });
+
             // Points lines
             Object.keys(series).forEach(function(key) {
                 var s = series[key];
@@ -1408,6 +1504,141 @@ function renderPortfolioChart() {
         .catch(function(err) { console.error('Chart load failed:', err); });
 }
 document.addEventListener('DOMContentLoaded', renderPortfolioChart);
+
+// ═══════════ NEXT BEST MOVE TICKER ═══════════
+var SUGGESTIONS = [];
+var SUGGESTION_IDX = 0;
+
+function buildSuggestions() {
+    var now = new Date();
+    var out = [];
+
+    // $120 Gold Dining Credit — monthly check
+    var currMonth = now.getMonth();
+    out.push({
+        icon: '🍔',
+        text: 'Order <strong>$10 Grubhub / Buffalo Wild Wings / Wonder</strong> this month on Amex Gold — $120 Dining Credit resets monthly, you lose $10 if you skip.',
+        action: 'Target: $10 by end of ' + now.toLocaleString('en-US', {month: 'long'})
+    });
+
+    // Uber One anniversary — expires Oct 30
+    var daysToUberExpiry = Math.max(0, Math.ceil((new Date('2026-10-30') - now) / 86400000));
+    if (daysToUberExpiry > 0 && daysToUberExpiry < 60) {
+        out.push({
+            icon: '🚨',
+            text: '<strong>$96 Uber One</strong> anniversary credit expires in <strong>' + daysToUberExpiry + ' days</strong> (Oct 30). Activate at amex.com now.',
+            action: 'This disappears forever if not used — $96 free'
+        });
+    }
+
+    // Rent Day — Bilt 1st of month
+    var dayOfMonth = now.getDate();
+    if (dayOfMonth === 1) {
+        out.push({
+            icon: '🎯',
+            text: '<strong>Today is Bilt Rent Day!</strong> 3x dining, 2x travel, 2x everything else on Bilt. Only lasts 24 hours.',
+            action: 'Shift today\'s dinner to Bilt for 3x'
+        });
+    } else if (dayOfMonth > 25) {
+        var daysToRentDay = Math.max(1, 32 - dayOfMonth) % 31;
+        out.push({
+            icon: '📅',
+            text: 'Bilt Rent Day in <strong>' + (daysToRentDay || 1) + ' day(s)</strong> (1st of month) — 3x dining, 2x travel. Plan a nice dinner for the 1st.',
+            action: 'Save receipts for the 1st'
+        });
+    }
+
+    // Bilt → Amtrak 2:1 opportunity
+    if (BALANCES.bilt > 10000) {
+        out.push({
+            icon: '🚂',
+            text: 'Your <strong>' + BALANCES.bilt.toLocaleString() + ' Bilt</strong> = ' + (BALANCES.bilt * 2).toLocaleString() + ' Amtrak Guest Rewards @ 2:1 (permanent partner). Worth ~$' + Math.round(BALANCES.bilt * 2 * 0.025).toLocaleString() + ' in Acela redemptions.',
+            action: 'If you ride Acela NYC-BOS/DC, transfer when needed'
+        });
+    }
+
+    // Marriott Platinum push
+    out.push({
+        icon: '🏨',
+        text: 'You\'re <strong>16/50 nights</strong> to Marriott Platinum. 34 more nights by Dec 31 unlocks lounge access + 50% point bonus. Bevy nights count.',
+        action: '34 nights in 3 months = aggressive but possible'
+    });
+
+    // Credit card data retention
+    out.push({
+        icon: '🗓️',
+        text: '<strong>Bevy fee ($250)</strong> posts Apr 12, 2027. Call Amex retention 30 days prior (Mar 12). GitHub will auto-remind.',
+        action: 'Free night cert (~$300) usually makes keeping worth it'
+    });
+
+    // Gold cap check
+    out.push({
+        icon: '⚠️',
+        text: 'Watch Amex Gold caps: <strong>$50K dining</strong> + <strong>$25K groceries</strong> both drop to 1x after. If close to cap, split overflow onto Bevy (2x) or wait for new year.',
+        action: 'Your dining pace ~$13K/yr = well under cap'
+    });
+
+    // CFU abroad warning
+    out.push({
+        icon: '🌍',
+        text: 'Reminder: <strong>CFU has 3% FTX fee</strong>. Use Amex Gold (restaurants worldwide 4x, no FTX) or Bilt / Bevy abroad instead.',
+        action: 'Noticed Brazil + Türkiye charges on CFU — $7+ in fees paid'
+    });
+
+    // Add Card Member
+    out.push({
+        icon: '👥',
+        text: 'Amex Gold shows <strong>10K MR offer</strong> for adding an authorized user. Zero risk if you add family/partner for free.',
+        action: '10K MR = ~$200 value, 5 min to set up'
+    });
+
+    return out;
+}
+
+function updateTicker() {
+    if (SUGGESTIONS.length === 0) SUGGESTIONS = buildSuggestions();
+    if (SUGGESTIONS.length === 0) return;
+    var s = SUGGESTIONS[SUGGESTION_IDX % SUGGESTIONS.length];
+    document.getElementById('tickerIcon').textContent = s.icon;
+    document.getElementById('tickerText').innerHTML = s.text;
+    document.getElementById('tickerAction').innerHTML = s.action;
+}
+function cycleTicker() {
+    SUGGESTION_IDX++;
+    updateTicker();
+}
+document.addEventListener('DOMContentLoaded', function() {
+    SUGGESTIONS = buildSuggestions();
+    updateTicker();
+    setInterval(cycleTicker, 15000);  // auto-cycle every 15s
+});
+
+// ═══════════ ELITE STATUS CALCULATION ═══════════
+document.addEventListener('DOMContentLoaded', function() {
+    var currentNights = 16;  // from last Marriott screenshot
+    var platinumTarget = 50;
+    var pct = Math.min(100, Math.round((currentNights / platinumTarget) * 100));
+    var el = document.getElementById('etBarFill');
+    if (el) {
+        el.style.width = pct + '%';
+        document.getElementById('etPct').textContent = pct + '%';
+        document.getElementById('etNightsCurrent').textContent = currentNights;
+    }
+
+    // Projection logic
+    var now = new Date();
+    var yearEnd = new Date(now.getFullYear(), 11, 31);
+    var daysLeft = Math.ceil((yearEnd - now) / 86400000);
+    var nightsNeeded = platinumTarget - currentNights;
+    var monthsLeft = daysLeft / 30;
+
+    var detail = document.getElementById('eliteDetail');
+    if (detail && nightsNeeded > 0) {
+        detail.innerHTML = '<strong>Reality check:</strong> ' + nightsNeeded + ' nights needed in ~' + monthsLeft.toFixed(1) + ' months = ' + (nightsNeeded / monthsLeft).toFixed(1) + ' nights/mo. ' +
+            (nightsNeeded <= 15 ? 'Achievable with 1-2 trips.' : nightsNeeded <= 25 ? 'Possible with aggressive travel.' : '<strong>Not realistic</strong> — focus on 2027 instead. Status Match Challenge (Hyatt Globalist → Marriott Platinum) is a faster path if you have Hyatt status.') +
+            ' <br><br>Bevy card gives 15 Elite Night Credits annually (already counted). Each stay = 1 bonus ENC + nights stayed.';
+    }
+});
 
 // ═══════════ TRIP PLANNER ═══════════
 var BALANCES = { mr: 293477, marriott: 202998, ur: 93957, urLocked: true, bilt: 38300 };
@@ -1749,6 +1980,158 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// ═══════════ CSV SPEND IMPORT ═══════════
+function importSpendCsv(evt) {
+    var file = evt.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        var text = e.target.result;
+        var rows = text.split('\n').map(function(r) { return r.split(','); });
+        if (rows.length < 2) { alert('Empty CSV'); return; }
+
+        // Detect header row
+        var headers = rows[0].map(function(h) { return h.toLowerCase().replace(/"/g, '').trim(); });
+        var descIdx = headers.findIndex(function(h) { return h.includes('description') || h.includes('merchant'); });
+        var amtIdx = headers.findIndex(function(h) { return h === 'amount' || h.includes('amount'); });
+        var catIdx = headers.findIndex(function(h) { return h === 'category'; });
+
+        if (amtIdx === -1) { alert('No "Amount" column found. Try Amex/Chase standard export.'); return; }
+
+        // Category patterns
+        var patterns = {
+            dining: /restaurant|cafe|coffee|bar|grill|pizza|sushi|burger|chipotle|starbucks|dunkin|chopt|sweetgreen|grubhub|doordash|resy|aramark|five guys|shake shack|tst\*/i,
+            groceries: /whole foods|trader joe|wegmans|food|market|safeway|kroger|publix|aldi|grocery/i,
+            travel: /airline|united|delta|american air|southwest|jetblue|airbnb|hotel|marriott|hyatt|hilton|uber|lyft|rental|avis|hertz|amtrak|airport/i,
+            marriott: /marriott|courtyard|renaissance|westin|sheraton|ritz-carlton|st regis|w hotel|bonvoy/i,
+            uber: /uber|lyft|cabify/i,
+            gas: /shell|exxon|chevron|bp |mobil|gas |fuel|arco/i,
+        };
+
+        var totals = { dining: 0, groceries: 0, travel: 0, marriott: 0, prepaid: 0, uber: 0, gas: 0, other: 0 };
+        var count = 0;
+
+        rows.slice(1).forEach(function(row) {
+            if (row.length <= Math.max(descIdx, amtIdx)) return;
+            var desc = (descIdx >= 0 ? row[descIdx] : '').replace(/"/g, '');
+            var amt = parseFloat((row[amtIdx] || '').replace(/[^0-9.-]/g, ''));
+            if (isNaN(amt) || amt >= 0) return;  // skip positive (payments)
+            amt = Math.abs(amt);
+            count++;
+
+            var matched = false;
+            if (patterns.marriott.test(desc)) { totals.marriott += amt; matched = true; }
+            else if (patterns.dining.test(desc)) { totals.dining += amt; matched = true; }
+            else if (patterns.groceries.test(desc)) { totals.groceries += amt; matched = true; }
+            else if (patterns.uber.test(desc)) { totals.uber += amt; matched = true; }
+            else if (patterns.gas.test(desc)) { totals.gas += amt; matched = true; }
+            else if (patterns.travel.test(desc)) { totals.travel += amt; matched = true; }
+            if (!matched) totals.other += amt;
+        });
+
+        if (count === 0) { alert('No transactions parsed. Check CSV format.'); return; }
+
+        // Fill monthly values (assume CSV covers 1 month — rough)
+        document.getElementById('catDining').value = Math.round(totals.dining);
+        document.getElementById('catGroceries').value = Math.round(totals.groceries);
+        document.getElementById('catTravel').value = Math.round(totals.travel);
+        document.getElementById('catMarriott').value = Math.round(totals.marriott);
+        document.getElementById('catUber').value = Math.round(totals.uber);
+        document.getElementById('catGas').value = Math.round(totals.gas);
+        document.getElementById('catOther').value = Math.round(totals.other);
+
+        alert('Imported ' + count + ' transactions. Values populated above — review and click Calculate.');
+    };
+    reader.readAsText(file);
+}
+
+// ═══════════ MONTHLY SCORECARD ═══════════
+function showScorecard() {
+    fetch('portfolio_history.json?t=' + Date.now())
+        .then(r => r.json())
+        .then(data => {
+            var snaps = data.snapshots;
+            if (snaps.length < 2) { alert('Need at least 2 snapshots for scorecard.'); return; }
+
+            var now = new Date();
+            var monthAgo = new Date(now.getTime() - 30 * 86400000);
+
+            // Find snapshots closest to now and 30 days ago
+            var latest = snaps[snaps.length - 1];
+            var prior = null;
+            for (var i = snaps.length - 2; i >= 0; i--) {
+                if (new Date(snaps[i].date) <= monthAgo) { prior = snaps[i]; break; }
+            }
+            if (!prior) prior = snaps[0];
+
+            var mrGain = latest.mr - prior.mr;
+            var marriottGain = latest.marriott - prior.marriott;
+            var urGain = latest.ur - prior.ur;
+            var biltGain = latest.bilt - prior.bilt;
+            var totalValueGain = (mrGain * 0.02) + (marriottGain * 0.008) + (urGain * 0.02) + (biltGain * 0.018);
+
+            var modal = document.createElement('div');
+            modal.id = 'scorecardModal';
+            modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
+            modal.innerHTML = '<div style="background:white;border-radius:16px;padding:32px;max-width:600px;width:100%;max-height:90vh;overflow-y:auto;position:relative;">' +
+                '<button onclick="document.getElementById(\'scorecardModal\').remove()" style="position:absolute;top:12px;right:12px;background:#f3f4f6;border:none;border-radius:50%;width:36px;height:36px;cursor:pointer;font-size:18px;">&times;</button>' +
+                '<h2 style="border:none;padding:0;margin-bottom:4px;font-size:22px;">Monthly Scorecard</h2>' +
+                '<div style="color:#6b7280;font-size:13px;margin-bottom:20px;">' + prior.date + ' &rarr; ' + latest.date + ' (' + Math.round((new Date(latest.date) - new Date(prior.date)) / 86400000) + ' days)</div>' +
+
+                '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">' +
+                scorecardTile('Amex MR Gained', (mrGain >= 0 ? '+' : '') + mrGain.toLocaleString(), '$' + Math.round(mrGain * 0.02).toLocaleString() + ' value', '#006fcf') +
+                scorecardTile('Marriott Gained', (marriottGain >= 0 ? '+' : '') + marriottGain.toLocaleString(), '$' + Math.round(marriottGain * 0.008).toLocaleString() + ' value', '#7c3aed') +
+                scorecardTile('Chase UR Gained', (urGain >= 0 ? '+' : '') + urGain.toLocaleString(), '$' + Math.round(urGain * 0.02).toLocaleString() + ' value', '#003087') +
+                scorecardTile('Bilt Gained', (biltGain >= 0 ? '+' : '') + biltGain.toLocaleString(), '$' + Math.round(biltGain * 0.018).toLocaleString() + ' value', '#1a1a2e') +
+                '</div>' +
+
+                '<div style="background:#f0fdf4;border:2px solid #bbf7d0;border-radius:12px;padding:16px;text-align:center;margin-bottom:20px;">' +
+                    '<div style="font-size:12px;color:#166534;text-transform:uppercase;letter-spacing:1px;font-weight:700;">Total Value Gained</div>' +
+                    '<div style="font-size:32px;font-weight:800;color:#059669;margin-top:4px;">$' + Math.round(totalValueGain).toLocaleString() + '</div>' +
+                '</div>' +
+
+                '<div style="padding:14px 16px;background:#eff6ff;border-radius:10px;font-size:13px;color:#1e40af;margin-bottom:12px;">' +
+                '<strong>What drove growth:</strong><br>' + buildScorecardCommentary(mrGain, marriottGain, urGain, biltGain) +
+                '</div>' +
+
+                '<div style="padding:14px 16px;background:#fef3c7;border-radius:10px;font-size:13px;color:#78350f;">' +
+                '<strong>Watch for next month:</strong><br>' + buildScorecardTodos() +
+                '</div>' +
+
+                '<button onclick="window.print()" style="margin-top:16px;padding:10px 20px;background:#1a1a2e;color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;">Print / Save PDF</button>' +
+            '</div>';
+            document.body.appendChild(modal);
+        })
+        .catch(function(e) { alert('Failed to load history: ' + e.message); });
+}
+
+function scorecardTile(label, value, sub, color) {
+    return '<div style="background:' + color + ';color:white;border-radius:10px;padding:14px;">' +
+        '<div style="font-size:10px;opacity:0.85;text-transform:uppercase;letter-spacing:1px;">' + label + '</div>' +
+        '<div style="font-size:20px;font-weight:800;margin-top:4px;">' + value + '</div>' +
+        '<div style="font-size:11px;opacity:0.9;">' + sub + '</div>' +
+    '</div>';
+}
+
+function buildScorecardCommentary(mr, marriott, ur, bilt) {
+    var parts = [];
+    if (mr > 15000) parts.push('Strong MR earning on Gold (dining/groceries 4x).');
+    if (marriott > 100000) parts.push('Big Marriott jump — likely bonus posted or large stay charged on Bevy.');
+    else if (marriott > 10000) parts.push('Steady Marriott earning from Bevy spend.');
+    if (ur > 500) parts.push('CFU accrued a bit of UR — try to limit CFU use since UR locked.');
+    if (bilt === 0) parts.push('Bilt dormant as expected.');
+    if (parts.length === 0) return 'Quiet month — no major moves.';
+    return parts.join(' ');
+}
+
+function buildScorecardTodos() {
+    var todos = [];
+    todos.push('Check $120 Dining Credit progress — needs $10/mo use.');
+    todos.push('Check Uber One $96 anniversary credit before Oct 30.');
+    todos.push('Rent Day on 1st — plan nice dinner on Bilt for 3x.');
+    return todos.map(function(t) { return '&bull; ' + t; }).join('<br>');
+}
 
 function createReport() {
     var btn = document.querySelector('.report-btn');
