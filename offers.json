@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-10-26T19:01:28.443635+00:00",
+  "generated_at": "2026-10-27T11:37:05.435257+00:00",
   "feed_count": 6,
-  "item_count": 20,
+  "item_count": 18,
   "items": [
     {
-      "source": "Doctor of Credit",
-      "title": "American Express Transfer Bonus: 35% To Marriott (1:1.35)",
-      "summary": "Some American Express members are being targeted for a 35% transfer bonus to Marriott. Normally you can transfer 1,000 Membership Rewards points to 1,000 Marriott points. Under this promotion you’d receive 1,350 Marriott points.",
-      "link": "https://www.doctorofcredit.com/american-express-transfer-bonus-35-to-marriott-11-35-2/",
-      "published": "2026-10-25T19:50:28+00:00",
+      "source": "Frequent Miler",
+      "title": "Amex no longer automatically linking Membership Rewards accounts",
+      "summary": "As recently reported on Reddit and Doctor of Credit, American Express is apparently no longer automatically linking Membership Rewards accounts when you open a new card. It is still possible to link a new card with your existing Membership Rewards-earning cards during the application process or to c",
+      "link": "https://frequentmiler.com/amex-no-longer-automatically-linking-membership-rewards-accounts/",
+      "published": "2026-10-26T23:45:53+00:00",
       "score": 9,
       "tier": "tier1",
       "is_new": true
@@ -21,7 +21,7 @@
       "published": "2026-10-26T08:22:37+00:00",
       "score": 9,
       "tier": "tier1",
-      "is_new": true
+      "is_new": false
     },
     {
       "source": "Doctor of Credit",
@@ -31,17 +31,7 @@
       "published": "2026-10-26T17:00:36+00:00",
       "score": 7,
       "tier": "tier1",
-      "is_new": true
-    },
-    {
-      "source": "Doctor of Credit",
-      "title": "Citi Adds $200 inKind Dining Credit To American Airlines Executive Card",
-      "summary": "Citi has added a $200 inKind dining credit to the Citi / AAdvantage Executive World Legend Mastercard. The credit is a semi annual meaning you receive one $100 credit that is good from January - June and a second $100 credit that is good through July - December",
-      "link": "https://www.doctorofcredit.com/citi-adds-200-inkind-dining-credit-to-american-airlines-executive-card/",
-      "published": "2026-10-25T23:12:50+00:00",
-      "score": 7,
-      "tier": "tier1",
-      "is_new": true
+      "is_new": false
     },
     {
       "source": "The Points Guy",
@@ -51,14 +41,14 @@
       "published": "2026-10-25T20:00:59+00:00",
       "score": 7,
       "tier": "tier1",
-      "is_new": true
+      "is_new": false
     },
     {
-      "source": "The Points Guy",
-      "title": "Why I rely on credit cards to earn American Airlines elite status",
-      "summary": "You can earn American Airlines elite status without flying. Here's how much you'll need to spend on AAdvantage credit cards to qualify for each tier.",
-      "link": "https://thepointsguy.com/news/requalify-aa-elite-credit-card/",
-      "published": "2026-10-23T20:00:28+00:00",
+      "source": "Frequent Miler",
+      "title": "Bilt questions, live at the Chicago Points Travel Festival | Question of the Week Ep20 | 10-26-26",
+      "summary": "At the Chicago Points Travel Festival last weekend, Greg and Nick filmed a live coffee break episode, letting the audience pick the topic of discussion: Best use of Bilt points now that the dust has settled. At the end of this discussion, they took some questions from the audience, which we&#8217;ve",
+      "link": "https://frequentmiler.com/bilt-questions-live-at-the-chicago-points-travel-festival-question-of-the-week-ep20-10-26-26/",
+      "published": "2026-10-26T22:45:25+00:00",
       "score": 7,
       "tier": "tier1",
       "is_new": true
@@ -71,7 +61,7 @@
       "published": "2026-10-26T13:45:19+00:00",
       "score": 7,
       "tier": "tier1",
-      "is_new": true
+      "is_new": false
     },
     {
       "source": "Frequent Miler",
@@ -81,24 +71,14 @@
       "published": "2026-10-24T10:45:37+00:00",
       "score": 7,
       "tier": "tier1",
-      "is_new": true
+      "is_new": false
     },
     {
-      "source": "Frequent Miler",
-      "title": "Marriott Amex Offer: Spend $375, get $150 back (targeted)",
-      "summary": "A new, targeted Amex offer is out for Marriott Bonvoy: get a $150 statement credit when you spend $375+ at most Bonvoy properties. You can spread the spend across multiple purchases. This offer is only valid for properties in the US, the Caribbean, Canada, and Mexico and there may be other permutati",
-      "link": "https://frequentmiler.com/marriott-amex-offer-spend-375-get-150-back-targeted/",
-      "published": "2026-10-23T17:45:32+00:00",
-      "score": 7,
-      "tier": "tier1",
-      "is_new": true
-    },
-    {
-      "source": "Frequent Miler",
-      "title": "Marriott Homes & Villas promo: Earn 3x points on all 5+ night stays next Summer",
-      "summary": "Marriott Homes &#38; Villas is running another promotion, this time awarding triple base points on all stays of five or more nights during Summer 2027. This is a strange one. Although the promotion applies to stays from 5/24/27 &#8211; 9/11/27, the booking window closes 7 months before the stay wind",
-      "link": "https://frequentmiler.com/marriott-homes-villas-promo-earn-3x-points-on-all-5-night-stays-next-summer/",
-      "published": "2026-10-23T13:45:31+00:00",
+      "source": "View from the Wing",
+      "title": "Free 5,000 American Airlines Miles For AT&T Customers (Hurry, Limited To The First 65,000 Customers)",
+      "summary": "Current AT&#038;T customers receive 5,000 American Airlines AAdvantage miles just for linking their AT&#038;T and AAdvantage accounts.",
+      "link": "https://viewfromthewing.com/free-5000-american-airlines-miles-for-att-customers-hurry-limited-to-the-first-65000-customers/",
+      "published": "2026-10-26T21:04:17+00:00",
       "score": 7,
       "tier": "tier1",
       "is_new": true
@@ -111,7 +91,7 @@
       "published": "2026-10-26T18:04:53+00:00",
       "score": 7,
       "tier": "tier1",
-      "is_new": true
+      "is_new": false
     },
     {
       "source": "View from the Wing",
@@ -121,7 +101,7 @@
       "published": "2026-10-26T15:58:20+00:00",
       "score": 7,
       "tier": "tier1",
-      "is_new": true
+      "is_new": false
     },
     {
       "source": "View from the Wing",
@@ -131,17 +111,7 @@
       "published": "2026-10-25T22:22:11+00:00",
       "score": 7,
       "tier": "tier1",
-      "is_new": true
-    },
-    {
-      "source": "View from the Wing",
-      "title": "Citi Strata Elite Looks Premium — But The Real Value Is American Airlines Miles And $1200 First Year Credits",
-      "summary": "Citi Strata Elite arrives in a surprisingly premium package, but the real value is what the card earns. The current offer delivers 75,000 points and credits worth up to $1,200 in the first year, and its points now transfer to American Airlines AAdvantage.",
-      "link": "https://viewfromthewing.com/citi-strata-elite-looks-premium-but-the-real-value-is-american-airlines-miles-and-1200-first-year-credits/",
-      "published": "2026-10-25T18:04:29+00:00",
-      "score": 7,
-      "tier": "tier1",
-      "is_new": true
+      "is_new": false
     },
     {
       "source": "One Mile at a Time",
@@ -151,7 +121,7 @@
       "published": "2026-10-26T00:20:45+00:00",
       "score": 7,
       "tier": "tier1",
-      "is_new": true
+      "is_new": false
     },
     {
       "source": "The Points Guy",
@@ -160,6 +130,16 @@
       "link": "https://thepointsguy.com/credit-cards/citi-aadvantage-platinum-select-bonus-eligibility/",
       "published": "2026-10-24T13:00:37+00:00",
       "score": 6,
+      "tier": "tier1",
+      "is_new": false
+    },
+    {
+      "source": "Doctor of Credit",
+      "title": "Increased Referrer Offers On American Express Cards (Up To 45,000 Points)",
+      "summary": "Update 10/26/26: More people targeted.&#160; Update 8/4/25: More reports of 45,000 Update 1/7/26: Reports of 45,000 points again and another report of 30,000 points again. Others are seeing lower offers. Original Post: The referral bonus on the American Express Gold card has increased for some peopl",
+      "link": "https://www.doctorofcredit.com/refer-a-friend-from-american-express-gold-card-and-get-20000-bonus-points/",
+      "published": "2026-10-26T19:51:59+00:00",
+      "score": 5,
       "tier": "tier1",
       "is_new": true
     },
@@ -171,6 +151,16 @@
       "published": "2026-10-26T15:45:47+00:00",
       "score": 5,
       "tier": "other-compelling",
+      "is_new": false
+    },
+    {
+      "source": "Doctor of Credit",
+      "title": "Capital One Transfer Bonus: 20% To British Airways Avios (1:1.2)",
+      "summary": "Capital One is offering a 20% transfer bonus to British Airways Avios. Normally the transfer rate for British Airways Avios is 1,000:1,000, with this transfer bonus it is 1,000:1,200",
+      "link": "https://www.doctorofcredit.com/capital-one-transfer-bonus-20-to-british-airways-avios-11-2-3/",
+      "published": "2026-10-27T02:29:11+00:00",
+      "score": 4,
+      "tier": "other-compelling",
       "is_new": true
     },
     {
@@ -181,17 +171,7 @@
       "published": "2026-10-24T02:00:42+00:00",
       "score": 3,
       "tier": "tier2",
-      "is_new": true
-    },
-    {
-      "source": "Frequent Miler",
-      "title": "Southwest Companion Pass Complete Guide 2026",
-      "summary": "The Southwest Companion Pass has undoubtedly long been the most valuable companion ticket benefit of any airline program, but the way it is earned is changing dramatically in 2027. This post has been updated to indicate both the new 2027 requirements as well as how to earn the pass one last time the",
-      "link": "https://frequentmiler.com/complete-guide-southwest-companion-pass/",
-      "published": "2026-10-23T10:45:14+00:00",
-      "score": 3,
-      "tier": "tier2",
-      "is_new": true
+      "is_new": false
     },
     {
       "source": "r/churning",
