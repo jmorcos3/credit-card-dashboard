@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-17T12:29:12.380749+00:00",
+  "generated_at": "2026-11-17T12:31:04.829022+00:00",
   "feed_count": 6,
   "item_count": 17,
   "items": [
@@ -11,7 +11,7 @@
       "published": "2026-11-16T21:45:44+00:00",
       "score": 10,
       "tier": "tier1",
-      "is_new": true
+      "is_new": false
     },
     {
       "source": "Doctor of Credit",
@@ -21,7 +21,7 @@
       "published": "2026-11-16T20:11:39+00:00",
       "score": 7,
       "tier": "tier1",
-      "is_new": true
+      "is_new": false
     },
     {
       "source": "Doctor of Credit",
@@ -31,7 +31,7 @@
       "published": "2026-11-16T17:00:22+00:00",
       "score": 7,
       "tier": "tier1",
-      "is_new": true
+      "is_new": false
     },
     {
       "source": "The Points Guy",
@@ -41,7 +41,7 @@
       "published": "2026-11-16T22:00:18+00:00",
       "score": 7,
       "tier": "tier1",
-      "is_new": true
+      "is_new": false
     },
     {
       "source": "The Points Guy",
@@ -51,7 +51,7 @@
       "published": "2026-11-16T16:00:32+00:00",
       "score": 7,
       "tier": "tier1",
-      "is_new": true
+      "is_new": false
     },
     {
       "source": "The Points Guy",
@@ -61,7 +61,7 @@
       "published": "2026-11-16T13:00:47+00:00",
       "score": 7,
       "tier": "tier1",
-      "is_new": true
+      "is_new": false
     },
     {
       "source": "View from the Wing",
@@ -71,7 +71,7 @@
       "published": "2026-11-16T19:34:15+00:00",
       "score": 7,
       "tier": "tier1",
-      "is_new": true
+      "is_new": false
     },
     {
       "source": "View from the Wing",
@@ -81,7 +81,7 @@
       "published": "2026-11-15T22:04:58+00:00",
       "score": 7,
       "tier": "tier1",
-      "is_new": true
+      "is_new": false
     },
     {
       "source": "One Mile at a Time",
@@ -101,7 +101,7 @@
       "published": "2026-11-15T09:17:51+00:00",
       "score": 7,
       "tier": "tier1",
-      "is_new": true
+      "is_new": false
     },
     {
       "source": "Doctor of Credit",
@@ -111,7 +111,7 @@
       "published": "2026-11-16T19:37:42+00:00",
       "score": 5,
       "tier": "tier1",
-      "is_new": true
+      "is_new": false
     },
     {
       "source": "Frequent Miler",
@@ -131,7 +131,7 @@
       "published": "2026-11-15T17:45:42+00:00",
       "score": 5,
       "tier": "tier1",
-      "is_new": true
+      "is_new": false
     },
     {
       "source": "One Mile at a Time",
@@ -141,7 +141,7 @@
       "published": "2026-11-16T19:43:37+00:00",
       "score": 5,
       "tier": "tier1",
-      "is_new": true
+      "is_new": false
     },
     {
       "source": "Frequent Miler",
@@ -151,7 +151,7 @@
       "published": "2026-11-15T02:45:32+00:00",
       "score": 4,
       "tier": "other-compelling",
-      "is_new": true
+      "is_new": false
     },
     {
       "source": "Doctor of Credit",
@@ -161,7 +161,7 @@
       "published": "2026-11-16T20:33:22+00:00",
       "score": 3,
       "tier": "tier2",
-      "is_new": true
+      "is_new": false
     },
     {
       "source": "View from the Wing",
