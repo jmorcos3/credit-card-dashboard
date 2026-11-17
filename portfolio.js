@@ -1,0 +1,16 @@
+// Single source of truth for point balances.
+// To update: append one snapshot. The LAST entry drives every balance, dollar value,
+// total, chart point and scorecard on the page - nothing else needs editing.
+var PORTFOLIO_HISTORY = [
+    { date: '2026-04-11', mr: 203538, marriott: 0,      ur: 93957, bilt: 38300, note: 'Baseline before Bevy signup' },
+    { date: '2026-04-15', mr: 217594, marriott: 0,      ur: 93957, bilt: 38300, note: 'Bevy opened Apr 12' },
+    { date: '2026-05-19', mr: 217594, marriott: 0,      ur: 93957, bilt: 38300, note: 'Bevy spend ramping' },
+    { date: '2026-06-04', mr: 217594, marriott: 0,      ur: 93957, bilt: 38300, note: 'Bevy $4,250 spent' },
+    { date: '2026-06-08', mr: 217594, marriott: 0,      ur: 93957, bilt: 38300, note: 'Bevy threshold hit Jun 1' },
+    { date: '2026-06-15', mr: 227143, marriott: 188870, ur: 93957, bilt: 38300, note: '175K Marriott bonus posted' },
+    { date: '2026-06-16', mr: 230389, marriott: 188870, ur: 93957, bilt: 38300, note: 'MR earning resumes on Gold' },
+    { date: '2026-07-20', mr: 247524, marriott: 192254, ur: 93957, bilt: 38300, note: 'Steady Gold earning' },
+    { date: '2026-08-15', mr: 247524, marriott: 202388, ur: 93957, bilt: 38300, note: 'Marriott drift from Bevy spend' },
+    { date: '2026-10-01', mr: 293477, marriott: 202998, ur: 94257, bilt: 38300, note: 'Portfolio crosses $10K' },
+    { date: '2026-11-16', mr: 316668, marriott: 202998, ur: 94257, bilt: 38300, note: 'Steady Gold earning' }
+];

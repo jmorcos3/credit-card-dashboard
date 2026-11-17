@@ -17,7 +17,6 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
-from email import message_from_bytes
 from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
 
@@ -31,6 +30,32 @@ SENDERS = [
     "boardingarea.com",
     "milestomemories.com",
 ]
+
+# Newsletter display names. Catches copies delivered through Apple "Hide My Email", where the
+# From address is ...@privaterelay.appleid.com (so the domain match misses) but the name is intact.
+SENDER_NAMES = {
+    "The Points Guy": "TPG Newsletter",
+    "Doctor of Credit": "DoC Newsletter",
+    "Frequent Miler": "FM Newsletter",
+}
+SENDER_DOMAIN_LABELS = {
+    "thepointsguy.com": "TPG Newsletter",
+    "doctorofcredit.com": "DoC Newsletter",
+    "frequentmiler.com": "FM Newsletter",
+}
+
+
+def source_label(sender):
+    """Human label for a From header."""
+    low = sender.lower()
+    for name, label in SENDER_NAMES.items():
+        if name.lower() in low:
+            return label
+    for dom in SENDERS:
+        if dom in low:
+            return SENDER_DOMAIN_LABELS.get(dom, dom.split(".")[0].title())
+    return "Email"
+
 
 # Same tier system as scrape.py
 TIER1 = re.compile(
@@ -47,7 +72,7 @@ TIER1 = re.compile(
 )
 
 BUSINESS = re.compile(
-    r"\b(business|biz|ink (preferred|cash|unlimited|premier|business)|"
+    r"\b(business(?![- ]class)|biz|ink (preferred|cash|unlimited|premier|business)|"
     r"amex business|amex biz|"
     r"spark (cash|miles|business)|"
     r"venture x business|"
@@ -175,7 +200,7 @@ def score(title, body):
 def fetch_emails():
     token = get_access_token()
     # Build query: from any sender, last 14 days
-    from_clause = " OR ".join(f"from:{s}" for s in SENDERS)
+    from_clause = " OR ".join([f"from:{s}" for s in SENDERS] + [f'from:"{n}"' for n in SENDER_NAMES])
     query = f"({from_clause}) newer_than:14d"
     listing = gmail_get("/messages", token, q=query, maxResults=50)
     messages = listing.get("messages", [])
@@ -205,18 +230,7 @@ def fetch_emails():
             if s == 0:
                 continue
 
-            # Extract source from sender
-            source = "Email"
-            for sender_dom in SENDERS:
-                if sender_dom.lower() in sender.lower():
-                    source = sender_dom.split(".")[0].title()
-                    if "thepointsguy" in sender_dom:
-                        source = "TPG Newsletter"
-                    elif "doctorofcredit" in sender_dom:
-                        source = "DoC Newsletter"
-                    elif "frequentmiler" in sender_dom:
-                        source = "FM Newsletter"
-                    break
+            source = source_label(sender)
 
             # Try to extract first prominent link
             link_match = re.search(r'https?://[^\s"\'<>)]+', body_raw)

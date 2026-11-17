@@ -1,26 +1,44 @@
 name: Deploy to GitHub Pages
+
 on:
   push:
     branches: [master]
+  # The scraper pushes its data refresh with GITHUB_TOKEN, and pushes made with that
+  # token never start `push` workflows. Without this trigger the live site kept serving
+  # last week's offers.json until the next manual push.
+  workflow_run:
+    workflows: ["Weekly RSS Scraper"]
+    types: [completed]
+  workflow_dispatch:
+
 permissions:
   contents: read
   pages: write
   id-token: write
-# Cancel in-progress deploy when new one triggered — avoids concurrency conflict
+
+# One deploy at a time; a queued deploy waits instead of colliding with the running one.
 concurrency:
   group: "pages"
   cancel-in-progress: false
+
 jobs:
   deploy:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v4
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/checkout@v6
         with:
-          path: '.'
+          ref: master
+      - name: Assemble site (only the files the page loads)
+        run: |
+          mkdir _site
+          cp index.html portfolio.js manifest.json offers.json offers_email.json _site/
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

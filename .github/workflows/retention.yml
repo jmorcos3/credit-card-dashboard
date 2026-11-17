@@ -13,53 +13,67 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v7
+      - uses: actions/github-script@v8
         with:
           script: |
-            const now = new Date();
-            // Card fee dates: [MM-DD, cardName, annualFee]
+            const { owner, repo } = context.repo;
+            const DAY = 86400000;
+
+            // Annual fee post dates (MM-DD). Keep in sync with FEES in index.html.
             const cards = [
-              { fee_date: '04-12', card: 'Marriott Bonvoy Bevy', fee: 250, tips: 'Ask for $100-200 statement credit or 10-30K MR retention bonus. Free night cert (~$300-400 value at Cat 5) still makes card worth keeping. If no offer, use Bonvoy points before cancel (24mo expiry).' },
-              { fee_date: '05-11', card: 'Amex Gold', fee: 325, tips: 'Ask for bonus MR (10-30K common) or statement credit. Card pays for itself via credits ($100 Resy + $84 Dunkin + $120 Dining + $120 Uber Cash = $424) — keep regardless.' },
+              { fee_date: '04-12', card: 'Marriott Bonvoy Bevy', fee: 250, tips: 'Ask for a $100-200 statement credit or bonus Bonvoy points. The free night cert (~$300-400 value at Cat 5) still makes the card worth keeping. If no offer and you cancel, use your Bonvoy points first (24-month expiry without activity).' },
+              { fee_date: '05-11', card: 'Amex Gold', fee: 325, tips: 'Ask for bonus MR (10-30K is common) or a statement credit. The card pays for itself via credits ($120 Uber Cash + $120 dining + $100 Resy + $84 Dunkin = $424), so keep it regardless.' },
             ];
 
-            const currentYear = now.getUTCFullYear();
-            for (const c of cards) {
-              // Compute next fee date this year or next
-              let feeDate = new Date(`${currentYear}-${c.fee_date}T14:00:00Z`);
-              if (feeDate < now) feeDate = new Date(`${currentYear + 1}-${c.fee_date}T14:00:00Z`);
-              const daysUntil = Math.floor((feeDate - now) / (1000 * 60 * 60 * 24));
+            // Reminder stages, most urgent first. A stage is raised once per fee date, on the first
+            // run at or inside its window - so a skipped or late scheduled run cannot miss it.
+            const stages = [
+              { within: 3,  label: 'FINAL WARNING', advice: '**FEE POSTS WITHIN 3 DAYS.** Call today. If canceling, do it now to avoid the fee. If keeping, no action.' },
+              { within: 14, label: 'URGENT',        advice: '**Getting late.** Call retention today or tomorrow. If no offer, decide keep vs cancel within a week.' },
+              { within: 30, label: 'CALL SOON',     advice: '**PRIME WINDOW.** Call retention now. Reps can often offer more a month out than on the day.' },
+              { within: 60, label: 'HEADS UP',      advice: 'Plenty of time. Start watching r/amex and r/churning for what retention offers people are getting.' },
+            ];
 
-              // Fire at 60, 30, 14, 3 days out — escalating urgency
-              const triggers = { 60: 'HEADS UP', 30: 'CALL SOON', 14: 'URGENT', 3: 'FINAL WARNING' };
-              const urgency = triggers[daysUntil];
-              if (urgency) {
-                const feeStr = feeDate.toISOString().slice(0, 10);
-                const title = `[${urgency}] Retention: ${c.card} fee ($${c.fee}) posts in ${daysUntil} days (${feeStr})`;
-                const stageAdvice = daysUntil >= 60
-                  ? 'Plenty of time. Start monitoring for retention offer signals in the r/amex or churning subreddits — some months are better than others.'
-                  : daysUntil >= 30
-                  ? '**PRIME WINDOW.** Call retention now. Reps often can offer better deals 30 days before vs. day-of.'
-                  : daysUntil >= 14
-                  ? '**Getting late.** Call retention today or tomorrow. If no offer, decide keep vs cancel by day 7.'
-                  : '**FEE POSTS IN 3 DAYS.** Call today. If canceling, do it now to avoid fee. If keeping, no action.';
-                const body = `Your **${c.card}** $${c.fee} annual fee posts on **${feeStr}** (${daysUntil} days).\n\n` +
-                             `## ${stageAdvice}\n\n` +
-                             `Path: Amex chat (fastest) or 1-800-528-4800.\n\n` +
-                             `**Script:** "Hi, I'm reviewing my card and see the $${c.fee} fee is about to post. Are there any retention offers available?" If they say no: "Any statement credits, bonus points, or fee waivers I'd qualify for if I keep the card?"\n\n` +
-                             `**Notes for this card:** ${c.tips}\n\n` +
-                             `**Try chat first, then call if no luck.** Reps have discretion — sometimes trying again a day later gets a better offer.\n\n` +
-                             `---\n` +
-                             `**Log outcome:** Reply to this issue with what you were offered (or that you canceled). Helps track retention offer patterns over time.`;
-                await github.rest.issues.create({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  title: title,
-                  body: body,
-                  labels: ['retention', 'action-required', `${daysUntil}-day-warning`]
-                });
-                console.log(`Created ${urgency} retention issue for ${c.card}`);
-              } else {
-                console.log(`${c.card}: ${daysUntil} days until fee — no trigger`);
+            // Whole calendar days in UTC, so the time of day the job happens to run does not matter.
+            const now = new Date();
+            const today = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+
+            const existing = await github.paginate(github.rest.issues.listForRepo, {
+              owner, repo, labels: 'retention', state: 'all', per_page: 100,
+            });
+
+            for (const c of cards) {
+              const [month, day] = c.fee_date.split('-').map(Number);
+              let fee = Date.UTC(now.getUTCFullYear(), month - 1, day);
+              if (fee < today) fee = Date.UTC(now.getUTCFullYear() + 1, month - 1, day);
+              const daysUntil = Math.round((fee - today) / DAY);
+              const feeStr = new Date(fee).toISOString().slice(0, 10);
+
+              const stage = stages.find(s => daysUntil <= s.within);
+              if (!stage) {
+                console.log(`${c.card}: ${daysUntil} days until fee (${feeStr}) - no reminder due`);
+                continue;
               }
+
+              const prefix = `[${stage.label}] Retention: ${c.card}`;
+              if (existing.some(i => i.title.startsWith(prefix) && i.title.includes(`(${feeStr})`))) {
+                console.log(`${c.card}: ${stage.label} already raised for ${feeStr}`);
+                continue;
+              }
+
+              const body = `Your **${c.card}** $${c.fee} annual fee posts on **${feeStr}** (${daysUntil} days).\n\n` +
+                           `## ${stage.advice}\n\n` +
+                           `Path: Amex chat (fastest) or 1-800-528-4800.\n\n` +
+                           `**Script:** "Hi, I'm reviewing my card and see the $${c.fee} fee is about to post. Are there any retention offers available?" If they say no: "Any statement credits, bonus points, or fee waivers I'd qualify for if I keep the card?"\n\n` +
+                           `**Notes for this card:** ${c.tips}\n\n` +
+                           `**Try chat first, then call if no luck.** Reps have discretion - trying again a day later sometimes gets a better offer.\n\n` +
+                           `---\n` +
+                           `**Log outcome:** Reply to this issue with what you were offered (or that you canceled).`;
+              await github.rest.issues.create({
+                owner, repo,
+                title: `${prefix} fee ($${c.fee}) posts in ${daysUntil} days (${feeStr})`,
+                body,
+                labels: ['retention', 'action-required', `${stage.within}-day-warning`],
+              });
+              console.log(`Created ${stage.label} retention issue for ${c.card}`);
             }

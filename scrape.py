@@ -3,12 +3,14 @@
 Tiered relevance:
   TIER 1 (cards/programs user actively uses): big score boost
   TIER 2 (same issuers, different products): allowed at reduced weight
-  OTHER (Citi/Cap One/BoA/etc): only if extremely compelling (score >= 8)
+  OTHER (Citi/Cap One/BoA/etc): only when 3+ offer signals stack up (scores 4-7)
   BUSINESS cards: hard exclude
 
-Also writes history/<YYYY-MM-DD>.json snapshot for trend tracking.
+Also writes history/<YYYY-MM-DD>.json (used to flag items as new vs the last run) and
+high_signal.json (read by the digest step in the same workflow run; not committed).
 """
 import feedparser
+import html
 import json
 import os
 import re
@@ -53,7 +55,7 @@ TIER2 = re.compile(
 
 # Hard exclude — business cards (user has no business)
 BUSINESS = re.compile(
-    r"\b(business|biz|ink (preferred|cash|unlimited|premier|business)|"
+    r"\b(business(?![- ]class)|biz|ink (preferred|cash|unlimited|premier|business)|"
     r"amex business|amex biz|"
     r"spark (cash|miles|business)|"
     r"venture x business|"
@@ -98,7 +100,8 @@ HIGH_SIGNAL = re.compile(
 
 
 def clean_html(s):
-    return re.sub(r"<[^>]+>", "", s or "").strip()
+    """Strip tags, decode entities (&#32; etc.) and collapse whitespace. The page HTML-escapes on render."""
+    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", s or ""))).strip()
 
 
 def score(title, summary):
@@ -141,7 +144,7 @@ def fetch_feed(name, url):
     try:
         feed = feedparser.parse(url, request_headers={"User-Agent": UA})
         for entry in feed.entries[:40]:
-            title = entry.get("title", "")
+            title = html.unescape(entry.get("title", ""))
             summary = clean_html(entry.get("summary", ""))[:500]
             link = entry.get("link", "")
             published = entry.get("published_parsed") or entry.get("updated_parsed")
@@ -172,7 +175,6 @@ def llm_summarize(items):
     if not api_key or not items:
         return items
     try:
-        import json as _json
         for item in items:
             prompt = (
                 "Summarize this credit card offer in ONE short sentence (under 20 words). "
@@ -181,7 +183,7 @@ def llm_summarize(items):
             )
             req = urllib.request.Request(
                 "https://api.anthropic.com/v1/messages",
-                data=_json.dumps({
+                data=json.dumps({
                     "model": "claude-haiku-4-5",
                     "max_tokens": 80,
                     "messages": [{"role": "user", "content": prompt}],
@@ -193,7 +195,7 @@ def llm_summarize(items):
                 },
             )
             with urllib.request.urlopen(req, timeout=15) as resp:
-                data = _json.loads(resp.read())
+                data = json.loads(resp.read())
                 item["tldr"] = data["content"][0]["text"].strip()
     except Exception as e:
         print(f"LLM summary failed: {e}")

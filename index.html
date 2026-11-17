@@ -66,7 +66,6 @@
             display: inline-block; padding: 3px 10px; border-radius: 6px;
             font-size: 11px; font-weight: 600; margin-right: 6px; margin-top: 8px;
         }
-        .tag-urgent { background: #fef2f2; color: #dc2626; }
         .tag-best { background: #fef3c7; color: #92400e; }
         .tag-marriott { background: #fdf4ff; color: #9333ea; }
         .tag-united { background: #eff6ff; color: #1d4ed8; }
@@ -78,8 +77,6 @@
         .apply-btn:hover { background: #1d4ed8; }
         .apply-btn.amex-btn { background: #006fcf; }
         .apply-btn.amex-btn:hover { background: #0055a4; }
-        .apply-btn.cap1-btn { background: #d32f2f; }
-        .apply-btn.cap1-btn:hover { background: #b71c1c; }
 
         .value-analysis {
             margin-top: 14px; padding: 14px 16px; background: #f0fdf4; border: 1px solid #bbf7d0;
@@ -93,7 +90,6 @@
         .value-analysis .va-total { border-top: 1px solid #bbf7d0; padding-top: 6px; margin-top: 4px; }
         .value-analysis .va-total td { font-weight: 700; color: #166534; font-size: 14px; }
         .value-analysis .va-negative { color: #059669; }
-        .value-analysis .va-positive { color: #dc2626; }
 
         .warning-box {
             background: #fef2f2; border: 2px solid #fecaca; border-radius: 12px; padding: 20px 24px; margin-bottom: 24px;
@@ -160,51 +156,10 @@
             display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px;
             background: #1a1a2e; color: white; border: none; border-radius: 8px;
             font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.2s;
-            float: right; margin-top: -4px;
         }
         .report-btn:hover { background: #2d2d44; }
         .report-btn:disabled { background: #9ca3af; cursor: wait; }
         .report-btn svg { width: 16px; height: 16px; fill: currentColor; }
-
-        .tracker-box {
-            background: #fdf4ff; border: 2px solid #e9d5ff; border-radius: 14px;
-            padding: 24px; margin-bottom: 24px;
-        }
-        .tracker-box h3 { font-size: 16px; margin-bottom: 4px; }
-        .tracker-box .tracker-sub { font-size: 13px; color: #6b7280; margin-bottom: 16px; }
-        .tracker-progress-bar {
-            background: #f3e8ff; border-radius: 8px; height: 14px; overflow: hidden; margin-bottom: 8px;
-        }
-        .tracker-progress-fill {
-            background: linear-gradient(90deg, #9333ea, #7c3aed); height: 100%; border-radius: 8px;
-            transition: width 0.5s ease;
-        }
-        .tracker-stats { display: flex; justify-content: space-between; font-size: 13px; color: #6b7280; margin-bottom: 16px; }
-        .tracker-stats strong { color: #1a1a2e; }
-        .tracker-input-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-        .tracker-input {
-            padding: 8px 14px; border: 2px solid #e9d5ff; border-radius: 8px; font-size: 14px;
-            width: 160px; outline: none; font-family: inherit;
-        }
-        .tracker-input:focus { border-color: #9333ea; }
-        .tracker-btn {
-            padding: 8px 18px; background: #9333ea; color: white; border: none; border-radius: 8px;
-            font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.2s;
-        }
-        .tracker-btn:hover { background: #7c3aed; }
-        .tracker-btn-reset {
-            padding: 8px 14px; background: #f3f4f6; color: #6b7280; border: none; border-radius: 8px;
-            font-size: 13px; cursor: pointer;
-        }
-        .tracker-btn-reset:hover { background: #e5e7eb; }
-        .tracker-milestone {
-            margin-top: 14px; padding: 12px 16px; background: white; border: 1px solid #e9d5ff;
-            border-radius: 10px; font-size: 13px; color: #6b7280;
-        }
-        .tracker-milestone strong { color: #9333ea; }
-        .tracker-complete {
-            background: #f0fdf4; border-color: #bbf7d0; color: #166534;
-        }
 
         .live-offers { margin-bottom: 48px; }
         .live-offers .lo-meta { font-size: 12px; color: #9ca3af; margin-bottom: 16px; }
@@ -229,6 +184,7 @@
         .lo-title a:hover { color: #9333ea; }
         .lo-summary { font-size: 12px; color: #6b7280; line-height: 1.4; }
         .lo-loading { text-align: center; padding: 24px; color: #9ca3af; font-size: 13px; }
+        .lo-badge { padding: 2px 6px; border-radius: 4px; font-size: 9px; font-weight: 700; margin-left: 6px; }
 
         /* Portfolio chart */
         .chart-section { margin-bottom: 48px; }
@@ -240,7 +196,7 @@
 
         /* Trip planner */
         .trip-planner { background: #eff6ff; border: 2px solid #bfdbfe; border-radius: 14px; padding: 24px; margin-bottom: 48px; }
-        .trip-form { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 12px; margin-bottom: 16px; align-items: end; }
+        .trip-form { display: grid; grid-template-columns: repeat(6, 1fr) auto; gap: 12px; margin-bottom: 16px; align-items: end; }
         .trip-form label { font-size: 12px; color: #6b7280; font-weight: 600; display: block; margin-bottom: 4px; }
         .trip-form select, .trip-form input { padding: 8px 12px; border: 1px solid #bfdbfe; border-radius: 8px; font-size: 14px; width: 100%; font-family: inherit; }
         .trip-btn { padding: 8px 20px; background: #2563eb; color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; }
@@ -262,12 +218,6 @@
         .cat-result th { text-align: left; padding: 8px; background: #fffbeb; font-size: 11px; text-transform: uppercase; color: #78350f; }
         .cat-result td { padding: 8px; border-bottom: 1px solid #fef3c7; }
         .cat-result .total-row { font-weight: 700; background: #fffbeb; }
-
-        /* Transfer bonus alert */
-        .xfer-alert { background: #f0fdf4; border: 2px solid #bbf7d0; border-radius: 12px; padding: 16px 20px; margin-bottom: 24px; display: none; }
-        .xfer-alert.show { display: block; }
-        .xfer-alert h4 { font-size: 14px; color: #166534; margin-bottom: 6px; }
-        .xfer-alert p { font-size: 13px; color: #14532d; }
 
         /* Airline tracker */
         .airline-tracker { background: white; border: 2px solid #e5e7eb; border-radius: 14px; padding: 20px 24px; margin-bottom: 24px; }
@@ -319,7 +269,7 @@
 
         /* Credit utilization */
         .utilization { background: white; border: 2px solid #e5e7eb; border-radius: 14px; padding: 20px 24px; margin-bottom: 24px; }
-        .util-row { display: grid; grid-template-columns: 150px 1fr 80px 80px; gap: 10px; align-items: center; margin-bottom: 10px; font-size: 13px; }
+        .util-row { display: grid; grid-template-columns: 150px 1fr 90px 90px; gap: 10px; align-items: center; margin-bottom: 10px; font-size: 13px; }
         .util-bar { background: #f3f4f6; border-radius: 6px; height: 20px; position: relative; overflow: hidden; }
         .util-bar-fill { height: 100%; border-radius: 6px; transition: width 0.4s; }
         .util-overall { margin-top: 16px; padding: 12px; background: #f9fafb; border-radius: 8px; display: flex; justify-content: space-between; font-size: 14px; font-weight: 700; }
@@ -336,14 +286,6 @@
             line-height: 1.4; font-weight: 400;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
-
-        /* Section collapse */
-        .collapse-btn {
-            background: transparent; border: none; cursor: pointer; font-size: 14px;
-            color: #6b7280; margin-left: 8px; vertical-align: middle;
-        }
-        .collapse-btn:hover { color: #1a1a2e; }
-        .collapsible-content.collapsed { display: none; }
 
         .ticker-bar {
             background: linear-gradient(135deg, #1a1a2e 0%, #0f172a 100%);
@@ -367,7 +309,7 @@
             background: linear-gradient(135deg, #5b21b6 0%, #7c3aed 100%);
             color: white; border-radius: 14px; padding: 20px 24px; margin-bottom: 24px;
         }
-        .elite-tracker .et-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; }
+        .elite-tracker .et-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; margin-bottom: 14px; }
         .elite-tracker .et-title { font-size: 15px; font-weight: 700; }
         .elite-tracker .et-current { font-size: 13px; opacity: 0.85; }
         .elite-tracker .et-bar-wrap { background: rgba(255,255,255,0.15); border-radius: 10px; height: 28px; overflow: hidden; position: relative; }
@@ -403,7 +345,13 @@
         .footer { font-size: 12px; color: #9ca3af; text-align: center; padding: 24px; border-top: 1px solid #e5e7eb; }
 
         @media (max-width: 768px) {
+            .container { padding: 20px 14px; }
+            .container > div { max-width: 100%; overflow-x: auto; }   /* wide tables scroll inside their section */
             .points-grid { grid-template-columns: 1fr 1fr; }
+            .points-grid > *, .util-row > * { min-width: 0; }
+            .points-card { padding: 16px; }
+            .points-card .pts { font-size: 26px; }
+            .util-row { grid-template-columns: 84px 1fr 68px 68px; gap: 6px; font-size: 12px; }
             .current-grid { grid-template-columns: 1fr; }
             .signup-card { grid-template-columns: 1fr; }
             .total-bar { flex-direction: column; gap: 8px; text-align: center; }
@@ -411,29 +359,28 @@
             .tl-item { grid-template-columns: 1fr; }
             .lo-grid { grid-template-columns: 1fr; }
             .qr-grid { grid-template-columns: 1fr 1fr; }
-            .trip-form { grid-template-columns: 1fr; }
+            .trip-form { grid-template-columns: 1fr 1fr; }
             .cat-form { grid-template-columns: 1fr 1fr; }
-            #bevyTracker > div[style*="grid-template-columns"] { grid-template-columns: 1fr 1fr !important; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap;">
         <h1>My Credit Card Points</h1>
         <div style="display: flex; gap: 8px;">
             <button class="report-btn" style="background: #9333ea;" onclick="showScorecard()">
                 <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM7 17H5v-5h2v5zm4 0H9V7h2v10zm4 0h-2v-7h2v7zm4 0h-2v-9h2v9z"/></svg>
                 Monthly Scorecard
             </button>
-            <button class="report-btn" onclick="createReport()">
+            <button class="report-btn" onclick="createReport(this)">
                 <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
                 Create Report
             </button>
         </div>
     </div>
-    <div class="subtitle">Goal: Marriott Bonvoy hotels + United flights to Europe &mdash; Chase Private Client &mdash; <span id="lastUpdated">Loading…</span></div>
+    <div class="subtitle">Goal: Marriott Bonvoy hotels + United flights to Europe &mdash; Chase Private Client &mdash; Balances as of <span data-calc="asOf">Nov 16, 2026</span></div>
 
     <!-- ═══════════ NEXT BEST MOVE TICKER ═══════════ -->
     <div class="ticker-bar" id="nextMoveTicker">
@@ -450,7 +397,7 @@
     <div class="elite-tracker" id="eliteTracker">
         <div class="et-header">
             <div class="et-title">Marriott Elite Status Progress</div>
-            <div class="et-current">Current: <strong>Gold Elite</strong> &bull; <span id="etNightsCurrent">16</span>/50 nights to Platinum</div>
+            <div class="et-current">Current: <strong>Gold Elite</strong> &bull; <span id="etNightsCurrent">16</span>/50 nights to Platinum <span style="opacity: 0.7;">(as of <span id="etAsOf">Aug 2026</span>)</span></div>
         </div>
         <div class="et-bar-wrap">
             <div class="et-bar-fill" id="etBarFill" style="width: 32%;"><span id="etPct">32%</span></div>
@@ -516,7 +463,7 @@
                 <span class="qr-badge">TRANSFER VEHICLE</span>
                 <div class="qr-label">Bilt 2.0</div>
                 <div class="qr-name">Hold for Transfers</div>
-                <div class="qr-use">Don't earn new. Use 38,300 stash for transfers.</div>
+                <div class="qr-use">Don't earn new. Use <span data-pts="bilt">38,300</span> stash for transfers.</div>
                 <div class="qr-detail">Unit economics don't work for you. Keep card open ($0 fee) as transfer rail only: 1:1 to United (no Sapphire needed) &amp; Marriott 1:1.</div>
             </div>
             <div class="qr-card skip">
@@ -534,11 +481,6 @@
                     <td style="padding: 4px 8px 4px 0;"><strong>$120 Dining Credit</strong> (BWW, Wonder, Grubhub partners)</td>
                     <td style="padding: 4px 8px;">$0 / $120</td>
                     <td style="padding: 4px 0; color: #dc2626; font-weight: 700;">UNUSED — $10/mo, set recurring</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #fde68a;">
-                    <td style="padding: 4px 8px 4px 0;"><strong>$96 Uber One</strong> (60th anniversary)</td>
-                    <td style="padding: 4px 8px;">$0 / $96</td>
-                    <td style="padding: 4px 0; color: #dc2626; font-weight: 700;">EXPIRES Oct 30 (~135 days)</td>
                 </tr>
                 <tr style="border-bottom: 1px solid #fde68a;">
                     <td style="padding: 4px 8px 4px 0;"><strong>Hertz Five Star</strong> status</td>
@@ -565,43 +507,44 @@
     </div>
 
     <!-- ═══════════ YOUR POINTS ═══════════ -->
+    <!-- Every [data-pts] / [data-usd] / [data-calc] number is filled from portfolio.js (latest snapshot). -->
     <div class="points-grid">
         <div class="points-card chase">
             <div class="card-label">Chase Ultimate Rewards</div>
             <div class="card-name">Freedom Unlimited (...9058)</div>
-            <div class="pts">94,257</div>
-            <div class="val">~2.0&cent;/pt &bull; Worth <strong>$1,885</strong> via United</div>
-            <div class="val" style="margin-top: 4px; font-size: 11px;">Use for: United flights only &bull; LOCKED (need Sapphire card)</div>
+            <div class="pts" data-pts="ur">94,257</div>
+            <div class="val">~2.0&cent;/pt &bull; Worth <strong data-usd="ur">$1,885</strong> via United</div>
+            <div class="val" style="margin-top: 4px; font-size: 11px;">LOCKED until a Sapphire card is open &bull; <span data-calc="urCash">$943</span> as cash today</div>
         </div>
         <div class="points-card amex">
             <div class="card-label">Amex Membership Rewards</div>
             <div class="card-name">Gold Card (...83000)</div>
-            <div class="pts">293,477</div>
-            <div class="val">~2.0&cent;/pt &bull; Worth <strong>$5,870</strong> via airlines</div>
+            <div class="pts" data-pts="mr">316,668</div>
+            <div class="val">~2.0&cent;/pt &bull; Worth <strong data-usd="mr">$6,333</strong> via airlines</div>
             <div class="val" style="margin-top: 4px; font-size: 11px;">Use for: ANA First Class, Delta One via Virgin Atlantic</div>
         </div>
         <div class="points-card marriott">
             <div class="card-label">Marriott Bonvoy</div>
-            <div class="card-name">Account 449779435 &bull; via Bevy</div>
-            <div class="pts">202,998</div>
-            <div class="val">~0.8&cent;/pt &bull; Worth <strong>$1,624</strong></div>
-            <div class="val" style="margin-top: 4px; font-size: 11px;">Use for: 5-6 nights Cat 5 Europe (Westin/Renaissance)</div>
+            <div class="card-name">Earned via Bevy (...41008)</div>
+            <div class="pts" data-pts="marriott">202,998</div>
+            <div class="val">~0.8&cent;/pt &bull; Worth <strong data-usd="marriott">$1,624</strong></div>
+            <div class="val" style="margin-top: 4px; font-size: 11px;">Use for: 5 nights Cat 5 Europe (Westin/Renaissance)</div>
         </div>
         <div class="points-card bilt">
             <div class="card-label">Bilt Rewards</div>
-            <div class="card-name">Bilt Mastercard 2.0</div>
-            <div class="pts">38,300</div>
-            <div class="val">~1.8&cent;/pt &bull; Worth <strong>$689</strong> (United) or <strong>$1,900</strong> (Amtrak 2:1)</div>
-            <div class="val" style="margin-top: 4px; font-size: 11px;">NEW: Amtrak 2:1 permanent partner — great for Acela</div>
+            <div class="card-name">Bilt Card (dormant)</div>
+            <div class="pts" data-pts="bilt">38,300</div>
+            <div class="val">~1.8&cent;/pt &bull; Worth <strong data-usd="bilt">$689</strong></div>
+            <div class="val" style="margin-top: 4px; font-size: 11px;">Transfer rail only: United 1:1, Marriott 1:1. Amtrak is 2:1 &mdash; poor without a bonus.</div>
         </div>
     </div>
 
     <div class="total-bar">
         <div>
             <div class="total-label">Total Portfolio Value (at best redemption rates)</div>
-            <div class="total-pts">629,032 points across 4 currencies &bull; Amex MR $5,870 + Marriott $1,624 + Chase UR $1,885 + Bilt $689</div>
+            <div class="total-pts"><span data-pts="total">652,223</span> points across 4 currencies &bull; Amex MR <span data-usd="mr">$6,333</span> + Marriott <span data-usd="marriott">$1,624</span> + Chase UR <span data-usd="ur">$1,885</span> + Bilt <span data-usd="bilt">$689</span></div>
         </div>
-        <div class="total-value">$10,068</div>
+        <div class="total-value" data-usd="total">$10,531</div>
     </div>
 
     <!-- ═══════════ AIRLINE MILES TRACKER ═══════════ -->
@@ -615,7 +558,7 @@
                 <div class="al-name">United MileagePlus</div>
                 <div class="al-balance"><input type="number" id="milesUnited" value="0" onchange="saveAirlineMiles()"></div>
                 <div class="al-value">~1.4&cent;/pt &bull; Worth <strong id="milesUnitedValue">$0</strong></div>
-                <div class="al-use">+ 38,300 Bilt convertible 1:1</div>
+                <div class="al-use">+ <span data-pts="bilt">38,300</span> Bilt convertible 1:1</div>
             </div>
             <div class="al-card delta">
                 <div class="al-name">Delta SkyMiles</div>
@@ -659,7 +602,7 @@
         <p style="color: #6b7280; font-size: 14px; margin-top: -12px; margin-bottom: 16px;">
             Pick a destination and trip type. Dashboard suggests optimal points path from your current balances.
         </p>
-        <div class="trip-form" style="grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr auto;">
+        <div class="trip-form">
             <div>
                 <label>Destination</label>
                 <select id="tripDest">
@@ -759,7 +702,7 @@
             <input type="file" accept=".csv" onchange="importSpendCsv(event)" style="display: none;">
         </label>
         <div style="margin-top: 8px; font-size: 11px; color: #78350f;">
-            Upload monthly statement CSV (Amex export, Chase export). Dashboard auto-fills categories above based on merchant category codes.
+            Upload monthly statement CSV (Amex export, Chase export). Dashboard auto-fills the categories above by matching merchant names (rough &mdash; review before calculating). Multi-month files are averaged to a monthly figure.
         </div>
         <div class="cat-result" id="catResult" style="display: none;"></div>
     </div>
@@ -782,27 +725,27 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><strong>Amex MR</strong> (293,477 pts)</td>
+                    <td><strong>Amex MR</strong> (<span data-pts="mr">316,668</span> pts)</td>
                     <td><strong>~2.0&cent;</strong></td>
                     <td class="best-use">ANA First Class, Delta One via Virgin Atlantic</td>
-                    <td class="waste">Transferring to Marriott (drops to 0.7&cent;)</td>
+                    <td class="waste">Transferring to Marriott (drops to 0.8&cent;)</td>
                 </tr>
                 <tr>
-                    <td><strong>Chase UR</strong> (94,257 pts)</td>
+                    <td><strong>Chase UR</strong> (<span data-pts="ur">94,257</span> pts &mdash; locked)</td>
                     <td><strong>~2.0&cent;</strong></td>
                     <td class="best-use">United MileagePlus 1:1 (no fuel surcharges)</td>
-                    <td class="waste">Transferring to Marriott (drops to 0.7&cent;)</td>
+                    <td class="waste">Transferring to Marriott (drops to 0.8&cent;)</td>
                 </tr>
                 <tr>
-                    <td><strong>Bilt</strong> (38,300 pts &mdash; static, not earning)</td>
+                    <td><strong>Bilt</strong> (<span data-pts="bilt">38,300</span> pts &mdash; static, not earning)</td>
                     <td><strong>~1.8&cent;</strong></td>
                     <td class="best-use">Transfer 1:1 to United (bypasses locked Sapphire) or Marriott</td>
                     <td class="waste">Cash back (drops to 0.5&cent;)</td>
                 </tr>
                 <tr>
-                    <td><strong>Marriott Bonvoy</strong> (202,998 pts &mdash; bonus posted!)</td>
+                    <td><strong>Marriott Bonvoy</strong> (<span data-pts="marriott">202,998</span> pts)</td>
                     <td><strong>~0.8&cent;</strong></td>
-                    <td class="best-use">5-6 nights Cat 5 Europe (Westin Athens, Renaissance Paris, Sheraton Rome)</td>
+                    <td class="best-use">5 nights Cat 5 Europe with 5th night free (Westin Athens, Renaissance Paris, Sheraton Rome)</td>
                     <td class="waste">Converting to airline miles (poor ratio)</td>
                 </tr>
             </tbody>
@@ -818,10 +761,10 @@
             </div>
             <div class="strategy-rule">
                 <div class="rule-num">2</div>
-                <h4>Hotels = Marriott Cards Only</h4>
-                <p>Get Marriott points from sign-up bonuses on Marriott co-branded cards (Brilliant/Bevy). Use Bilt to top off Marriott when needed.</p>
-                <div class="rule-do">&check; Sign up for Marriott card bonuses</div>
-                <div class="rule-dont">&times; Don't waste 2&cent; points on 0.7&cent; hotels</div>
+                <h4>Hotels = Bonvoy Points Only</h4>
+                <p>Your Bevy bonus is banked and no other Marriott card bonus is open to you. Pay for Marriott stays with Bonvoy points; top off from Bilt 1:1 if a booking is short.</p>
+                <div class="rule-do">&check; Spend Bonvoy points on Marriott stays</div>
+                <div class="rule-dont">&times; Don't waste 2&cent; points on 0.8&cent; hotels</div>
             </div>
             <div class="strategy-rule">
                 <div class="rule-num">3</div>
@@ -835,9 +778,9 @@
 
     <!-- ═══════════ WARNINGS ═══════════ -->
     <div class="warning-box">
-        <h3>Your 94,257 Chase UR points are LOCKED</h3>
+        <h3>Your <span data-pts="ur">94,257</span> Chase UR points are LOCKED</h3>
         <p>
-            Your Sapphire Preferred (...0043) was opened <strong>July 2025</strong> and is now <strong>closed</strong>. Without an open Sapphire card, you cannot transfer UR to United or Marriott. They're stuck at 1&cent; each ($939 cash back vs $1,879 as United miles).
+            Your Sapphire Preferred (...0043) was opened <strong>July 2025</strong> and closed around October 2025. Without an open Sapphire card you cannot transfer UR to United or Marriott, so they're stuck at 1&cent; each (<span data-calc="urCash">$943</span> cash back vs <span data-usd="ur">$1,885</span> as United miles).
         </p>
         <div style="margin-top: 12px; padding: 14px; background: #fff; border: 1px solid #fecaca; border-radius: 8px;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -845,18 +788,17 @@
                     <div style="font-size: 13px; font-weight: 700; color: #dc2626;">Next Sapphire Bonus Eligible</div>
                     <div style="font-size: 12px; color: #7f1d1d; margin-top: 2px;">48-month rule: bonus received ~Aug 2025 + 48 months</div>
                 </div>
-                <div style="font-size: 24px; font-weight: 800; color: #dc2626;">July 2029</div>
+                <div style="font-size: 24px; font-weight: 800; color: #dc2626;">Aug 2029</div>
             </div>
             <div style="margin-top: 10px; background: #fee2e2; border-radius: 6px; height: 8px; overflow: hidden;">
-                <div style="background: #dc2626; height: 100%; width: 23%; border-radius: 6px;"></div>
+                <div id="sapphireBar" style="background: #dc2626; height: 100%; width: 31%; border-radius: 6px;"></div>
             </div>
-            <div style="font-size: 11px; color: #9ca3af; margin-top: 4px;">~9 months of 48 elapsed &bull; ~39 months remaining</div>
+            <div style="font-size: 11px; color: #9ca3af; margin-top: 4px;">~<span data-calc="sapphireElapsed">15</span> months of 48 elapsed &bull; ~<span data-calc="sapphireLeft">33</span> months remaining</div>
         </div>
         <p style="margin-top: 10px; font-size: 13px; color: #7f1d1d;">
-            <strong>Options before July 2029:</strong> You could reapply for a Sapphire card without the bonus (just to unlock transfers), but that costs $95-$795/yr with no SUB. A better approach: transfer your <strong>Bilt points to United directly</strong> (no Sapphire needed) and focus on Marriott Bonvoy cards for hotels.
+            <strong>Options before Aug 2029:</strong> You could reapply for a Sapphire card without the bonus (just to unlock transfers), but that costs $95-$795/yr with no SUB. Cheaper routes to United miles: transfer <strong>Bilt points to United directly</strong> (no Sapphire needed) or the United Explorer card below.
         </p>
     </div>
-
 
     <!-- ═══════════ ELIGIBILITY TRACKER ═══════════ -->
     <div style="background: #fff; border: 2px solid #e5e7eb; border-radius: 14px; padding: 24px; margin-bottom: 24px;">
@@ -885,7 +827,7 @@
                 <tr style="border-bottom: 1px solid #f3f4f6;">
                     <td style="padding: 10px 8px;"><strong>Marriott Bonvoy Bevy</strong></td>
                     <td style="padding: 10px 8px;"><span style="background: #dcfce7; color: #166534; padding: 3px 8px; border-radius: 4px; font-weight: 700; font-size: 11px;">CLAIMED</span></td>
-                    <td style="padding: 10px 8px; color: #6b7280;">Holding card. Bonus pending $5K spend by Oct 12, 2026.</td>
+                    <td style="padding: 10px 8px; color: #6b7280;">Holding card. 175K bonus earned and posted Jun 2026.</td>
                 </tr>
                 <tr style="border-bottom: 1px solid #f3f4f6;">
                     <td style="padding: 10px 8px;"><strong>Marriott Bonvoy Brilliant</strong></td>
@@ -905,7 +847,7 @@
                 <tr style="border-bottom: 1px solid #f3f4f6;">
                     <td style="padding: 10px 8px;"><strong>Amex Green</strong></td>
                     <td style="padding: 10px 8px;"><span style="background: #fef3c7; color: #92400e; padding: 3px 8px; border-radius: 4px; font-weight: 700; font-size: 11px;">WAIT</span></td>
-                    <td style="padding: 10px 8px; color: #6b7280;">Eligible but refresh imminent (Amex paused new apps). Wait for new SUB.</td>
+                    <td style="padding: 10px 8px; color: #6b7280;">Eligible. A refresh was rumored for mid-2026 &mdash; not re-checked since April, confirm the current offer before applying.</td>
                 </tr>
                 <tr style="border-bottom: 1px solid #f3f4f6;">
                     <td style="padding: 10px 8px;"><strong>United MileagePlus Explorer / Club / Quest</strong></td>
@@ -926,7 +868,7 @@
         </table>
 
         <div style="margin-top: 14px; padding: 12px 14px; background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; font-size: 13px; color: #7f1d1d;">
-            <strong>Chase <span class="glossary" data-def="5/24 rule: Chase auto-denies you if you've opened 5+ consumer credit cards (any issuer) in the last 24 months. Count resets as old cards age past 24 months.">5/24</span> status:</strong> 2/24 (CSP Jul 2025 + CFU). You're well under the 5-card limit — Chase will approve new cards. The <span class="glossary" data-def="Sapphire family rule: You can only earn a welcome bonus on ONE Sapphire card (Preferred OR Reserve) every 48 months. Resets 48 mo after bonus posts.">Sapphire family rule</span> is the binding constraint.
+            <strong>Chase <span class="glossary" data-def="5/24 rule: Chase auto-denies you if you've opened 5+ consumer credit cards (any issuer) in the last 24 months. Count resets as old cards age past 24 months.">5/24</span> status:</strong> at least 2/24 (CSP Jul 2025 + Bevy Apr 2026; add one if the Freedom Unlimited was opened after Nov 2024). Either way you're under the 5-card limit &mdash; Chase will approve new cards. The <span class="glossary" data-def="Sapphire family rule: You can only earn a welcome bonus on ONE Sapphire card (Preferred OR Reserve) every 48 months. Resets 48 mo after bonus posts.">Sapphire family rule</span> is the binding constraint.
         </div>
     </div>
 
@@ -946,7 +888,7 @@
                     <span class="issuer-tag">Amex &bull; $895/yr &bull; <strong style="color: #059669;">ELIGIBLE</strong></span>
                 </div>
                 <div class="why">
-                    <strong>Your only major eligible bonus right now.</strong> CSR/CSP locked until Aug 2029. Brilliant blocked by Marriott family rule. Platinum welcome bonus typically 80K-175K MR (check current offer — CardMatch sometimes shows 150K-175K for prequal). Adds to your 293,477 MR for premium Europe redemptions: ANA First Class (~110K RT), Virgin Atlantic → Delta One (~50K each way). Holding Gold first = no Amex pop-up risk.
+                    <strong>Your only major eligible bonus right now.</strong> CSR/CSP locked until Aug 2029. Brilliant blocked by Marriott family rule. Platinum welcome bonus typically 80K-175K MR (check current offer — CardMatch sometimes shows 150K-175K for prequal). Adds to your <span data-pts="mr">316,668</span> MR for premium Europe redemptions: ANA First Class (~110K RT), Virgin Atlantic → Delta One (~50K each way). Holding Gold first = no Amex pop-up risk.
                 </div>
                 <div class="details">
                     <div class="detail-item">Spend: <span>$8,000 in 6 months</span></div>
@@ -999,7 +941,7 @@
                 </div>
                 <div class="details">
                     <div class="detail-item">Eligible: <span>Aug 2029</span></div>
-                    <div class="detail-item">Current offer: <span>150K UR (would-be value: $3,000)</span></div>
+                    <div class="detail-item">Offer: <span>varies (was 150K UR mid-2026)</span></div>
                     <div class="detail-item">UR alternative: <span>Bilt → United 1:1 (no Sapphire needed)</span></div>
                 </div>
                 <span class="tag" style="background: #fef2f2; color: #991b1b;">BLOCKED — SAPPHIRE FAMILY RULE</span>
@@ -1007,7 +949,7 @@
             <div class="bonus-box" style="background: #fef2f2; border-color: #fecaca;">
                 <div class="bonus-pts" style="color: #991b1b;">2029</div>
                 <div class="bonus-label">Eligible</div>
-                <div class="bonus-value" style="color: #991b1b;">~3.3 years away</div>
+                <div class="bonus-value" style="color: #991b1b;">~<span data-calc="sapphireYears">2.7</span> years away</div>
             </div>
         </div>
 
@@ -1040,7 +982,7 @@
                     <span class="issuer-tag">Chase &bull; $0 first year, then $150/yr &bull; <strong style="color: #059669;">ELIGIBLE</strong></span>
                 </div>
                 <div class="why">
-                    Direct path to United miles for Europe — no Sapphire required. Current offer typically <strong>50K-60K United miles</strong> after $3K spend in 3 months. Earns 2x United, 2x dining, 2x hotels. <strong>Free first checked bag</strong> on United (saves $35 each way), priority boarding, 25% off Wi-Fi. Not in Sapphire family — bypasses your 48-mo block. Chase 5/24: you're 2/24 = approvable.
+                    Direct path to United miles for Europe — no Sapphire required. Current offer typically <strong>50K-60K United miles</strong> after $3K spend in 3 months. Earns 2x United, 2x dining, 2x hotels. <strong>Free first checked bag</strong> on United (saves $35 each way), priority boarding, 25% off Wi-Fi. Not in Sapphire family — bypasses your 48-mo block. Chase 5/24: you're under the limit = approvable.
                 </div>
                 <div class="details">
                     <div class="detail-item">Spend: <span>$3,000 in 3 months</span></div>
@@ -1082,10 +1024,10 @@
                     <span class="issuer-tag">Citi &bull; $0 first year, then $99/yr &bull; <strong style="color: #059669;">ELIGIBLE</strong></span>
                 </div>
                 <div class="why">
-                    Diversifies you into <strong>American AAdvantage</strong> miles for Europe via oneworld (BA, Iberia, Finnair partners). Current offer typically <strong>50K-75K AA miles</strong> after $2.5K spend. Free first checked bag on AA flights. Citi 48-mo rule per AA card-family — you've never had → eligible.
+                    Diversifies you into <strong>American AAdvantage</strong> miles for Europe via oneworld (BA, Iberia, Finnair partners). <strong>TPG flagged an elevated 80,000-mile offer on Oct 26, 2026</strong> ($3,500 spend in 4 months, &ldquo;ending soon&rdquo;) &mdash; confirm it is still live before applying; the usual offer is 50K-75K. Free first checked bag on domestic AA for you and up to four companions. Citi 48-month rule per AA card &mdash; you've never had one, so you're eligible.
                 </div>
                 <div class="details">
-                    <div class="detail-item">Spend: <span>$2,500 in 4 months</span></div>
+                    <div class="detail-item">Spend: <span>$3,500 in 4 months (80K offer)</span></div>
                     <div class="detail-item">Top earn: <span>2x AA, gas, dining</span></div>
                     <div class="detail-item">Perks: <span>Free 1st checked bag (AA), preferred boarding, no FX fees</span></div>
                 </div>
@@ -1093,22 +1035,22 @@
                 <span class="tag" style="background: #dcfce7; color: #166534;">$0 FIRST YEAR</span>
 
                 <div class="value-analysis">
-                    <div class="va-title">Year 1 Value Breakdown (assumes 50K offer)</div>
+                    <div class="va-title">Year 1 Value Breakdown</div>
                     <table>
                         <tr><td>Annual fee Year 1 (waived)</td><td class="va-negative">$0</td></tr>
-                        <tr><td>50K AA miles (@ 1.5&cent;/pt)</td><td class="va-negative">+$750</td></tr>
+                        <tr><td>50K AA miles at the usual offer (@ 1.5&cent;/pt)</td><td class="va-negative">+$750</td></tr>
                         <tr><td>Free checked bag (2 RT/yr)</td><td class="va-negative">+$140</td></tr>
                     </table>
                     <table class="va-total">
-                        <tr><td>Net Year 1 value</td><td class="va-negative">+$890</td></tr>
-                        <tr><td>Value metric (no fee Y1)</td><td class="va-negative">Pure upside, $0 cost</td></tr>
+                        <tr><td>Net Year 1 value (50K offer)</td><td class="va-negative">+$890</td></tr>
+                        <tr><td>Net Year 1 value (80K offer, if still live)</td><td class="va-negative">+$1,340</td></tr>
                     </table>
                 </div>
 
                 <a href="https://www.citi.com/credit-cards/citi-aadvantage-platinum-select-credit-card" target="_blank" class="apply-btn" style="background: #056dae;">Apply on Citi.com</a>
             </div>
             <div class="bonus-box">
-                <div class="bonus-pts">50K</div>
+                <div class="bonus-pts">50-80K</div>
                 <div class="bonus-label">AA Miles</div>
                 <div class="bonus-value">Europe RT economy</div>
             </div>
@@ -1119,9 +1061,9 @@
     <div class="info-box" style="background: #f0fdf4; border-color: #bbf7d0;">
         <h3 style="color: #166534;">Your Bevy Game Plan</h3>
         <p>
-            <strong>Now &rarr; Oct 2026:</strong> Put ALL everyday spending on the Bevy to hit $5,000. At your pace (~$2,192/mo), that's ~2.5 months.<br><br>
-            <strong>After you hit $5,000:</strong> Switch back to <strong>Amex Gold</strong> for 4x dining ($12.9K/yr) and 4x groceries ($4.5K/yr). The Gold earns 4x MR on your biggest categories vs. the Bevy's 2x Marriott on non-Marriott spend.<br><br>
-            <strong>After Year 1:</strong> Evaluate whether to keep the Bevy ($250/yr). The free night cert (up to 50K pts = ~$250-350 value) roughly covers the fee. If you stay at Marriott 2+ nights/yr, it pays for itself and keeps your Bonvoy points from expiring. If not, cancel &mdash; but use or transfer your Marriott points within 24 months.<br><br>
+            <strong>Done:</strong> $5,000 spend hit Jun 1, 2026 and the 175K bonus posted. Everyday spend is back on <strong>Amex Gold</strong> (4x MR at ~2&cent; beats the Bevy's 4x Bonvoy at ~0.8&cent; on dining and groceries).<br><br>
+            <strong>Now:</strong> Use the Bevy only for Marriott stays (6x).<br><br>
+            <strong>At the first anniversary (Apr 2027):</strong> Evaluate whether to keep the Bevy ($250/yr). The free night cert (up to 50K pts = ~$250-350 value) roughly covers the fee. If you stay at Marriott 2+ nights/yr, it pays for itself and keeps your Bonvoy points from expiring. If not, cancel &mdash; but use or transfer your Marriott points within 24 months.<br><br>
             <strong>Referral bonus:</strong> Your Bevy already has a referral link worth <strong>20,000 Marriott pts per referral</strong> (up to 5x/year = 100K bonus pts). If anyone you know wants a Marriott card, share your link.
         </p>
     </div>
@@ -1129,7 +1071,7 @@
     <div class="info-box">
         <h3>Why never transfer Amex MR or Chase UR to Marriott?</h3>
         <p>
-            Your Amex MR and Chase UR are worth <strong>~2.0&cent; each</strong> when transferred to airlines. If you transfer them to Marriott instead, they drop to <strong>~0.7&cent; each</strong> &mdash; you'd lose 65% of their value. Example: 100K MR = a <strong>$2,000 Delta One flight</strong> to Europe via Virgin Atlantic, OR just <strong>$700 in Marriott hotel nights</strong>. Always earn Marriott points from Marriott card bonuses and Bilt, and save your premium currencies for flights.
+            Your Amex MR and Chase UR are worth <strong>~2.0&cent; each</strong> when transferred to airlines. If you transfer them to Marriott instead, they drop to <strong>~0.8&cent; each</strong> &mdash; you'd lose about 60% of their value. Example: 100K MR = a <strong>$2,000 Delta One flight</strong> to Europe via Virgin Atlantic, OR just <strong>$800 in Marriott hotel nights</strong>. Pay for hotels with the Bonvoy points you already have (topping off from Bilt), and save your premium currencies for flights.
         </p>
     </div>
 
@@ -1147,80 +1089,74 @@
             </thead>
             <tbody>
                 <tr style="border-bottom: 1px solid #f3f4f6;">
-                    <td style="padding: 14px 0;"><strong>Marriott: 6 nights at a Westin or W Hotel</strong></td>
-                    <td style="padding: 14px 0;">~180,000 Bonvoy pts</td>
-                    <td style="padding: 14px 0;">0 (sign up for Brilliant = 200K)</td>
-                    <td style="padding: 14px 0; color: #d97706; font-weight: 600;">Apply by May 13</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f3f4f6;">
-                    <td style="padding: 14px 0;"><strong>United: Round-trip economy to Europe</strong></td>
-                    <td style="padding: 14px 0;">~60,000 United miles</td>
-                    <td style="padding: 14px 0;">94,257 Chase UR</td>
-                    <td style="padding: 14px 0; color: #dc2626; font-weight: 600;">Locked &mdash; CSP is closed</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f3f4f6;">
-                    <td style="padding: 14px 0;"><strong>United: Round-trip Polaris biz class to Europe</strong></td>
-                    <td style="padding: 14px 0;">~120,000&ndash;160,000 United miles</td>
-                    <td style="padding: 14px 0;">94,257 UR + 38,300 Bilt = 132,257</td>
-                    <td style="padding: 14px 0; color: #dc2626; font-weight: 600;">Bilt ready, UR locked (CSP closed)</td>
+                    <td style="padding: 14px 0;"><strong>Marriott: 5 nights Cat 5 in Europe (5th night free)</strong></td>
+                    <td style="padding: 14px 0;">~200,000 Bonvoy pts</td>
+                    <td style="padding: 14px 0;"><span data-pts="marriott">202,998</span> Bonvoy</td>
+                    <td style="padding: 14px 0; font-weight: 600;" data-need="marriott:200000">Ready now</td>
                 </tr>
                 <tr style="border-bottom: 1px solid #f3f4f6;">
                     <td style="padding: 14px 0;"><strong>ANA First Class round-trip to Europe via Tokyo</strong></td>
                     <td style="padding: 14px 0;">~110,000 Amex MR</td>
-                    <td style="padding: 14px 0;">293,477 MR</td>
-                    <td style="padding: 14px 0; color: #059669; font-weight: 600;">Ready now</td>
+                    <td style="padding: 14px 0;"><span data-pts="mr">316,668</span> MR</td>
+                    <td style="padding: 14px 0; font-weight: 600;" data-need="mr:110000">Ready now</td>
                 </tr>
                 <tr style="border-bottom: 1px solid #f3f4f6;">
-                    <td style="padding: 14px 0;"><strong>Virgin Atlantic &rarr; Delta One to Europe</strong></td>
+                    <td style="padding: 14px 0;"><strong>Virgin Atlantic &rarr; Delta One to Europe (one-way)</strong></td>
                     <td style="padding: 14px 0;">~50,000 Amex MR</td>
-                    <td style="padding: 14px 0;">293,477 MR</td>
-                    <td style="padding: 14px 0; color: #059669; font-weight: 600;">Ready now (x4 trips)</td>
+                    <td style="padding: 14px 0;"><span data-pts="mr">316,668</span> MR</td>
+                    <td style="padding: 14px 0; font-weight: 600;"><span data-need="mr:50000">Ready now</span> <span style="color: #6b7280; font-weight: 400;">(enough for <span data-calc="vaTrips">6</span>)</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid #f3f4f6;">
+                    <td style="padding: 14px 0;"><strong>Bilt &rarr; United: round-trip economy to Europe</strong></td>
+                    <td style="padding: 14px 0;">~60,000 United miles</td>
+                    <td style="padding: 14px 0;"><span data-pts="bilt">38,300</span> Bilt</td>
+                    <td style="padding: 14px 0; font-weight: 600;" data-need="bilt:60000">Need 21,700 more</td>
                 </tr>
                 <tr>
-                    <td style="padding: 14px 0;"><strong>Bilt &rarr; United economy to Europe</strong></td>
-                    <td style="padding: 14px 0;">~60,000 United miles</td>
-                    <td style="padding: 14px 0;">38,300 Bilt</td>
-                    <td style="padding: 14px 0; color: #dc2626; font-weight: 600;">Need 21,700 more</td>
+                    <td style="padding: 14px 0;"><strong>United: round-trip Polaris business class to Europe</strong></td>
+                    <td style="padding: 14px 0;">~120,000&ndash;160,000 United miles</td>
+                    <td style="padding: 14px 0;"><span data-pts="ur">94,257</span> UR + <span data-pts="bilt">38,300</span> Bilt = <span data-calc="urPlusBilt">132,557</span></td>
+                    <td style="padding: 14px 0; color: #dc2626; font-weight: 600;">Bilt ready, UR locked until Aug 2029</td>
                 </tr>
             </tbody>
         </table>
         <p style="font-size: 12px; color: #9ca3af; margin-top: 12px;">
-            Chase UR transfers locked &mdash; CSP (...0043) is closed. Need a new Sapphire card to unlock. Bilt transfers to United directly without a Sapphire card.
+            Award prices are rough estimates, not live availability. Chase UR transfers stay locked until a Sapphire card is open; Bilt transfers to United directly without one.
         </p>
     </div>
 
     <!-- ═══════════ YOUR CURRENT CARDS ═══════════ -->
     <div class="current-cards">
         <h2>Your Current Cards</h2>
-        <div class="current-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="current-grid">
             <div class="current-card" style="border-left: 3px solid #9333ea;">
-                <div class="cc-name">Marriott Bonvoy Bevy (...41008) <span style="color: #059669; font-size: 12px;">NEW</span></div>
+                <div class="cc-name">Marriott Bonvoy Bevy (...41008)</div>
                 <div class="cc-details">
                     $250/yr &bull; $25K limit &bull; Opened Apr 2026<br>
-                    6x Marriott, 2x everything else &bull; Gold Elite<br>
-                    <em style="color: #9333ea;">175K bonus: spend $5K in 6 months</em>
+                    6x Marriott, 4x dining/groceries, 2x other &bull; Gold Elite<br>
+                    <em style="color: #9333ea;">175K bonus earned Jun 2026 &bull; Marriott stays only</em>
                 </div>
             </div>
             <div class="current-card" style="border-left: 3px solid #006fcf;">
                 <div class="cc-name">Amex Gold Card (...83000)</div>
                 <div class="cc-details">
-                    $325/yr &bull; 293,477 MR pts<br>
-                    4x dining, 4x groceries, 3x flights<br>
-                    <em style="color: #006fcf;">Primary everyday card after Bevy bonus</em>
+                    $325/yr &bull; <span data-pts="mr">316,668</span> MR pts<br>
+                    4x dining, 4x groceries, 3x flights, 5x prepaid hotels<br>
+                    <em style="color: #006fcf;">Primary everyday card</em>
                 </div>
             </div>
             <div class="current-card" style="border-left: 3px solid #003087;">
                 <div class="cc-name">Chase Freedom Unlimited (...9058)</div>
                 <div class="cc-details">
-                    $0/yr &bull; 94,257 UR pts &bull; $33.3K limit<br>
+                    $0/yr &bull; <span data-pts="ur">94,257</span> UR pts &bull; $33.3K limit<br>
                     1.5x all purchases, 3x dining<br>
                     <em style="color: #dc2626;">Transfers locked &mdash; need Sapphire card</em>
                 </div>
             </div>
             <div class="current-card" style="border-left: 3px solid #1a1a2e;">
-                <div class="cc-name">Bilt Mastercard 2.0 <span style="color: #6b7280; font-size: 12px;">DORMANT</span></div>
+                <div class="cc-name">Bilt Card <span style="color: #6b7280; font-size: 12px;">DORMANT</span></div>
                 <div class="cc-details">
-                    $0/yr &bull; 38,300 Bilt pts &bull; not earning<br>
+                    $0/yr &bull; <span data-pts="bilt">38,300</span> Bilt pts &bull; not earning<br>
                     Hold open as transfer rail only<br>
                     Transfers to United &amp; Marriott 1:1
                 </div>
@@ -1229,7 +1165,7 @@
                 <div class="cc-name">Chase Sapphire Preferred (...0043) <span style="color: #dc2626; font-size: 12px;">CLOSED</span></div>
                 <div class="cc-details">
                     Opened Jul 2025 &bull; Closed ~Oct 2025<br>
-                    <em style="color: #dc2626;">Next bonus eligible: July 2029</em>
+                    <em style="color: #dc2626;">Next Sapphire bonus eligible: Aug 2029</em>
                 </div>
             </div>
         </div>
@@ -1239,7 +1175,7 @@
     <div class="live-offers">
         <h2>Live Offers Watch</h2>
         <p style="color: #6b7280; font-size: 14px; margin-top: -12px; margin-bottom: 8px;">
-            Auto-refreshed weekly from RSS (TPG, DoC, FM, VFTW, OMAAT, r/churning) <strong>+ your Gmail inbox</strong> (TPG/DoC/FM newsletters). Tiered: <strong>YOUR CARDS</strong> (Marriott, United, AA, Amex Gold/Plat/Bevy, Sapphire, Bilt) prioritized; other issuers only if extremely compelling (score ≥ 7). All business cards excluded. Top 10 get Claude one-line TL;DRs. Items from email tagged <strong>FROM INBOX</strong>.
+            Auto-refreshed every Monday from RSS (TPG, DoC, FM, VFTW, OMAAT, r/churning), plus TPG/DoC/FM newsletters from your Gmail inbox when the Gmail connection is working (tagged <strong>FROM INBOX</strong>). <strong>YOUR CARDS</strong> (Marriott, United, AA, Amex Gold/Plat/Bevy, Sapphire, Bilt) are prioritized; other issuers appear only when several strong offer signals stack up. Business cards are excluded.
         </p>
         <div class="lo-meta" id="loMeta">Loading...</div>
         <div class="lo-grid" id="loGrid">
@@ -1269,16 +1205,16 @@
                     <tr style="border-bottom: 1px solid #f3f4f6; background: #fffbeb;">
                         <td style="padding: 14px 12px;"><strong>Marriott Bevy</strong> (...41008)<br><span style="color: #6b7280; font-size: 11px;">Amex &bull; Opened Apr 12, 2026</span></td>
                         <td style="padding: 14px 12px;"><strong>$250</strong></td>
-                        <td style="padding: 14px 12px;"><strong style="color: #d97706;">Apr 12, 2027</strong><br><span style="color: #6b7280; font-size: 11px;">~10 months away</span></td>
-                        <td style="padding: 14px 12px;"><strong>Mar 12 - Apr 11, 2027</strong></td>
-                        <td style="padding: 14px 12px; color: #374151;">Call retention for $100-200 statement credit or 10-30K MR. If no offer, decide: keep for free night cert (~$300-400 value at Cat 5) or cancel + use Bonvoy points first.</td>
+                        <td style="padding: 14px 12px;"><strong style="color: #d97706;" data-fee="bevy:date">Apr 12, 2027</strong><br><span style="color: #6b7280; font-size: 11px;" data-fee="bevy:away">~5 months away</span></td>
+                        <td style="padding: 14px 12px;"><strong data-fee="bevy:window">Mar 12 - Apr 11, 2027</strong></td>
+                        <td style="padding: 14px 12px; color: #374151;">Call retention for a $100-200 statement credit or bonus Bonvoy points. If no offer, decide: keep for free night cert (~$300-400 value at Cat 5) or cancel + use Bonvoy points first.</td>
                     </tr>
                     <tr style="border-bottom: 1px solid #f3f4f6;">
                         <td style="padding: 14px 12px;"><strong>Amex Gold Card</strong> (...83000)<br><span style="color: #6b7280; font-size: 11px;">Amex &bull; Member since 2023 &bull; Last fee posted May 11, 2026</span></td>
                         <td style="padding: 14px 12px;"><strong>$325</strong></td>
-                        <td style="padding: 14px 12px;"><strong style="color: #d97706;">May 11, 2027</strong><br><span style="color: #6b7280; font-size: 11px;">~11 months away</span></td>
-                        <td style="padding: 14px 12px;"><strong>Apr 11 - May 10, 2027</strong></td>
-                        <td style="padding: 14px 12px; color: #374151;">Keep. Primary card. $325 fee covered by credits ($120 Uber, $120 Resy, $84 Dunkin, $96 Uber One anniversary). Retention call still worth trying for bonus MR.</td>
+                        <td style="padding: 14px 12px;"><strong style="color: #d97706;" data-fee="gold:date">May 11, 2027</strong><br><span style="color: #6b7280; font-size: 11px;" data-fee="gold:away">~6 months away</span></td>
+                        <td style="padding: 14px 12px;"><strong data-fee="gold:window">Apr 11 - May 10, 2027</strong></td>
+                        <td style="padding: 14px 12px; color: #374151;">Keep. Primary card. $325 fee covered by credits ($120 Uber Cash, $120 dining, $100 Resy, $84 Dunkin'). Retention call still worth trying for bonus MR.</td>
                     </tr>
                     <tr style="border-bottom: 1px solid #f3f4f6;">
                         <td style="padding: 14px 12px;"><strong>Chase Freedom Unlimited</strong> (...9058)<br><span style="color: #6b7280; font-size: 11px;">Chase</span></td>
@@ -1288,7 +1224,7 @@
                         <td style="padding: 14px 12px; color: #374151;">Keep open. No fee cost. Sock-drawer until Aug 2029.</td>
                     </tr>
                     <tr style="border-bottom: 1px solid #f3f4f6;">
-                        <td style="padding: 14px 12px;"><strong>Bilt Mastercard 2.0</strong><br><span style="color: #6b7280; font-size: 11px;">Wells Fargo</span></td>
+                        <td style="padding: 14px 12px;"><strong>Bilt Card</strong><br><span style="color: #6b7280; font-size: 11px;">$0 tier</span></td>
                         <td style="padding: 14px 12px; color: #059669;"><strong>$0</strong></td>
                         <td style="padding: 14px 12px; color: #6b7280;">N/A</td>
                         <td style="padding: 14px 12px; color: #6b7280;">N/A</td>
@@ -1310,7 +1246,7 @@
         </div>
 
         <div style="margin-top: 10px; padding: 12px 14px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; font-size: 12px; color: #166534;">
-            <strong>&#10003; Both fee dates confirmed.</strong> Bevy: Apr 12 anniversary. Gold: May 11 anniversary. Set calendar reminders for retention call windows above.
+            <strong>&#10003; Both fee dates confirmed.</strong> Bevy: Apr 12 anniversary. Gold: May 11 anniversary. GitHub opens a reminder issue 60, 30, 14 and 3 days before each fee.
         </div>
     </div>
 
@@ -1324,19 +1260,19 @@
             <div class="ft-card priority">
                 <div class="ft-title">1. Max your 401(k) match &mdash; HIGHEST priority</div>
                 <div class="ft-body">
-                    Confirm you're hitting <strong>100% of Goldman Sachs' 401(k) match</strong> (not full $23.5K limit — just the match tier). Free money. GS typically matches 100% up to 4% of base + 2% automatic = effectively 6% employer contribution. If base is $150K → <strong>$9,000/yr free</strong>. Non-negotiable. Verify via GS Benefits portal.
+                    Confirm you're contributing enough to capture <strong>100% of Goldman Sachs' 401(k) match</strong> (the match tier, not necessarily the full $24,500 limit for 2026). Free money, non-negotiable. Look up the exact match formula in the GS benefits portal &mdash; it isn't recorded here.
                 </div>
             </div>
             <div class="ft-card priority">
-                <div class="ft-title">2. Backdoor Roth IRA ($7K/yr)</div>
+                <div class="ft-title">2. Backdoor Roth IRA ($7,500/yr)</div>
                 <div class="ft-body">
-                    As a GS employee, your income likely exceeds direct Roth limit ($161K single, 2026). <strong>Backdoor Roth</strong>: contribute $7K to Traditional IRA (non-deductible), convert to Roth immediately. Tax-free growth forever. 10+ years = <strong>$150K+ tax-free</strong> on $70K contributed.
+                    Direct Roth contributions phase out between $153K and $168K of income for single filers in 2026. Above that, use a <strong>Backdoor Roth</strong>: contribute $7,500 to a Traditional IRA (non-deductible), then convert to Roth. Tax-free growth from then on. Only clean if you hold no other pre-tax IRA money (see #4).
                 </div>
             </div>
             <div class="ft-card priority">
                 <div class="ft-title">3. Mega Backdoor Roth (if available)</div>
                 <div class="ft-body">
-                    Check GS 401(k) plan docs for <strong>after-tax contributions + in-plan Roth conversion</strong> (also called "mega backdoor"). Big-bank 401(k) plans frequently allow this. If allowed, shovel up to <strong>$46K/yr</strong> extra into Roth (combined 415(c) limit $70K minus pre-tax $23.5K minus employer match). GS Benefits portal → 401(k) → plan documents.
+                    Check GS 401(k) plan docs for <strong>after-tax contributions + in-plan Roth conversion</strong> (also called "mega backdoor"). Big-bank 401(k) plans frequently allow this. If allowed, you can add roughly <strong>$40K+/yr</strong> extra into Roth (2026 combined limit $72,000, minus your $24,500 deferral, minus the employer match). GS Benefits portal → 401(k) → plan documents.
                 </div>
             </div>
             <div class="ft-card">
@@ -1348,13 +1284,13 @@
             <div class="ft-card">
                 <div class="ft-title">5. HSA if you have HDHP</div>
                 <div class="ft-body">
-                    Triple tax-advantaged: deductible in, tax-free growth, tax-free out for medical. <strong>$4,300/yr limit (2026)</strong>. If GS offers HDHP as option, worth considering vs PPO. Treat HSA as stealth retirement account — invest it, don't spend it.
+                    Triple tax-advantaged: deductible in, tax-free growth, tax-free out for medical. <strong>$4,400/yr self-only limit (2026)</strong>. If GS offers HDHP as option, worth considering vs PPO. Treat HSA as stealth retirement account — invest it, don't spend it.
                 </div>
             </div>
             <div class="ft-card">
                 <div class="ft-title">6. Emergency fund in Marcus / Fidelity CMA</div>
                 <div class="ft-body">
-                    3-6 months expenses in HYSA. Current rate ~4-5%. <strong>Marcus by Goldman Sachs</strong> = your employer, zero friction + ~4.5%. Or <strong>Fidelity CMA</strong> auto-sweeps to money market at ~5%. For rent $4,100 + bills ~$3K/mo = $21-42K target.
+                    3-6 months of expenses in a high-yield account. <strong>Marcus by Goldman Sachs</strong> (your employer, zero friction) or a <strong>Fidelity CMA</strong> sweeping to a money market fund &mdash; check today's rates, they move with the Fed. For rent $4,100 + bills ~$3K/mo = $21-42K target.
                 </div>
             </div>
             <div class="ft-card">
@@ -1372,13 +1308,13 @@
             <div class="ft-card">
                 <div class="ft-title">9. Umbrella insurance ($200-400/yr)</div>
                 <div class="ft-body">
-                    NYC = high liability exposure. <strong>$1M umbrella policy</strong> on top of renters/auto covers catastrophic lawsuits. Cheap peace of mind at your income level. Required if net worth hits ~$500K.
+                    NYC = high liability exposure. <strong>$1M umbrella policy</strong> on top of renters/auto covers catastrophic lawsuits. Cheap peace of mind at your income level, and more worthwhile as your net worth grows.
                 </div>
             </div>
             <div class="ft-card">
                 <div class="ft-title">10. Tax-loss harvesting (year-end)</div>
                 <div class="ft-body">
-                    If your Chase CMA Edge brokerage has losers, <strong>sell to realize $3K/yr losses</strong> against ordinary income + unlimited vs gains. Repeat yearly. Buy similar-but-not-identical to maintain exposure (avoid wash sale rule).
+                    If your taxable brokerage accounts (Merrill Edge, J.P. Morgan Self-Directed) hold losers, <strong>realized losses offset gains without limit plus $3K/yr of ordinary income</strong>. Swap into a similar-but-not-identical ETF to keep exposure (wash sale rule), and clear the trade with GS compliance and its holding-period rules first.
                 </div>
             </div>
             <div class="ft-card">
@@ -1390,7 +1326,7 @@
             <div class="ft-card">
                 <div class="ft-title">12. Renters insurance ($10-15/mo)</div>
                 <div class="ft-body">
-                    Covers theft, water damage, liability. NYC landlords often require it. Lemonade (<strong>$5-15/mo</strong>) or Toggl is easy. Protects $20-50K of stuff.
+                    Covers theft, water damage, liability. NYC landlords often require it. Lemonade (<strong>$5-15/mo</strong>) is quick to set up. Protects $20-50K of stuff.
                 </div>
             </div>
             <div class="ft-card">
@@ -1407,58 +1343,42 @@
 
     <!-- ═══════════ REFRESH & LAUNCH TIMELINE ═══════════ -->
     <div style="margin-bottom: 48px;">
-        <h2>Card Refresh &amp; Launch Rumors</h2>
+        <h2>Card Refresh &amp; Launch Watch</h2>
         <p style="color: #6b7280; font-size: 14px; margin-top: -12px; margin-bottom: 24px;">
-            Issuers refresh cards every 2-3 years with new benefits and fee increases. Signing up <strong>before</strong> a refresh locks you into the old fee while you get the new perks. That's the best time to apply.
+            Issuers refresh cards every 2-3 years with new benefits and fee increases. Signing up <strong>before</strong> a refresh locks you into the old fee while you get the new perks. Fresh news lands in Live Offers above; these are the standing items.
         </p>
 
         <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px;">
             <div class="tl-item">
-                <div class="tl-when urgent">Expires May 13</div>
+                <div class="tl-when soon">Unconfirmed</div>
                 <div class="tl-what">
-                    <h4>Marriott Bonvoy Brilliant &amp; Bevy &mdash; All-Time High Bonuses</h4>
-                    <p>Brilliant: 200K points. Bevy: 175K points. Both are the highest bonuses ever offered on these cards. <strong>No indication these will return after May 13.</strong></p>
-                    <span class="tl-action act-now">Apply before May 13</span>
-                </div>
-            </div>
-            <div class="tl-item">
-                <div class="tl-when urgent">NOW &ndash; Q2 2026</div>
-                <div class="tl-what">
-                    <h4>Chase Sapphire Preferred &mdash; Fee Increase to $150</h4>
-                    <p>Doctor of Credit reports CSP fee may increase from $95 to $150. You already received the CSP bonus so this mostly affects you if you want to hold it long-term. The CSR is the better play for you now.</p>
-                    <span class="tl-action act-watch">You're blocked from CSP bonus &mdash; focus on CSR</span>
-                </div>
-            </div>
-            <div class="tl-item">
-                <div class="tl-when soon">Q2&ndash;Q3 2026</div>
-                <div class="tl-what">
-                    <h4>Amex Green Card &mdash; Refresh Incoming</h4>
-                    <p>Amex has stopped accepting new Green Card applications &mdash; refresh is imminent. Rumored: 4x gas, 3x streaming, fee increase from $150 to $195-$250. Could launch with a strong new SUB worth waiting for.</p>
-                    <span class="tl-action act-soon">Wait for new SUB, then evaluate</span>
-                </div>
-            </div>
-            <div class="tl-item">
-                <div class="tl-when soon">2026 (TBD)</div>
-                <div class="tl-what">
-                    <h4>Chase x Hyatt Premium Card &mdash; New Card</h4>
-                    <p>Hyatt confirmed they will "expand the card portfolio" with Chase. A premium card is expected in 2026 but no date confirmed. Less relevant for you since you prefer Marriott, but worth watching.</p>
-                    <span class="tl-action act-watch">Monitor &mdash; lower priority for Marriott strategy</span>
+                    <h4>Amex Green Card &mdash; Refresh</h4>
+                    <p>In April 2026 Amex had stopped taking new Green Card applications and a refresh was expected by Q3 (rumored 4x gas, 3x streaming, fee up from $150). This page has not re-checked it since &mdash; look up the current state before acting.</p>
+                    <span class="tl-action act-soon">Check current offer, then evaluate</span>
                 </div>
             </div>
             <div class="tl-item">
                 <div class="tl-when watch">Launched Feb 2026</div>
                 <div class="tl-what">
                     <h4>Bilt 2.0 Card Lineup &mdash; Already Refreshed</h4>
-                    <p>You have the Bilt 2.0. New tiers: Blue ($0), Obsidian ($95), Palladium ($495). Upgrade NOT recommended — Bilt's economics don't fit your spending profile and the dining bonus isn't worth the fee vs Amex Gold's 4x dining. Keep on Blue $0 tier as transfer rail only.</p>
-                    <span class="tl-action act-watch">Review Obsidian vs your current tier</span>
+                    <p>Tiers: Blue ($0), Obsidian ($95), Palladium ($495). Upgrade NOT recommended &mdash; Bilt's economics don't fit your spending and the dining bonus isn't worth a fee next to Amex Gold's 4x. Stay on the $0 tier as a transfer rail only.</p>
+                    <span class="tl-action act-watch">No action &mdash; stay on the $0 tier</span>
                 </div>
             </div>
             <div class="tl-item">
-                <div class="tl-when watch">April 2026</div>
+                <div class="tl-when watch">Refreshed 2025</div>
                 <div class="tl-what">
-                    <h4>Amex Platinum &mdash; Benefit Changes</h4>
-                    <p>Amex extended Platinum discounts to economy fares but ended Lufthansa lounge access. Already refreshed in 2025 ($895 fee). No further fee changes expected. Apply when ready &mdash; no grandfather urgency.</p>
-                    <span class="tl-action act-watch">Stable offer &mdash; no rush</span>
+                    <h4>Amex Platinum &mdash; Stable</h4>
+                    <p>Refreshed in 2025 ($895 fee); in April 2026 Amex extended Platinum discounts to economy fares and ended Lufthansa lounge access. No grandfather urgency &mdash; apply when a strong targeted offer shows up.</p>
+                    <span class="tl-action act-watch">No rush &mdash; wait for 150K+</span>
+                </div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-when watch">Aug 2029</div>
+                <div class="tl-what">
+                    <h4>Chase Sapphire &mdash; Bonus Window Reopens</h4>
+                    <p>48 months after your Sapphire Preferred bonus. Opening either Sapphire card then also unlocks transfers for your <span data-pts="ur">94,257</span> stranded UR.</p>
+                    <span class="tl-action act-watch">Nothing to do until then</span>
                 </div>
             </div>
         </div>
@@ -1468,166 +1388,219 @@
 
 <div class="footer">
     Sources:
-    <a href="https://thepointsguy.com/credit-cards/best-pm/" style="color: #6b7280;">The Points Guy</a> &bull;
-    <a href="https://thepointsguy.com/credit-cards/marriott/" style="color: #6b7280;">TPG Marriott Cards</a> &bull;
-    <a href="https://www.doctorofcredit.com/increased-signup-bonuses-on-american-express-marriott-brilliant-bevy-and-business-cards/" style="color: #6b7280;">DoC &mdash; Marriott Bonuses</a> &bull;
-    <a href="https://thepointsguy.com/loyalty-programs/transfer-chase-ultimate-rewards-united/" style="color: #6b7280;">TPG &mdash; Chase to United</a> &bull;
-    <a href="https://www.doctorofcredit.com/rumor-chase-to-increase-chase-sapphire-preferred-annual-fee-to-150/" style="color: #6b7280;">DoC &mdash; CSP Fee Rumor</a> &bull;
-    <a href="https://www.doctorofcredit.com/new-credit-cards-for-2026-launched-announced-rumored/" style="color: #6b7280;">DoC &mdash; New Cards 2026</a> &bull;
-    <a href="https://www.doctorofcredit.com/american-express-green-card-no-longer-accepting-new-applications-refresh-incoming/" style="color: #6b7280;">DoC &mdash; Amex Green Refresh</a>
+    <a href="https://thepointsguy.com/" style="color: #6b7280;">The Points Guy</a> &bull;
+    <a href="https://www.doctorofcredit.com/" style="color: #6b7280;">Doctor of Credit</a> &bull;
+    <a href="https://frequentmiler.com/" style="color: #6b7280;">Frequent Miler</a> &bull;
+    <a href="https://onemileatatime.com/" style="color: #6b7280;">One Mile at a Time</a> &bull;
+    <a href="https://viewfromthewing.com/" style="color: #6b7280;">View from the Wing</a>
+    <br>Point values are community-consensus estimates; actual value depends on the redemption.
 </div>
 
+<script src="portfolio.js"></script>
 <script>
+// ═══════════ CORE DATA (balances come from portfolio.js) ═══════════
+var RATES = { mr: 0.02, marriott: 0.008, ur: 0.02, bilt: 0.018 };   // dollars per point
+var CURRENCIES = ['mr', 'marriott', 'ur', 'bilt'];
+var LATEST = PORTFOLIO_HISTORY[PORTFOLIO_HISTORY.length - 1];
+var BALANCES = { mr: LATEST.mr, marriott: LATEST.marriott, ur: LATEST.ur, bilt: LATEST.bilt, urLocked: true };
+var SAPPHIRE = { bonus: new Date(2025, 7, 1), eligible: new Date(2029, 7, 1) };   // 48-month rule
+var FEES = { bevy: '04-12', gold: '05-11' };   // annual fee post dates (MM-DD); keep in sync with retention.yml
+
+function fmt(n) { return Math.round(n).toLocaleString('en-US'); }
+function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function(c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+}
+function usdValue(k) { return BALANCES[k] * RATES[k]; }
+function totalPts() { return CURRENCIES.reduce(function(sum, k) { return sum + BALANCES[k]; }, 0); }
+function totalUsd() { return CURRENCIES.reduce(function(sum, k) { return sum + Math.round(usdValue(k)); }, 0); }
+function monthsBetween(a, b) { return (b.getFullYear() - a.getFullYear()) * 12 + (b.getMonth() - a.getMonth()); }
+function shortDate(d) { return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }); }
+function today() { var d = new Date(); d.setHours(0, 0, 0, 0); return d; }
+function nextFeeDate(mmdd) {
+    var p = mmdd.split('-');
+    var d = new Date(today().getFullYear(), parseInt(p[0], 10) - 1, parseInt(p[1], 10));
+    if (d < today()) d.setFullYear(d.getFullYear() + 1);
+    return d;
+}
+
+// Fills every [data-pts], [data-usd], [data-calc], [data-need] and [data-fee] element.
+function fillPage() {
+    var now = new Date();
+    var monthsLeft = Math.max(0, monthsBetween(now, SAPPHIRE.eligible));
+    var calc = {
+        asOf: shortDate(new Date(LATEST.date + 'T12:00:00')),
+        urCash: '$' + fmt(BALANCES.ur * 0.01),
+        urPlusBilt: fmt(BALANCES.ur + BALANCES.bilt),
+        vaTrips: Math.floor(BALANCES.mr / 50000),
+        sapphireElapsed: Math.max(0, monthsBetween(SAPPHIRE.bonus, now)),
+        sapphireLeft: monthsLeft,
+        sapphireYears: (monthsLeft / 12).toFixed(1)
+    };
+    document.querySelectorAll('[data-pts]').forEach(function(el) {
+        var k = el.getAttribute('data-pts');
+        el.textContent = fmt(k === 'total' ? totalPts() : BALANCES[k]);
+    });
+    document.querySelectorAll('[data-usd]').forEach(function(el) {
+        var k = el.getAttribute('data-usd');
+        el.textContent = '$' + fmt(k === 'total' ? totalUsd() : usdValue(k));
+    });
+    document.querySelectorAll('[data-calc]').forEach(function(el) {
+        var k = el.getAttribute('data-calc');
+        if (calc[k] != null) el.textContent = calc[k];
+    });
+    document.querySelectorAll('[data-need]').forEach(function(el) {
+        var p = el.getAttribute('data-need').split(':');
+        var gap = parseInt(p[1], 10) - BALANCES[p[0]];
+        el.textContent = gap <= 0 ? 'Ready now' : 'Need ' + fmt(gap) + ' more';
+        el.style.color = gap <= 0 ? '#059669' : '#dc2626';
+    });
+    document.querySelectorAll('[data-fee]').forEach(function(el) {
+        var p = el.getAttribute('data-fee').split(':');   // "<card>:<date|away|window>"
+        var d = nextFeeDate(FEES[p[0]]);
+        var days = Math.round((d - today()) / 86400000);
+        if (p[1] === 'date') {
+            el.textContent = shortDate(d);
+        } else if (p[1] === 'away') {
+            el.textContent = days < 60 ? days + ' days away' : '~' + Math.round(days / 30.44) + ' months away';
+        } else if (p[1] === 'window') {
+            var start = new Date(d); start.setMonth(start.getMonth() - 1);
+            var end = new Date(d); end.setDate(end.getDate() - 1);
+            el.textContent = start.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' - ' + shortDate(end);
+        }
+    });
+    var bar = document.getElementById('sapphireBar');
+    if (bar) bar.style.width = Math.min(100, Math.round(calc.sapphireElapsed / 48 * 100)) + '%';
+}
+document.addEventListener('DOMContentLoaded', fillPage);
+
 // ═══════════ LIVE OFFERS LOADER ═══════════
 function loadLiveOffers() {
-    Promise.all([
-        fetch('offers.json?t=' + Date.now()).then(r => r.ok ? r.json() : {items:[]}),
-        fetch('offers_email.json?t=' + Date.now()).then(r => r.ok ? r.json() : {items:[]}).catch(() => ({items:[]})),
-    ]).then(function(results) {
-        var rss = results[0];
-        var email = results[1];
-        var merged = (rss.items || []).concat(email.items || []);
-        // Dedup fuzzy title
-        var seen = {};
-        var unique = [];
-        merged.sort(function(a, b) { return (b.score||0) - (a.score||0); });
-        merged.forEach(function(i) {
-            var key = (i.title || '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 60);
-            if (seen[key]) return;
-            seen[key] = true;
-            unique.push(i);
-        });
-        var data = {
-            generated_at: rss.generated_at || new Date().toISOString(),
-            item_count: unique.length,
-            feed_count: (rss.feed_count || 0) + (email.items && email.items.length > 0 ? 1 : 0),
-            items: unique,
+    function getJson(url) {
+        return fetch(url + '?t=' + Date.now())
+            .then(function(r) { return r.ok ? r.json() : { items: [] }; })
+            .catch(function() { return { items: [] }; });
+    }
+    Promise.all([getJson('offers.json'), getJson('offers_email.json')]).then(function(results) {
+        var rss = results[0], email = results[1];
+        var seen = {}, unique = [];
+        (rss.items || []).concat(email.items || [])
+            .sort(function(a, b) { return (b.score || 0) - (a.score || 0); })
+            .forEach(function(i) {
+                var key = (i.title || '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 60);
+                if (seen[key]) return;
+                seen[key] = true;
+                unique.push(i);
+            });
+        renderLiveOffers({
+            generated_at: rss.generated_at,
+            feed_count: rss.feed_count || 0,
             email_count: (email.items || []).length,
-        };
-        renderLiveOffers(data);
-    }).catch(function() {
-        document.getElementById('loMeta').textContent = 'Offers feed unavailable.';
-        document.getElementById('loGrid').innerHTML = '';
+            items: unique
+        });
     });
 }
 
 function renderLiveOffers(data) {
     var meta = document.getElementById('loMeta');
     var grid = document.getElementById('loGrid');
-    var dt = new Date(data.generated_at);
-    meta.textContent = 'Last refresh: ' + dt.toLocaleString('en-US', {dateStyle:'medium',timeStyle:'short'}) + ' • ' + data.item_count + ' relevant items from ' + data.feed_count + ' feeds (' + data.email_count + ' from your inbox)';
+    if (!data.generated_at) {
+        meta.textContent = 'Offers feed unavailable.';
+        grid.innerHTML = '';
+        return;
+    }
+    meta.textContent = 'Last refresh: ' + new Date(data.generated_at).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' }) +
+        ' • ' + data.items.length + ' relevant items from ' + data.feed_count + ' feeds' +
+        (data.email_count ? ' + ' + data.email_count + ' from your inbox' : ' • inbox scan offline');
 
-            if (!data.items || data.items.length === 0) {
-                grid.innerHTML = '<div class="lo-loading">No high-signal offers this week.</div>';
-                return;
-            }
+    if (!data.items.length) {
+        grid.innerHTML = '<div class="lo-loading">No high-signal offers this week.</div>';
+        return;
+    }
 
-            grid.innerHTML = data.items.map(function(i) {
-                var cls = i.score >= 7 ? 's-high' : (i.score >= 4 ? 's-mid' : 's-low');
-                var pubDate = i.published ? new Date(i.published).toLocaleDateString('en-US', {month:'short',day:'numeric'}) : '';
-                var newBadge = i.is_new ? '<span style="background:#dcfce7;color:#166534;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:700;margin-left:6px;">NEW</span>' : '';
-                var tierBadge = i.tier === 'tier1' ? '<span style="background:#fef3c7;color:#92400e;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:700;margin-left:6px;">YOUR CARDS</span>' : '';
-                var emailBadge = i.from_email ? '<span style="background:#dbeafe;color:#1d4ed8;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:700;margin-left:6px;">FROM INBOX</span>' : '';
-                var tldr = i.tldr ? '<div style="font-size:13px;color:#1a1a2e;font-weight:500;margin:6px 0;padding:6px 10px;background:#faf5ff;border-left:3px solid #9333ea;border-radius:4px;">' + i.tldr + '</div>' : '';
-                var breakEven = computeXferBreakEven(i);
-                return '<div class="lo-item">' +
-                    '<div class="lo-score ' + cls + '">' + i.score + '</div>' +
-                    '<div class="lo-content">' +
-                        '<div class="lo-source">' + i.source + (pubDate ? ' • ' + pubDate : '') + newBadge + tierBadge + emailBadge + '</div>' +
-                        '<div class="lo-title"><a href="' + i.link + '" target="_blank" rel="noopener">' + i.title + '</a></div>' +
-                        tldr +
-                        breakEven +
-                        '<div class="lo-summary">' + (i.summary || '').slice(0, 200) + (i.summary && i.summary.length > 200 ? '…' : '') + '</div>' +
-                    '</div>' +
-                '</div>';
-            }).join('');
-        })
-        .catch(err => {
-            document.getElementById('loMeta').textContent = 'Offers feed unavailable (will refresh next Monday).';
-            document.getElementById('loGrid').innerHTML = '';
-        });
+    function badge(text, bg, fg) {
+        return '<span class="lo-badge" style="background:' + bg + ';color:' + fg + ';">' + text + '</span>';
+    }
+    grid.innerHTML = data.items.map(function(i) {
+        var cls = i.score >= 7 ? 's-high' : (i.score >= 4 ? 's-mid' : 's-low');
+        var pubDate = i.published ? new Date(i.published).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '';
+        var link = /^https?:\/\//i.test(i.link || '') ? i.link : '#';
+        var summary = i.summary || '';
+        return '<div class="lo-item">' +
+            '<div class="lo-score ' + cls + '">' + esc(i.score) + '</div>' +
+            '<div class="lo-content">' +
+                '<div class="lo-source">' + esc(i.source) + (pubDate ? ' • ' + pubDate : '') +
+                    (i.is_new ? badge('NEW', '#dcfce7', '#166534') : '') +
+                    (i.tier === 'tier1' ? badge('YOUR CARDS', '#fef3c7', '#92400e') : '') +
+                    (i.from_email ? badge('FROM INBOX', '#dbeafe', '#1d4ed8') : '') +
+                '</div>' +
+                '<div class="lo-title"><a href="' + esc(link) + '" target="_blank" rel="noopener">' + esc(i.title) + '</a></div>' +
+                (i.tldr ? '<div style="font-size:13px;color:#1a1a2e;font-weight:500;margin:6px 0;padding:6px 10px;background:#faf5ff;border-left:3px solid #9333ea;border-radius:4px;">' + esc(i.tldr) + '</div>' : '') +
+                computeXferBreakEven(i) +
+                '<div class="lo-summary">' + esc(summary.slice(0, 200)) + (summary.length > 200 ? '…' : '') + '</div>' +
+            '</div>' +
+        '</div>';
+    }).join('');
 }
 document.addEventListener('DOMContentLoaded', loadLiveOffers);
 
-// Auto-update "last updated" date
-document.addEventListener('DOMContentLoaded', function() {
-    var el = document.getElementById('lastUpdated');
-    if (el) el.textContent = 'Updated ' + new Date().toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
-});
-
 // ═══════════ TRANSFER BONUS BREAK-EVEN ═══════════
+var XFER_PARTNERS = [   // cents of value per partner point; first match wins
+    { re: /marriott|bonvoy/, name: 'Marriott', cents: 0.8 },
+    { re: /virgin atlantic/, name: 'Virgin Atlantic', cents: 2.0 },
+    { re: /\bana\b/, name: 'ANA', cents: 2.2 },
+    { re: /flying blue|air france|klm/, name: 'Flying Blue', cents: 1.5 },
+    { re: /united|mileageplus/, name: 'United', cents: 1.4 },
+    { re: /british airways|avios/, name: 'BA/Avios', cents: 1.4 }
+];
+
 function computeXferBreakEven(item) {
-    var text = (item.title + ' ' + (item.summary || '')).toLowerCase();
-    if (!/transfer bonus|conversion bonus/.test(text)) return '';
-    // Extract percentage
+    var text = ((item.title || '') + ' ' + (item.summary || '')).toLowerCase();
+    if (!/transfer|conversion/.test(text) || !/bonus/.test(text)) return '';
     var pctMatch = text.match(/(\d{2,3})\s*%/);
     if (!pctMatch) return '';
-    var pct = parseInt(pctMatch[1]);
+    var pct = parseInt(pctMatch[1], 10);
     if (pct < 15 || pct > 200) return '';
 
-    // Detect source currency
-    var isMR = /amex|membership rewards|mr\b/.test(text);
-    var isUR = /chase|ultimate rewards|\bur\b/.test(text);
+    var isUR = /chase|ultimate rewards/.test(text);
+    var isMR = /amex|american express|membership rewards/.test(text);
+    if (!isUR && !isMR) return '';   // Bilt, Citi, Capital One etc: no math to show
 
-    // Detect target
-    var target = 'partner';
-    var isMarriott = /marriott|bonvoy/.test(text);
-    var isFlyingBlue = /flying blue|air france|klm/.test(text);
-    var isVirgin = /virgin atlantic/.test(text);
-    var isANA = /\bana\b/.test(text);
-    var isUnited = /united|mileageplus/.test(text);
-    var isBA = /british airways|\bba\b|avios/.test(text);
+    var partner = null;
+    for (var i = 0; i < XFER_PARTNERS.length; i++) {
+        if (XFER_PARTNERS[i].re.test(text)) { partner = XFER_PARTNERS[i]; break; }
+    }
+    if (!partner) return '';
 
-    var baseValueCents = 0.02;  // MR/UR baseline
-    var partnerValueCents = 2.0;  // Default airline transfer
-    var partnerName = 'partner';
-
-    if (isMarriott) { partnerName = 'Marriott'; partnerValueCents = 0.8; }
-    else if (isVirgin) { partnerName = 'Virgin Atlantic'; partnerValueCents = 2.0; }
-    else if (isANA) { partnerName = 'ANA'; partnerValueCents = 2.2; }
-    else if (isFlyingBlue) { partnerName = 'Flying Blue'; partnerValueCents = 1.5; }
-    else if (isUnited) { partnerName = 'United'; partnerValueCents = 1.4; }
-    else if (isBA) { partnerName = 'BA/Avios'; partnerValueCents = 1.4; }
-
-    var srcBalance = isUR ? BALANCES.ur : BALANCES.mr;
-    var srcName = isUR ? 'UR' : 'MR';
     if (isUR && BALANCES.urLocked) {
-        return '<div style="font-size:12px;margin:6px 0;padding:8px 10px;background:#fef2f2;border-left:3px solid #dc2626;border-radius:4px;color:#7f1d1d;"><strong>Not useful for you:</strong> Your ' + srcBalance.toLocaleString() + ' UR is LOCKED (no Sapphire until Aug 2029).</div>';
+        return '<div style="font-size:12px;margin:6px 0;padding:8px 10px;background:#fef2f2;border-left:3px solid #dc2626;border-radius:4px;color:#7f1d1d;"><strong>Not useful for you:</strong> your ' + fmt(BALANCES.ur) + ' UR is locked (no Sapphire card until Aug 2029).</div>';
     }
 
-    // Effective value per source point after bonus
-    var effectiveValue = partnerValueCents * (1 + pct / 100);
-    var isCompelling = effectiveValue >= baseValueCents * 100 * 0.9;  // >=1.8¢
-
-    // Example calc: transfer 100K of source
-    var partnerReceived = Math.round(100 * (1 + pct / 100));
-    var partnerDollarValue = Math.round(partnerReceived * partnerValueCents);
-
+    var baseline = RATES.mr * 100;                             // 2.0 cents via a plain airline transfer
+    var effective = partner.cents * (1 + pct / 100);            // cents per MR point after the bonus
+    var received = Math.round(100 * (1 + pct / 100));           // thousands of partner points per 100K MR
     var verdict, color;
-    if (isCompelling) {
-        verdict = 'COMPELLING — beats baseline airline transfer';
+    if (effective >= baseline * 0.9) {
+        verdict = 'COMPELLING — matches or beats a plain airline transfer';
         color = '#059669';
-    } else if (effectiveValue >= 1.5) {
-        verdict = 'DECENT — use only if you need ' + partnerName + ' points for specific trip';
+    } else if (effective >= 1.5) {
+        verdict = 'DECENT — only if you need ' + partner.name + ' points for a specific trip';
         color = '#d97706';
     } else {
-        verdict = 'SKIP — still worse than direct airline transfer at 2.0¢/pt';
+        verdict = 'SKIP — still worse than a plain airline transfer at ' + baseline.toFixed(1) + '¢/pt';
         color = '#dc2626';
     }
-
     return '<div style="font-size:12px;margin:6px 0;padding:8px 10px;background:#f0fdf4;border-left:3px solid ' + color + ';border-radius:4px;">' +
         '<strong style="color:' + color + ';">Break-even for you:</strong> ' +
-        '100K ' + srcName + ' → ' + partnerReceived + 'K ' + partnerName + ' = ~$' + partnerDollarValue + ' (effective ' + effectiveValue.toFixed(2) + '¢/pt). ' +
-        'You have ' + srcBalance.toLocaleString() + ' ' + srcName + '. ' +
-        '<strong>' + verdict + '.</strong>' +
+        '100K MR → ' + received + 'K ' + partner.name + ' = ~$' + fmt(received * 10 * partner.cents) + ' (effective ' + effective.toFixed(2) + '¢/pt). ' +
+        'You have ' + fmt(BALANCES.mr) + ' MR. <strong>' + verdict + '.</strong>' +
         '</div>';
 }
 
 // ═══════════ PORTFOLIO GROWTH CHART ═══════════
 function renderPortfolioChart() {
-    fetch('portfolio_history.json?t=' + Date.now())
-        .then(r => r.json())
-        .then(data => {
+    (function(data) {
             var snaps = data.snapshots;
             var svg = document.getElementById('portfolioChart');
             if (!svg || !snaps || !snaps.length) return;
@@ -1637,7 +1610,7 @@ function renderPortfolioChart() {
 
             // Compute total $ value per snapshot
             var totalValues = snaps.map(function(s) {
-                return Math.round(s.mr * 0.02 + s.marriott * 0.008 + s.ur * 0.02 + s.bilt * 0.018);
+                return Math.round(s.mr * RATES.mr + s.marriott * RATES.marriott + s.ur * RATES.ur + s.bilt * RATES.bilt);
             });
 
             var series = {
@@ -1725,10 +1698,48 @@ function renderPortfolioChart() {
             });
 
             svg.innerHTML = svgContent;
-        })
-        .catch(function(err) { console.error('Chart load failed:', err); });
+    })({ snapshots: PORTFOLIO_HISTORY });
 }
 document.addEventListener('DOMContentLoaded', renderPortfolioChart);
+
+// ═══════════ MARRIOTT ELITE STATUS ═══════════
+// Update from marriott.com → Activity. Elite nights reset every Jan 1.
+var ELITE = { nights: 16, year: 2026, asOf: 'Aug 2026', target: 50 };
+
+function eliteOutlook() {
+    var now = new Date();
+    var needed = Math.max(0, ELITE.target - ELITE.nights);
+    var daysLeft = Math.max(0, Math.ceil((new Date(ELITE.year, 11, 31) - now) / 86400000));
+    return {
+        stale: now.getFullYear() !== ELITE.year,
+        needed: needed,
+        daysLeft: daysLeft,
+        realistic: needed > 0 && needed <= daysLeft / 4   // about one hotel night every four days
+    };
+}
+
+function renderElite() {
+    var o = eliteOutlook();
+    var pct = Math.min(100, Math.round(ELITE.nights / ELITE.target * 100));
+    document.getElementById('etBarFill').style.width = pct + '%';
+    document.getElementById('etPct').textContent = pct + '%';
+    document.getElementById('etNightsCurrent').textContent = ELITE.nights;
+    document.getElementById('etAsOf').textContent = ELITE.asOf;
+
+    var msg;
+    if (o.stale) {
+        msg = '<strong>Out of date:</strong> elite nights reset on Jan 1 and the count above is from ' + ELITE.year + '. Update ELITE in index.html with this year\'s number from marriott.com.';
+    } else if (o.needed === 0) {
+        msg = '<strong>Platinum reached</strong> for ' + ELITE.year + '.';
+    } else if (o.realistic) {
+        msg = '<strong>Within reach:</strong> ' + o.needed + ' more nights in the ' + o.daysLeft + ' days left this year gets you to Platinum.';
+    } else {
+        msg = '<strong>Platinum is out of reach this year:</strong> ' + o.needed + ' more nights needed with ' + o.daysLeft + ' days left. Gold stays automatic with the Bevy; aim for Platinum next year.';
+    }
+    document.getElementById('eliteDetail').innerHTML = msg +
+        '<br><br>The Bevy adds 15 Elite Night Credits every calendar year (already in the count). Award nights booked with points count too.';
+}
+document.addEventListener('DOMContentLoaded', renderElite);
 
 // ═══════════ NEXT BEST MOVE TICKER ═══════════
 var SUGGESTIONS = [];
@@ -1738,95 +1749,68 @@ function buildSuggestions() {
     var now = new Date();
     var out = [];
 
-    // $120 Gold Dining Credit — monthly check
-    var currMonth = now.getMonth();
     out.push({
         icon: '🍔',
-        text: 'Order <strong>$10 Grubhub / Buffalo Wild Wings / Wonder</strong> this month on Amex Gold — $120 Dining Credit resets monthly, you lose $10 if you skip.',
-        action: 'Target: $10 by end of ' + now.toLocaleString('en-US', {month: 'long'})
+        text: 'Order <strong>$10 on Grubhub / Buffalo Wild Wings / Wonder</strong> with the Amex Gold this month — the $120 dining credit is use-it-or-lose-it at $10 a month.',
+        action: 'Target: $10 by the end of ' + now.toLocaleString('en-US', { month: 'long' })
     });
 
-    // Uber One anniversary — expires Oct 30
-    var daysToUberExpiry = Math.max(0, Math.ceil((new Date('2026-10-30') - now) / 86400000));
-    if (daysToUberExpiry > 0 && daysToUberExpiry < 60) {
-        out.push({
-            icon: '🚨',
-            text: '<strong>$96 Uber One</strong> anniversary credit expires in <strong>' + daysToUberExpiry + ' days</strong> (Oct 30). Activate at amex.com now.',
-            action: 'This disappears forever if not used — $96 free'
-        });
-    }
-
-    // Rent Day — Bilt 1st of month
-    var dayOfMonth = now.getDate();
-    if (dayOfMonth === 1) {
-        out.push({
-            icon: '🎯',
-            text: '<strong>Today is Bilt Rent Day!</strong> 3x dining, 2x travel, 2x everything else on Bilt. Only lasts 24 hours.',
-            action: 'Shift today\'s dinner to Bilt for 3x'
-        });
-    } else if (dayOfMonth > 25) {
-        var daysToRentDay = Math.max(1, 32 - dayOfMonth) % 31;
-        out.push({
-            icon: '📅',
-            text: 'Bilt Rent Day in <strong>' + (daysToRentDay || 1) + ' day(s)</strong> (1st of month) — 3x dining, 2x travel. Plan a nice dinner for the 1st.',
-            action: 'Save receipts for the 1st'
-        });
-    }
-
-    // Bilt → Amtrak 2:1 opportunity
-    if (BALANCES.bilt > 10000) {
-        out.push({
-            icon: '🚂',
-            text: 'Your <strong>' + BALANCES.bilt.toLocaleString() + ' Bilt</strong> = ' + (BALANCES.bilt * 2).toLocaleString() + ' Amtrak Guest Rewards @ 2:1 (permanent partner). Worth ~$' + Math.round(BALANCES.bilt * 2 * 0.025).toLocaleString() + ' in Acela redemptions.',
-            action: 'If you ride Acela NYC-BOS/DC, transfer when needed'
-        });
-    }
-
-    // Marriott Platinum push
-    out.push({
-        icon: '🏨',
-        text: 'You\'re <strong>16/50 nights</strong> to Marriott Platinum. 34 more nights by Dec 31 unlocks lounge access + 50% point bonus. Bevy nights count.',
-        action: '34 nights in 3 months = aggressive but possible'
-    });
-
-    // Credit card data retention
+    var bevyFee = nextFeeDate(FEES.bevy);
+    var callBy = new Date(bevyFee); callBy.setMonth(callBy.getMonth() - 1);
     out.push({
         icon: '🗓️',
-        text: '<strong>Bevy fee ($250)</strong> posts Apr 12, 2027. Call Amex retention 30 days prior (Mar 12). GitHub will auto-remind.',
-        action: 'Free night cert (~$300) usually makes keeping worth it'
+        text: '<strong>Bevy fee ($250)</strong> posts ' + shortDate(bevyFee) + '. Call Amex retention around ' + shortDate(callBy) + ' — GitHub opens a reminder issue.',
+        action: 'The free night cert (~$300) usually makes keeping it worth it'
     });
 
-    // Gold cap check
+    var o = eliteOutlook();
+    if (!o.stale && o.realistic) {
+        out.push({
+            icon: '🏨',
+            text: 'You\'re <strong>' + ELITE.nights + '/' + ELITE.target + ' nights</strong> toward Marriott Platinum — ' + o.needed + ' more by Dec 31 unlocks lounge access and a 50% points bonus.',
+            action: 'Award nights count toward status'
+        });
+    }
+
+    out.push({
+        icon: '🚂',
+        text: 'Bilt → Amtrak is <strong>2:1</strong>: your ' + fmt(BALANCES.bilt) + ' Bilt would become ~' + fmt(BALANCES.bilt / 2) + ' Amtrak points (~$' + fmt(BALANCES.bilt / 2 * 0.0267) + ' of train travel). Bilt → United at 1:1 is the better default.',
+        action: 'Only move Bilt to Amtrak during a Rent Day transfer bonus'
+    });
+
     out.push({
         icon: '⚠️',
-        text: 'Watch Amex Gold caps: <strong>$50K dining</strong> + <strong>$25K groceries</strong> both drop to 1x after. If close to cap, split overflow onto Bevy (2x) or wait for new year.',
-        action: 'Your dining pace ~$13K/yr = well under cap'
+        text: 'Amex Gold earns 4x only up to <strong>$50K dining</strong> and <strong>$25K groceries</strong> a year, then 1x. Past a cap, the Bevy\'s 4x Bonvoy is the fallback.',
+        action: 'At ~$13K/yr of dining you are well under the cap'
     });
 
-    // CFU abroad warning
     out.push({
         icon: '🌍',
-        text: 'Reminder: <strong>CFU has 3% FTX fee</strong>. Use Amex Gold (restaurants worldwide 4x, no FTX) or Bilt / Bevy abroad instead.',
-        action: 'Noticed Brazil + Türkiye charges on CFU — $7+ in fees paid'
+        text: 'Reminder: the <strong>Freedom Unlimited charges a 3% foreign transaction fee</strong>. Abroad, use the Amex Gold (4x at restaurants) or the Bevy / Bilt — none of them charge it.',
+        action: 'Earlier Brazil and Türkiye charges on the CFU cost about $7 in fees'
     });
 
-    // Add Card Member
+    out.push({
+        icon: '✈️',
+        text: 'TPG flagged an <strong>80,000-mile Citi AAdvantage Platinum Select</strong> offer on Oct 26 ($3,500 spend in 4 months, $0 first-year fee). You are eligible.',
+        action: 'It was marked "ending soon" — confirm it is still live before applying'
+    });
+
     out.push({
         icon: '👥',
-        text: 'Amex Gold shows <strong>10K MR offer</strong> for adding an authorized user. Zero risk if you add family/partner for free.',
-        action: '10K MR = ~$200 value, 5 min to set up'
+        text: 'In October your Amex Gold dashboard showed a <strong>10K MR offer</strong> for adding an authorized user.',
+        action: 'Check whether it is still listed — 10K MR is roughly $200'
     });
 
     return out;
 }
 
 function updateTicker() {
-    if (SUGGESTIONS.length === 0) SUGGESTIONS = buildSuggestions();
-    if (SUGGESTIONS.length === 0) return;
+    if (!SUGGESTIONS.length) return;
     var s = SUGGESTIONS[SUGGESTION_IDX % SUGGESTIONS.length];
     document.getElementById('tickerIcon').textContent = s.icon;
     document.getElementById('tickerText').innerHTML = s.text;
-    document.getElementById('tickerAction').innerHTML = s.action;
+    document.getElementById('tickerAction').textContent = s.action;
 }
 function cycleTicker() {
     SUGGESTION_IDX++;
@@ -1835,39 +1819,10 @@ function cycleTicker() {
 document.addEventListener('DOMContentLoaded', function() {
     SUGGESTIONS = buildSuggestions();
     updateTicker();
-    setInterval(cycleTicker, 15000);  // auto-cycle every 15s
-});
-
-// ═══════════ ELITE STATUS CALCULATION ═══════════
-document.addEventListener('DOMContentLoaded', function() {
-    var currentNights = 16;  // from last Marriott screenshot
-    var platinumTarget = 50;
-    var pct = Math.min(100, Math.round((currentNights / platinumTarget) * 100));
-    var el = document.getElementById('etBarFill');
-    if (el) {
-        el.style.width = pct + '%';
-        document.getElementById('etPct').textContent = pct + '%';
-        document.getElementById('etNightsCurrent').textContent = currentNights;
-    }
-
-    // Projection logic
-    var now = new Date();
-    var yearEnd = new Date(now.getFullYear(), 11, 31);
-    var daysLeft = Math.ceil((yearEnd - now) / 86400000);
-    var nightsNeeded = platinumTarget - currentNights;
-    var monthsLeft = daysLeft / 30;
-
-    var detail = document.getElementById('eliteDetail');
-    if (detail && nightsNeeded > 0) {
-        detail.innerHTML = '<strong>Reality check:</strong> ' + nightsNeeded + ' nights needed in ~' + monthsLeft.toFixed(1) + ' months = ' + (nightsNeeded / monthsLeft).toFixed(1) + ' nights/mo. ' +
-            (nightsNeeded <= 15 ? 'Achievable with 1-2 trips.' : nightsNeeded <= 25 ? 'Possible with aggressive travel.' : '<strong>Not realistic</strong> — focus on 2027 instead. Status Match Challenge (Hyatt Globalist → Marriott Platinum) is a faster path if you have Hyatt status.') +
-            ' <br><br>Bevy card gives 15 Elite Night Credits annually (already counted). Each stay = 1 bonus ENC + nights stayed.';
-    }
+    setInterval(cycleTicker, 15000);
 });
 
 // ═══════════ TRIP PLANNER ═══════════
-var BALANCES = { mr: 293477, marriott: 202998, ur: 93957, urLocked: true, bilt: 38300 };
-
 // Round-trip miles per program + typical cash prices (USD)
 var FLIGHT_COST = {
     paris:      { rtEcon: 850,  rtBiz: 4200, ow:0.6, economy: { va: 50, un: 60, aa: 60 }, premium: { va: 85, un: 100 }, business: { va: 120, un: 140, ana: 110 }, first: { ana: 220 } },
@@ -1972,7 +1927,6 @@ function planTrip() {
 
     flightSuggestions.forEach(function(s) {
         var oCls = s.ok ? '' : (s.unit === 'AA' ? 'bad' : 'warn');
-        var savings = s.ok ? Math.round(totalCashFlight - (s.cost * 0.00)) : 0;  // full savings if using points
         var savingsBlurb = s.ok ? ' &bull; <strong style="color:#059669;">Saves ~$' + totalCashFlight.toLocaleString() + '</strong>' : '';
         html += '<div class="trip-opt ' + oCls + '"><strong>' + s.path + '</strong> &mdash; ' + s.cost.toLocaleString() + ' ' + s.unit + (s.note ? ' &bull; ' + s.note : '') + savingsBlurb + '<br><span style="color: #6b7280; font-size: 12px;">You have: ' + s.have.toLocaleString() + ' ' + s.unit + '</span></div>';
     });
@@ -2074,11 +2028,8 @@ function calcCategories() {
     var marriottValue = totalMarriott * 0.008;
     var grossValue = mrValue + marriottValue;
 
-    // Net after fees + credits
-    // Gold: $325 fee - $424 credits realized = -$99 net (adds value)
-    // Bevy: $250 fee - $300 free night cert (only if used) = -$50 net (adds value)
-    var goldNet = 325 - 424;  // -99 (credit generates value beyond fee)
-    var bevyNet = vals.marriott > 0 ? (250 - 300) : 250;  // Bevy only "free" if you use free night cert
+    // Net after fees + credits. Gold credits: $120 Uber Cash + $120 dining + $100 Resy + $84 Dunkin' = $424.
+    // The Bevy free night cert (~$300) only counts if you actually stay at Marriott.
     var totalFees = 325 + 250;
     var totalCreditsRealized = 424 + (vals.marriott > 0 ? 300 : 0);
     var netValue = grossValue - totalFees + totalCreditsRealized;
@@ -2117,8 +2068,8 @@ function calcCategories() {
     if (annualDining > diningCap || annualGroc > grocCap) {
         html += '<div style="margin-top: 8px; padding: 10px 12px; background: #fef3c7; border: 1px solid #fcd34d; border-radius: 6px; font-size: 12px; color: #78350f;">'
           + '<strong>&#9888; Gold cap warning:</strong> ';
-        if (annualDining > diningCap) html += 'Your dining exceeds $50K/yr &mdash; drops to 1x MR after cap. Consider Amex Green (3x dining, no cap) for overflow. ';
-        if (annualGroc > grocCap) html += 'Your groceries exceed $25K/yr &mdash; drops to 1x MR after cap. Buy grocery gift cards at office supply stores with a business card, or use Amex BCP.';
+        if (annualDining > diningCap) html += 'Your dining exceeds $50K/yr &mdash; drops to 1x MR after cap. Put the overflow on the Bevy (4x Bonvoy at restaurants). ';
+        if (annualGroc > grocCap) html += 'Your groceries exceed $25K/yr &mdash; drops to 1x MR after cap. Put the overflow on the Bevy (4x Bonvoy at US supermarkets).';
         html += '</div>';
     }
 
@@ -2130,81 +2081,6 @@ function calcCategories() {
     result.innerHTML = html;
     result.style.display = 'block';
 }
-
-// ═══════════ BEVY SPEND TRACKER ═══════════
-function loadBevySpend() {
-    var stored = localStorage.getItem('bevySpent');
-    var spent = stored !== null ? parseFloat(stored) : 5000; // THRESHOLD HIT Jun 1, 2026 per Amex chat. 175K Marriott bonus posts in 8-12 weeks (Aug-Sep 2026).
-    updateBevyUI(spent);
-}
-
-function updateBevySpend() {
-    var input = document.getElementById('bevyInput').value.trim();
-    var current = parseFloat(localStorage.getItem('bevySpent') || '0');
-    var newAmount;
-
-    if (input.toLowerCase().startsWith('total')) {
-        newAmount = parseFloat(input.replace(/[^0-9.]/g, ''));
-    } else {
-        newAmount = current + parseFloat(input.replace(/[^0-9.]/g, ''));
-    }
-
-    if (isNaN(newAmount) || newAmount < 0) return;
-    localStorage.setItem('bevySpent', newAmount.toString());
-    document.getElementById('bevyInput').value = '';
-    updateBevyUI(newAmount);
-}
-
-function resetBevySpend() {
-    if (confirm('Reset spend tracker to $0?')) {
-        localStorage.setItem('bevySpent', '0');
-        updateBevyUI(0);
-    }
-}
-
-function updateBevyUI(spent) {
-    var target = 5000;
-    var deadline = new Date('2026-10-12T23:59:59');
-    var now = new Date();
-    var msPerDay = 1000 * 60 * 60 * 24;
-    var daysLeft = Math.max(0, Math.ceil((deadline - now) / msPerDay));
-    var monthsLeft = daysLeft / 30.44;
-    var pct = Math.min(100, (spent / target) * 100);
-    var remaining = Math.max(0, target - spent);
-    var requiredPerMonth = monthsLeft > 0 ? remaining / monthsLeft : remaining;
-
-    document.getElementById('bevySpent').textContent = '$' + spent.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    document.getElementById('bevyPct').textContent = Math.round(pct) + '%';
-    document.getElementById('bevyRemaining').textContent = '$' + remaining.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    document.getElementById('bevyProgressBar').style.width = pct + '%';
-    document.getElementById('bevyDaysLeft').textContent = daysLeft + ' days left';
-    document.getElementById('bevyPace').textContent = '$' + requiredPerMonth.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0}) + '/mo';
-
-    var milestone = document.getElementById('bevyMilestone');
-    if (spent >= target) {
-        milestone.className = 'tracker-milestone tracker-complete';
-        milestone.innerHTML = '<strong>&#10003; Bonus target reached!</strong> 175,000 Marriott Bonvoy points post 8-12 weeks after threshold. Switch everyday spending back to Amex Gold for 4x dining/groceries.';
-        document.getElementById('bevyProgressBar').style.background = 'linear-gradient(90deg, #059669, #10b981)';
-        document.getElementById('bevyPaceSub').textContent = 'COMPLETE';
-    } else {
-        milestone.className = 'tracker-milestone';
-        milestone.innerHTML = '<strong>Pace check:</strong> Need <strong>$' + requiredPerMonth.toFixed(0) + '/mo</strong> on Bevy to hit $5K by Oct 12. Tip: Amex only counts <em>posted</em> charges (not pending). Verify at amex.com → Bevy → Benefits → Welcome Offer.';
-        document.getElementById('bevyPaceSub').textContent = monthsLeft.toFixed(1) + ' months left';
-    }
-}
-
-// Load tracker on page load
-document.addEventListener('DOMContentLoaded', loadBevySpend);
-
-// Allow Enter key on input
-document.addEventListener('DOMContentLoaded', function() {
-    var input = document.getElementById('bevyInput');
-    if (input) {
-        input.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') updateBevySpend();
-        });
-    }
-});
 
 // ═══════════ AIRLINE MILES TRACKER ═══════════
 var AIRLINE_RATES = { united: 0.014, delta: 0.012, aa: 0.015 };
@@ -2243,41 +2119,32 @@ document.addEventListener('DOMContentLoaded', loadAirlineMiles);
 // ═══════════ TRAVEL COUNTDOWN ═══════════
 function loadTrips() {
     var trips = JSON.parse(localStorage.getItem('trips') || '[]');
-    // Default seed first time
-    if (trips.length === 0 && localStorage.getItem('tripsSeeded') !== '1') {
-        trips = [
-            { id: 1, destination: 'Miami (Friend 30th)', date: '2027-09-04', status: 'planned', points: 'Marriott 200K', note: 'Bar Taco birthday' }
-        ];
-        localStorage.setItem('tripsSeeded', '1');
-        localStorage.setItem('trips', JSON.stringify(trips));
-    }
     renderTrips(trips);
 }
 
 function renderTrips(trips) {
-    var now = new Date();
-    now.setHours(0,0,0,0);
-    // Sort upcoming first, drop past trips
-    trips = trips.filter(function(t) { return new Date(t.date) >= now; });
-    trips.sort(function(a, b) { return new Date(a.date) - new Date(b.date); });
+    var start = today();
+    function when(t) { return new Date(t.date + 'T12:00:00'); }   // noon local: avoids the UTC off-by-one-day
+    trips = trips.filter(function(t) { return when(t) >= start; });
+    trips.sort(function(a, b) { return when(a) - when(b); });
 
     var list = document.getElementById('tcList');
     if (!list) return;
-
-    if (trips.length === 0) {
+    if (!trips.length) {
         list.innerHTML = '<div class="tc-empty">No upcoming trips. Click <strong>+ Add Trip</strong> above.</div>';
         return;
     }
-
     list.innerHTML = trips.map(function(t) {
-        var days = Math.ceil((new Date(t.date) - now) / 86400000);
+        var days = Math.ceil((when(t) - start) / 86400000);
+        var detail = [when(t).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }), t.status, t.points, t.note]
+            .filter(Boolean).map(esc).join(' &bull; ');
         return '<div class="tc-trip">' +
             '<div class="tc-info">' +
-                '<div class="tc-title">' + t.destination + '</div>' +
-                '<div class="tc-detail">' + new Date(t.date).toLocaleDateString('en-US', {weekday:'short',month:'short',day:'numeric',year:'numeric'}) + ' &bull; ' + t.status + (t.points ? ' &bull; ' + t.points : '') + (t.note ? ' &bull; ' + t.note : '') + '</div>' +
+                '<div class="tc-title">' + esc(t.destination) + '</div>' +
+                '<div class="tc-detail">' + detail + '</div>' +
             '</div>' +
             '<div style="text-align: right;"><div class="tc-days">' + days + '</div><div class="tc-days-label">days away</div></div>' +
-            '<button class="tc-del" onclick="deleteTrip(' + t.id + ')" title="Remove">&times;</button>' +
+            '<button class="tc-del" onclick="deleteTrip(' + Number(t.id) + ')" title="Remove">&times;</button>' +
         '</div>';
     }).join('');
 }
@@ -2315,16 +2182,24 @@ function deleteTrip(id) {
 document.addEventListener('DOMContentLoaded', loadTrips);
 
 // ═══════════ CREDIT UTILIZATION ═══════════
+// npsl = no preset spending limit (charge card): its balance doesn't count toward utilization.
+// A limit of 0 means "not entered yet" and the card is left out of the total.
 var UTIL_CARDS = [
-    { id: 'gold',   name: 'Amex Gold',           limit: 0,     balance: 0, note: 'No preset limit' },
-    { id: 'bevy',   name: 'Marriott Bevy',       limit: 25000, balance: 0 },
-    { id: 'cfu',    name: 'Chase Freedom Unlimited', limit: 33300, balance: 0 },
-    { id: 'bilt',   name: 'Bilt Mastercard',     limit: 10000, balance: 0 },
+    { id: 'gold', name: 'Amex Gold',               npsl: true, limit: 0, balance: 0 },
+    { id: 'bevy', name: 'Marriott Bevy',           limit: 25000, balance: 0 },
+    { id: 'cfu',  name: 'Chase Freedom Unlimited', limit: 33300, balance: 0 },
+    { id: 'bilt', name: 'Bilt',                    limit: 0,     balance: 0 }
 ];
 
 function loadUtil() {
-    var stored = JSON.parse(localStorage.getItem('utilization') || 'null');
-    if (stored) UTIL_CARDS = stored;
+    var stored = {};
+    try { stored = JSON.parse(localStorage.getItem('utilization') || '{}') || {}; } catch (e) { stored = {}; }
+    UTIL_CARDS.forEach(function(c) {
+        var s = stored[c.id];
+        if (!s) return;
+        c.balance = s.balance || 0;
+        if (!c.npsl) c.limit = s.limit || 0;
+    });
     renderUtil();
 }
 
@@ -2332,111 +2207,156 @@ function renderUtil() {
     var list = document.getElementById('utilList');
     if (!list) return;
     var totalBalance = 0, totalLimit = 0;
+    var inputStyle = 'width:100%;padding:4px 6px;border:1px solid #e5e7eb;border-radius:4px;font-size:12px;';
+    var muted = 'font-size:11px;color:#9ca3af;';
+    function tone(pct) { return pct >= 30 ? '#dc2626' : pct >= 10 ? '#d97706' : '#059669'; }
+
     list.innerHTML = UTIL_CARDS.map(function(c) {
-        totalBalance += (c.balance || 0);
-        totalLimit += (c.limit || 0);
-        var pct = c.limit > 0 ? Math.round((c.balance / c.limit) * 100) : 0;
-        var color = pct >= 30 ? '#dc2626' : pct >= 10 ? '#d97706' : '#059669';
+        var counted = !c.npsl && c.limit > 0;
+        var pct = counted ? Math.round(c.balance / c.limit * 100) : 0;
+        if (counted) { totalBalance += c.balance; totalLimit += c.limit; }
+        var bar = counted
+            ? '<div class="util-bar"><div class="util-bar-fill" style="width:' + Math.min(100, pct) + '%;background:' + tone(pct) + ';"></div></div>'
+            : '<div style="' + muted + '">' + (c.npsl ? 'No preset limit — not counted' : 'Enter the credit limit to include this card') + '</div>';
+        var limitCell = c.npsl
+            ? '<div style="' + muted + '">n/a</div>'
+            : '<div><input type="number" min="0" value="' + c.limit + '" onchange="updateUtil(\'' + c.id + '\', \'limit\', this.value)" style="' + inputStyle + '"></div>';
         return '<div class="util-row">' +
             '<div style="font-weight: 600;">' + c.name + '</div>' +
-            '<div class="util-bar"><div class="util-bar-fill" style="width:' + Math.min(100, pct) + '%;background:' + color + ';"></div></div>' +
-            '<div><input type="number" value="' + (c.balance || 0) + '" onchange="updateUtil(\'' + c.id + '\', \'balance\', this.value)" style="width:100%;padding:4px 6px;border:1px solid #e5e7eb;border-radius:4px;font-size:12px;"></div>' +
-            '<div><input type="number" value="' + (c.limit || 0) + '" onchange="updateUtil(\'' + c.id + '\', \'limit\', this.value)" style="width:100%;padding:4px 6px;border:1px solid #e5e7eb;border-radius:4px;font-size:12px;"></div>' +
+            bar +
+            '<div><input type="number" min="0" value="' + c.balance + '" onchange="updateUtil(\'' + c.id + '\', \'balance\', this.value)" style="' + inputStyle + '"></div>' +
+            limitCell +
         '</div>';
     }).join('');
 
-    var overallPct = totalLimit > 0 ? Math.round((totalBalance / totalLimit) * 100) : 0;
-    var oColor = overallPct >= 30 ? '#dc2626' : overallPct >= 10 ? '#d97706' : '#059669';
-    var verdict = overallPct < 10 ? '&check; Optimal for FICO' : overallPct < 30 ? '&#9888; OK but could be better' : '&#10060; High — pay down';
-    document.getElementById('utilOverallPct').innerHTML = '<span style="color:' + oColor + ';">' + overallPct + '% ($' + totalBalance.toLocaleString() + ' / $' + totalLimit.toLocaleString() + ') &bull; ' + verdict + '</span>';
+    var out = document.getElementById('utilOverallPct');
+    if (!totalLimit) { out.textContent = '—'; return; }
+    var overall = Math.round(totalBalance / totalLimit * 100);
+    var verdict = overall < 10 ? '&check; Optimal for FICO' : overall < 30 ? '&#9888; OK but could be better' : '&#10060; High — pay down';
+    out.innerHTML = '<span style="color:' + tone(overall) + ';">' + overall + '% ($' + fmt(totalBalance) + ' / $' + fmt(totalLimit) + ') &bull; ' + verdict + '</span>';
 }
 
 function updateUtil(id, field, value) {
-    var card = UTIL_CARDS.find(function(c) { return c.id === id; });
+    var card = UTIL_CARDS.filter(function(c) { return c.id === id; })[0];
     if (!card) return;
-    card[field] = parseFloat(value) || 0;
-    localStorage.setItem('utilization', JSON.stringify(UTIL_CARDS));
+    card[field] = Math.max(0, parseFloat(value) || 0);
+    var toStore = {};
+    UTIL_CARDS.forEach(function(c) { toStore[c.id] = { balance: c.balance, limit: c.limit }; });
+    localStorage.setItem('utilization', JSON.stringify(toStore));
     renderUtil();
 }
 
 document.addEventListener('DOMContentLoaded', loadUtil);
 
-// ═══════════ PWA install ═══════════
-if ('serviceWorker' in navigator) {
-    // Only register SW if present — skip to avoid 404
-    // (no SW file; manifest alone enables Add to Home Screen on iOS/Android)
+// ═══════════ CSV SPEND IMPORT ═══════════
+// Handles quoted fields, embedded commas and multi-line cells (Amex "Extended Details").
+function parseCsv(text) {
+    var rows = [], row = [], cell = '', quoted = false;
+    for (var i = 0; i < text.length; i++) {
+        var c = text[i];
+        if (quoted) {
+            if (c === '"') {
+                if (text[i + 1] === '"') { cell += '"'; i++; } else { quoted = false; }
+            } else {
+                cell += c;
+            }
+        } else if (c === '"') {
+            quoted = true;
+        } else if (c === ',') {
+            row.push(cell); cell = '';
+        } else if (c === '\n' || c === '\r') {
+            if (c === '\r' && text[i + 1] === '\n') i++;
+            row.push(cell); cell = '';
+            if (row.length > 1 || row[0] !== '') rows.push(row);
+            row = [];
+        } else {
+            cell += c;
+        }
+    }
+    if (cell !== '' || row.length) { row.push(cell); rows.push(row); }
+    return rows;
 }
 
-// ═══════════ CSV SPEND IMPORT ═══════════
+var SPEND_PATTERNS = [   // matched against "description + category"; first match wins
+    ['marriott',  /marriott|courtyard|renaissance|westin|sheraton|ritz-carlton|st\.? regis|bonvoy/i],
+    ['dining',    /restaurant|food & drink|uber\s*eats|\bcafe\b|coffee|\bbar\b|grill|pizza|sushi|burger|taco|chipotle|starbucks|dunkin|chopt|sweetgreen|grubhub|doordash|seamless|resy|aramark|five guys|shake shack|tst\*/i],
+    ['groceries', /grocer|supermarket|whole foods|trader joe|wegmans|safeway|kroger|publix|aldi|key food|fairway|gristedes|h mart/i],
+    ['uber',      /\buber\b|\blyft\b/i],
+    ['gas',       /gas station|\bshell\b|exxon|chevron|\bbp\b|mobil|sunoco|\bfuel\b/i],
+    ['travel',    /airline|\bunited\b|\bdelta\b|american air|southwest|jetblue|airbnb|hotel|lodging|amtrak|rental car|hertz|\bavis\b/i]
+];
+
 function importSpendCsv(evt) {
     var file = evt.target.files[0];
     if (!file) return;
     var reader = new FileReader();
     reader.onload = function(e) {
-        var text = e.target.result;
-        var rows = text.split('\n').map(function(r) { return r.split(','); });
-        if (rows.length < 2) { alert('Empty CSV'); return; }
+        var rows = parseCsv(String(e.target.result));
+        function lower(r) { return r.map(function(h) { return h.toLowerCase().trim(); }); }
 
-        // Detect header row
-        var headers = rows[0].map(function(h) { return h.toLowerCase().replace(/"/g, '').trim(); });
-        var descIdx = headers.findIndex(function(h) { return h.includes('description') || h.includes('merchant'); });
-        var amtIdx = headers.findIndex(function(h) { return h === 'amount' || h.includes('amount'); });
-        var catIdx = headers.findIndex(function(h) { return h === 'category'; });
+        var headerIdx = -1;
+        for (var i = 0; i < Math.min(rows.length, 20); i++) {
+            if (lower(rows[i]).indexOf('amount') !== -1) { headerIdx = i; break; }
+        }
+        if (headerIdx === -1) { alert('No "Amount" column found. Use the CSV export from Amex or Chase.'); return; }
 
-        if (amtIdx === -1) { alert('No "Amount" column found. Try Amex/Chase standard export.'); return; }
+        var headers = lower(rows[headerIdx]);
+        function findCol(test) {
+            for (var j = 0; j < headers.length; j++) { if (test(headers[j])) return j; }
+            return -1;
+        }
+        var amtIdx = headers.indexOf('amount');
+        var descIdx = findCol(function(h) { return h.indexOf('description') !== -1 || h.indexOf('merchant') !== -1; });
+        var catIdx = headers.indexOf('category');
+        var typeIdx = headers.indexOf('type');
+        var dateIdx = findCol(function(h) { return h.indexOf('date') !== -1; });
 
-        // Category patterns
-        var patterns = {
-            dining: /restaurant|cafe|coffee|bar|grill|pizza|sushi|burger|chipotle|starbucks|dunkin|chopt|sweetgreen|grubhub|doordash|resy|aramark|five guys|shake shack|tst\*/i,
-            groceries: /whole foods|trader joe|wegmans|food|market|safeway|kroger|publix|aldi|grocery/i,
-            travel: /airline|united|delta|american air|southwest|jetblue|airbnb|hotel|marriott|hyatt|hilton|uber|lyft|rental|avis|hertz|amtrak|airport/i,
-            marriott: /marriott|courtyard|renaissance|westin|sheraton|ritz-carlton|st regis|w hotel|bonvoy/i,
-            uber: /uber|lyft|cabify/i,
-            gas: /shell|exxon|chevron|bp |mobil|gas |fuel|arco/i,
-        };
-
-        var totals = { dining: 0, groceries: 0, travel: 0, marriott: 0, prepaid: 0, uber: 0, gas: 0, other: 0 };
-        var count = 0;
-
-        rows.slice(1).forEach(function(row) {
-            if (row.length <= Math.max(descIdx, amtIdx)) return;
-            var desc = (descIdx >= 0 ? row[descIdx] : '').replace(/"/g, '');
-            var amt = parseFloat((row[amtIdx] || '').replace(/[^0-9.-]/g, ''));
-            if (isNaN(amt) || amt >= 0) return;  // skip positive (payments)
-            amt = Math.abs(amt);
-            count++;
-
-            var matched = false;
-            if (patterns.marriott.test(desc)) { totals.marriott += amt; matched = true; }
-            else if (patterns.dining.test(desc)) { totals.dining += amt; matched = true; }
-            else if (patterns.groceries.test(desc)) { totals.groceries += amt; matched = true; }
-            else if (patterns.uber.test(desc)) { totals.uber += amt; matched = true; }
-            else if (patterns.gas.test(desc)) { totals.gas += amt; matched = true; }
-            else if (patterns.travel.test(desc)) { totals.travel += amt; matched = true; }
-            if (!matched) totals.other += amt;
+        var txns = [];
+        rows.slice(headerIdx + 1).forEach(function(row) {
+            var amt = parseFloat(String(row[amtIdx] || '').replace(/[^0-9.\-]/g, ''));
+            if (isNaN(amt) || amt === 0) return;
+            var desc = descIdx >= 0 ? (row[descIdx] || '') : '';
+            var type = typeIdx >= 0 ? (row[typeIdx] || '') : '';
+            if (/payment|thank you|autopay/i.test(desc) || /payment/i.test(type)) return;
+            var d = dateIdx >= 0 ? new Date(row[dateIdx]) : null;
+            txns.push({
+                amt: amt,
+                label: desc + ' ' + (catIdx >= 0 ? (row[catIdx] || '') : ''),
+                date: d && !isNaN(d) ? d : null
+            });
         });
+        if (!txns.length) { alert('No transactions found in that file.'); return; }
 
-        if (count === 0) { alert('No transactions parsed. Check CSV format.'); return; }
+        // Amex exports charges as positive numbers, Chase as negative: the dominant sign is spending.
+        var positives = txns.filter(function(t) { return t.amt > 0; }).length;
+        var spendSign = positives >= txns.length / 2 ? 1 : -1;
+        var spend = txns.filter(function(t) { return t.amt * spendSign > 0; });
 
-        // Fill monthly values (assume CSV covers 1 month — rough)
-        document.getElementById('catDining').value = Math.round(totals.dining);
-        document.getElementById('catGroceries').value = Math.round(totals.groceries);
-        document.getElementById('catTravel').value = Math.round(totals.travel);
-        document.getElementById('catMarriott').value = Math.round(totals.marriott);
-        document.getElementById('catUber').value = Math.round(totals.uber);
-        document.getElementById('catGas').value = Math.round(totals.gas);
-        document.getElementById('catOther').value = Math.round(totals.other);
+        var times = spend.filter(function(t) { return t.date; }).map(function(t) { return t.date.getTime(); });
+        var months = times.length
+            ? Math.max(1, Math.round((Math.max.apply(null, times) - Math.min.apply(null, times)) / 86400000 / 30.44))
+            : 1;
 
-        alert('Imported ' + count + ' transactions. Values populated above — review and click Calculate.');
+        var totals = { dining: 0, groceries: 0, travel: 0, marriott: 0, uber: 0, gas: 0, other: 0 };
+        spend.forEach(function(t) {
+            var bucket = 'other';
+            for (var k = 0; k < SPEND_PATTERNS.length; k++) {
+                if (SPEND_PATTERNS[k][1].test(t.label)) { bucket = SPEND_PATTERNS[k][0]; break; }
+            }
+            totals[bucket] += Math.abs(t.amt);
+        });
+        Object.keys(totals).forEach(function(k) {
+            document.getElementById('cat' + k.charAt(0).toUpperCase() + k.slice(1)).value = Math.round(totals[k] / months);
+        });
+        evt.target.value = '';
+        alert('Imported ' + spend.length + ' transactions covering about ' + months + ' month(s). Monthly averages are filled in above — review them, then click Calculate.');
     };
     reader.readAsText(file);
 }
 
 // ═══════════ MONTHLY SCORECARD ═══════════
 function showScorecard() {
-    fetch('portfolio_history.json?t=' + Date.now())
-        .then(r => r.json())
-        .then(data => {
+    (function(data) {
             var snaps = data.snapshots;
             if (snaps.length < 2) { alert('Need at least 2 snapshots for scorecard.'); return; }
 
@@ -2455,7 +2375,7 @@ function showScorecard() {
             var marriottGain = latest.marriott - prior.marriott;
             var urGain = latest.ur - prior.ur;
             var biltGain = latest.bilt - prior.bilt;
-            var totalValueGain = (mrGain * 0.02) + (marriottGain * 0.008) + (urGain * 0.02) + (biltGain * 0.018);
+            var totalValueGain = (mrGain * RATES.mr) + (marriottGain * RATES.marriott) + (urGain * RATES.ur) + (biltGain * RATES.bilt);
 
             var modal = document.createElement('div');
             modal.id = 'scorecardModal';
@@ -2466,10 +2386,10 @@ function showScorecard() {
                 '<div style="color:#6b7280;font-size:13px;margin-bottom:20px;">' + prior.date + ' &rarr; ' + latest.date + ' (' + Math.round((new Date(latest.date) - new Date(prior.date)) / 86400000) + ' days)</div>' +
 
                 '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">' +
-                scorecardTile('Amex MR Gained', (mrGain >= 0 ? '+' : '') + mrGain.toLocaleString(), '$' + Math.round(mrGain * 0.02).toLocaleString() + ' value', '#006fcf') +
-                scorecardTile('Marriott Gained', (marriottGain >= 0 ? '+' : '') + marriottGain.toLocaleString(), '$' + Math.round(marriottGain * 0.008).toLocaleString() + ' value', '#7c3aed') +
-                scorecardTile('Chase UR Gained', (urGain >= 0 ? '+' : '') + urGain.toLocaleString(), '$' + Math.round(urGain * 0.02).toLocaleString() + ' value', '#003087') +
-                scorecardTile('Bilt Gained', (biltGain >= 0 ? '+' : '') + biltGain.toLocaleString(), '$' + Math.round(biltGain * 0.018).toLocaleString() + ' value', '#1a1a2e') +
+                scorecardTile('Amex MR Gained', (mrGain >= 0 ? '+' : '') + mrGain.toLocaleString(), '$' + Math.round(mrGain * RATES.mr).toLocaleString() + ' value', '#006fcf') +
+                scorecardTile('Marriott Gained', (marriottGain >= 0 ? '+' : '') + marriottGain.toLocaleString(), '$' + Math.round(marriottGain * RATES.marriott).toLocaleString() + ' value', '#7c3aed') +
+                scorecardTile('Chase UR Gained', (urGain >= 0 ? '+' : '') + urGain.toLocaleString(), '$' + Math.round(urGain * RATES.ur).toLocaleString() + ' value', '#003087') +
+                scorecardTile('Bilt Gained', (biltGain >= 0 ? '+' : '') + biltGain.toLocaleString(), '$' + Math.round(biltGain * RATES.bilt).toLocaleString() + ' value', '#1a1a2e') +
                 '</div>' +
 
                 '<div style="background:#f0fdf4;border:2px solid #bbf7d0;border-radius:12px;padding:16px;text-align:center;margin-bottom:20px;">' +
@@ -2488,8 +2408,7 @@ function showScorecard() {
                 '<button onclick="window.print()" style="margin-top:16px;padding:10px 20px;background:#1a1a2e;color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;">Print / Save PDF</button>' +
             '</div>';
             document.body.appendChild(modal);
-        })
-        .catch(function(e) { alert('Failed to load history: ' + e.message); });
+    })({ snapshots: PORTFOLIO_HISTORY });
 }
 
 function scorecardTile(label, value, sub, color) {
@@ -2513,14 +2432,18 @@ function buildScorecardCommentary(mr, marriott, ur, bilt) {
 
 function buildScorecardTodos() {
     var todos = [];
-    todos.push('Check $120 Dining Credit progress — needs $10/mo use.');
-    todos.push('Check Uber One $96 anniversary credit before Oct 30.');
-    todos.push('Rent Day on 1st — plan nice dinner on Bilt for 3x.');
+    todos.push('Use the $10 Amex Gold dining credit (Grubhub / Buffalo Wild Wings / Wonder).');
+    todos.push('Bevy fee posts ' + shortDate(nextFeeDate(FEES.bevy)) + ' — call retention a month before.');
+    todos.push('Add a new balance snapshot to portfolio.js so next month has data.');
     return todos.map(function(t) { return '&bull; ' + t; }).join('<br>');
 }
 
-function createReport() {
-    var btn = document.querySelector('.report-btn');
+function reportStatus(key, needed) {
+    var gap = needed - BALANCES[key];
+    return gap <= 0 ? '<td class="green">Ready now</td>' : '<td class="amber">Need ' + fmt(gap) + ' more</td>';
+}
+
+function createReport(btn) {
     var origHTML = btn.innerHTML;
     btn.disabled = true;
     btn.innerHTML = 'Opening print dialog...';
@@ -2594,25 +2517,25 @@ function createReport() {
 
       // Points cards (4 cols)
       + '<div class="row">'
-      + '<div class="col pts-card bg-amex"><div class="lbl">Amex MR</div><div class="num">293,477</div><div class="val">~2.0&cent;/pt &bull; $4,543</div><div class="use">Primary card. Europe via ANA/Virgin</div></div>'
-      + '<div class="col pts-card bg-marriott"><div class="lbl">Marriott Bonvoy</div><div class="num">202,998</div><div class="val">~0.8&cent;/pt &bull; $1,511</div><div class="use">Bonus POSTED. 5-7 nights Cat 5 Europe</div></div>'
-      + '<div class="col pts-card bg-chase"><div class="lbl">Chase UR</div><div class="num">94,257</div><div class="val">~2.0&cent;/pt &bull; $1,879</div><div class="use">LOCKED until Aug 2029</div></div>'
-      + '<div class="col pts-card bg-bilt"><div class="lbl">Bilt</div><div class="num">38,300</div><div class="val">~1.8&cent;/pt &bull; $689</div><div class="use">Dormant. Transfer rail only.</div></div>'
+      + '<div class="col pts-card bg-amex"><div class="lbl">Amex MR</div><div class="num">' + fmt(BALANCES.mr) + '</div><div class="val">~2.0&cent;/pt &bull; $' + fmt(usdValue('mr')) + '</div><div class="use">Primary card. Europe via ANA/Virgin</div></div>'
+      + '<div class="col pts-card bg-marriott"><div class="lbl">Marriott Bonvoy</div><div class="num">' + fmt(BALANCES.marriott) + '</div><div class="val">~0.8&cent;/pt &bull; $' + fmt(usdValue('marriott')) + '</div><div class="use">5 nights Cat 5 Europe</div></div>'
+      + '<div class="col pts-card bg-chase"><div class="lbl">Chase UR</div><div class="num">' + fmt(BALANCES.ur) + '</div><div class="val">~2.0&cent;/pt &bull; $' + fmt(usdValue('ur')) + '</div><div class="use">LOCKED until Aug 2029</div></div>'
+      + '<div class="col pts-card bg-bilt"><div class="lbl">Bilt</div><div class="num">' + fmt(BALANCES.bilt) + '</div><div class="val">~1.8&cent;/pt &bull; $' + fmt(usdValue('bilt')) + '</div><div class="use">Dormant. Transfer rail only.</div></div>'
       + '</div>'
 
-      + '<div class="total"><div><span class="l">Total Portfolio:</span> <span class="gray">548,270 points across 4 currencies</span></div><div class="r">$8,622</div></div>'
+      + '<div class="total"><div><span class="l">Total Portfolio:</span> <span class="gray">' + fmt(totalPts()) + ' points across 4 currencies &bull; balances as of ' + shortDate(new Date(LATEST.date + 'T12:00:00')) + '</span></div><div class="r">$' + fmt(totalUsd()) + '</div></div>'
 
       // Strategy
       + '<div class="strategy"><div class="t">Core Strategy</div><div class="s-row">'
-      + '<div class="s-col"><div class="h">1. Flights = Amex MR</div><div class="p">Transfer to airlines (2&cent;/pt). ANA First, Virgin Atlantic Delta One. Never to Marriott (0.7&cent;).</div></div>'
+      + '<div class="s-col"><div class="h">1. Flights = Amex MR</div><div class="p">Transfer to airlines (2&cent;/pt). ANA First, Virgin Atlantic Delta One. Never to Marriott (0.8&cent;).</div></div>'
       + '<div class="s-col"><div class="h">2. Hotels = Marriott (via Bevy)</div><div class="p">175K bonus banked. Use for Europe Cat 4-5. Don\'t convert MR to Marriott.</div></div>'
       + '<div class="s-col"><div class="h">3. Daily Spend = Amex Gold</div><div class="p">4x dining, 4x groceries, 5x prepaid hotels. Switched back from Bevy post-bonus.</div></div>'
       + '</div></div>'
 
       // Status boxes
       + '<div class="row">'
-      + '<div class="col ok" style="background: #f0fdf4;"><div class="t">&#10003; Bevy 175K Marriott Bonus POSTED Jun 2026</div><div class="b">Bonvoy account: 202,998 pts. Next: plan Europe Marriott trip (5-7 nights Cat 4-5). Bevy retention call due Apr 2027.</div></div>'
-      + '<div class="col warn"><div class="t">94,257 Chase UR LOCKED until Aug 2029</div><div class="b">CSP closed Jul 2025. Sapphire family rule blocks CSP/CSR bonus 48 mo. Bilt &rarr; United 1:1 works without Sapphire.</div></div>'
+      + '<div class="col ok" style="background: #f0fdf4;"><div class="t">&#10003; Bevy 175K Marriott Bonus POSTED Jun 2026</div><div class="b">Bonvoy balance: ' + fmt(BALANCES.marriott) + ' pts. Next: plan a Europe Marriott trip (5 nights Cat 5). Bevy retention call due Mar 2027.</div></div>'
+      + '<div class="col warn"><div class="t">' + fmt(BALANCES.ur) + ' Chase UR LOCKED until Aug 2029</div><div class="b">CSP opened Jul 2025, closed ~Oct 2025. Sapphire family rule blocks CSP/CSR bonus 48 mo. Bilt &rarr; United 1:1 works without Sapphire.</div></div>'
       + '</div>'
 
       // Eligibility for new cards
@@ -2622,7 +2545,7 @@ function createReport() {
       + '</tr></thead><tbody>'
       + '<tr><td>1</td><td><strong>Amex Platinum</strong><br><span class="gray">Amex</span></td><td><strong>80K-175K MR</strong></td><td>$895</td><td>$8K/6mo</td><td class="green">+$1,860 to +$3,260</td><td>Only major eligible card. Check CardMatch for 150K+ targeted offer first.</td></tr>'
       + '<tr><td>2</td><td><strong>United Explorer</strong><br><span class="gray">Chase</span></td><td><strong>50-60K United</strong></td><td>$0 Y1, $150</td><td>$3K/3mo</td><td class="green">+$1,240</td><td>Bypasses Sapphire family. Free 1st bag United. Direct United for Europe.</td></tr>'
-      + '<tr><td>3</td><td><strong>Citi AAdvantage Platinum</strong><br><span class="gray">Citi</span></td><td><strong>50-75K AA</strong></td><td>$0 Y1, $99</td><td>$2.5K/4mo</td><td class="green">+$890</td><td>Diversifies into AA/oneworld. Free 1st bag AA.</td></tr>'
+      + '<tr><td>3</td><td><strong>Citi AAdvantage Platinum</strong><br><span class="gray">Citi</span></td><td><strong>50-80K AA</strong></td><td>$0 Y1, $99</td><td>$3.5K/4mo</td><td class="green">+$890 to +$1,340</td><td>Diversifies into AA/oneworld. 80K offer seen Oct 26, 2026 &mdash; confirm it is still live.</td></tr>'
       + '</tbody></table>'
 
       + '<h2 style="color: #991b1b;">BLOCKED (Do Not Apply)</h2>'
@@ -2630,7 +2553,7 @@ function createReport() {
       + '<tr><td><strong>Chase Sapphire Reserve</strong> (Chase $795)</td><td class="red">Eligible Aug 2029 (Sapphire family 48-mo rule)</td></tr>'
       + '<tr><td><strong>Marriott Bonvoy Brilliant</strong> (Amex $650)</td><td class="red">Lifetime blocked (Bevy used Marriott family slot)</td></tr>'
       + '<tr><td><strong>Chase Sapphire Preferred</strong> (Chase $95)</td><td class="red">Eligible Aug 2029 (same Sapphire family rule)</td></tr>'
-      + '<tr><td><strong>Amex Green</strong> (Amex $150)</td><td class="amber">WAIT &mdash; refresh imminent, new SUB expected Q2-Q3 2026</td></tr>'
+      + '<tr><td><strong>Amex Green</strong> (Amex $150)</td><td class="amber">CHECK &mdash; refresh was expected mid-2026; confirm the current offer</td></tr>'
       + '<tr><td><strong>Any business card</strong> (Ink, Spark, Biz Gold/Plat)</td><td class="red">Excluded &mdash; user has no business</td></tr>'
       + '</tbody></table>'
 
@@ -2646,43 +2569,41 @@ function createReport() {
       + '<div class="elig-row">'
       + '<div class="elig-col" style="border-color: #b8860b;"><div class="n">Amex Gold &mdash; PRIMARY</div><div class="d">Dining (4x), Groceries (4x), Flights (3x), Prepaid Hotels (5x via Amex Travel)</div></div>'
       + '<div class="elig-col" style="border-color: #7c3aed;"><div class="n">Bevy &mdash; MARRIOTT ONLY</div><div class="d">Marriott direct (6x). Don\'t use elsewhere &mdash; Gold beats 2x on dining/groceries.</div></div>'
-      + '<div class="elig-col" style="border-color: #1a1a2e;"><div class="n">Bilt &mdash; TRANSFERS ONLY</div><div class="d">No new earning. 38,300 stash transfers 1:1 to United / Marriott.</div></div>'
+      + '<div class="elig-col" style="border-color: #1a1a2e;"><div class="n">Bilt &mdash; TRANSFERS ONLY</div><div class="d">No new earning. ' + fmt(BALANCES.bilt) + ' stash transfers 1:1 to United / Marriott.</div></div>'
       + '<div class="elig-col" style="border-color: #6b7280;"><div class="n">CFU &mdash; SOCK DRAWER</div><div class="d">UR locked, 1.5x earn wasted vs Gold. Skip until Aug 2029.</div></div>'
       + '</div>'
 
       // Active credits
       + '<div class="info" style="margin-bottom: 10px;"><div class="t">Active Credits / Perks to Use (Don\'t Forget)</div>'
-      + '<div class="b">Gold $96 Uber One (expires Oct 30, 2026) &bull; $120 Resy (use it) &bull; $84 Dunkin\' &bull; $120 Uber Cash &bull; Hertz Five Star (enroll free) &bull; Bevy free night cert (~Apr 2027 anniversary)</div></div>'
+      + '<div class="b">Gold $120 dining credit ($10/mo) &bull; $100 Resy &bull; $84 Dunkin\' &bull; $120 Uber Cash &bull; Hertz Five Star (enroll free) &bull; Bevy free night cert (~Apr 2027 anniversary)</div></div>'
 
       // Redemption table
       + '<h2>What Your Points Can Get You Today</h2>'
       + '<table><thead><tr>'
       + '<th>Redemption</th><th>Points Needed</th><th>You Have</th><th>Status</th>'
       + '</tr></thead><tbody>'
-      + '<tr><td><strong>Marriott: 5-6 nights Cat 5 Europe (Westin Athens, Renaissance Paris)</strong></td><td>~150K Bonvoy (5th-night free)</td><td>202,998 Bonvoy</td><td class="green">Ready now</td></tr>'
-      + '<tr><td><strong>Marriott: 2-3 nights Cat 7 luxury (W, JW)</strong></td><td>~140-200K Bonvoy</td><td>202,998 Bonvoy</td><td class="green">Ready now</td></tr>'
-      + '<tr><td><strong>ANA First Class RT to Europe via Tokyo</strong></td><td>~110K MR</td><td>293,477 MR</td><td class="green">Ready now</td></tr>'
-      + '<tr><td><strong>Virgin Atlantic &rarr; Delta One RT to Europe</strong></td><td>~50K MR</td><td>293,477 MR</td><td class="green">Ready (~4 trips)</td></tr>'
-      + '<tr><td><strong>United RT economy to Europe (via Bilt &rarr; United)</strong></td><td>~60K United</td><td>38,300 Bilt</td><td class="amber">Need 21,700 more</td></tr>'
-      + '<tr><td><strong>United Polaris business RT to Europe</strong></td><td>~120-160K United</td><td>94,257 UR (locked) + 38,300 Bilt</td><td class="red">UR locked until 2029</td></tr>'
+      + '<tr><td><strong>Marriott: 5 nights Cat 5 Europe (Westin Athens, Renaissance Paris)</strong></td><td>~200K Bonvoy (5th night free)</td><td>' + fmt(BALANCES.marriott) + ' Bonvoy</td>' + reportStatus('marriott', 200000) + '</tr>'
+      + '<tr><td><strong>ANA First Class RT to Europe via Tokyo</strong></td><td>~110K MR</td><td>' + fmt(BALANCES.mr) + ' MR</td>' + reportStatus('mr', 110000) + '</tr>'
+      + '<tr><td><strong>Virgin Atlantic &rarr; Delta One to Europe (one-way)</strong></td><td>~50K MR</td><td>' + fmt(BALANCES.mr) + ' MR</td>' + reportStatus('mr', 50000) + '</tr>'
+      + '<tr><td><strong>United RT economy to Europe (via Bilt &rarr; United)</strong></td><td>~60K United</td><td>' + fmt(BALANCES.bilt) + ' Bilt</td>' + reportStatus('bilt', 60000) + '</tr>'
+      + '<tr><td><strong>United Polaris business RT to Europe</strong></td><td>~120-160K United</td><td>' + fmt(BALANCES.ur) + ' UR (locked) + ' + fmt(BALANCES.bilt) + ' Bilt</td><td class="red">UR locked until Aug 2029</td></tr>'
       + '</tbody></table>'
 
       // Current cards
       + '<h2>Current Cards</h2>'
       + '<div class="elig-row">'
-      + '<div class="elig-col" style="border-color: #b8860b;"><div class="n">Amex Gold (...83000)</div><div class="d">$325/yr &bull; 293,477 MR &bull; primary card</div></div>'
+      + '<div class="elig-col" style="border-color: #b8860b;"><div class="n">Amex Gold (...83000)</div><div class="d">$325/yr &bull; ' + fmt(BALANCES.mr) + ' MR &bull; primary card</div></div>'
       + '<div class="elig-col" style="border-color: #5b21b6;"><div class="n">Marriott Bevy (...41008)</div><div class="d">$250/yr &bull; Opened Apr 12, 2026 &bull; 175K bonus posted</div></div>'
-      + '<div class="elig-col" style="border-color: #003087;"><div class="n">Chase Freedom Unlimited (...9058)</div><div class="d">$0/yr &bull; 94,257 UR locked &bull; sock drawer</div></div>'
-      + '<div class="elig-col" style="border-color: #1a1a2e;"><div class="n">Bilt Mastercard 2.0</div><div class="d">$0/yr &bull; 38,300 dormant &bull; transfer rail</div></div>'
+      + '<div class="elig-col" style="border-color: #003087;"><div class="n">Chase Freedom Unlimited (...9058)</div><div class="d">$0/yr &bull; ' + fmt(BALANCES.ur) + ' UR locked &bull; sock drawer</div></div>'
+      + '<div class="elig-col" style="border-color: #1a1a2e;"><div class="n">Bilt Card</div><div class="d">$0/yr &bull; ' + fmt(BALANCES.bilt) + ' dormant &bull; transfer rail</div></div>'
       + '</div>'
 
       // Key dates
       + '<h2>Key Dates &amp; Deadlines</h2>'
       + '<table><tbody>'
-      + '<tr><td style="width: 110px;" class="red">Oct 30, 2026</td><td>Amex Gold $96 Uber One anniversary credit expires</td></tr>'
-      + '<tr><td class="amber">Apr 12, 2027</td><td>Bevy anniversary &mdash; free night cert (up to 50K) posts. Call retention BEFORE $250 fee for offers.</td></tr>'
-      + '<tr><td class="gray">Q2-Q3 2026</td><td>Amex Green Card refresh expected &mdash; wait for new SUB before evaluating</td></tr>'
-      + '<tr><td class="gray">Aug 2029</td><td>Chase Sapphire family eligible again (48-mo from CSP bonus Jul 2025) &mdash; CSR window opens</td></tr>'
+      + '<tr><td style="width: 110px;" class="amber">' + shortDate(nextFeeDate(FEES.bevy)) + '</td><td>Bevy anniversary &mdash; free night cert (up to 50K) posts. Call retention a month BEFORE the $250 fee.</td></tr>'
+      + '<tr><td class="amber">' + shortDate(nextFeeDate(FEES.gold)) + '</td><td>Amex Gold $325 fee posts. Call retention a month before.</td></tr>'
+      + '<tr><td class="gray">Aug 2029</td><td>Chase Sapphire family eligible again (48 months after the CSP bonus) &mdash; unlocks UR transfers.</td></tr>'
       + '</tbody></table>'
 
       + '<footer>Sources: The Points Guy &bull; Doctor of Credit &bull; Frequent Miler &bull; Direct issuer pages. Point valuations are community-consensus estimates. Actual value depends on redemption.</footer>'
